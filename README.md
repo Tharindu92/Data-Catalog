@@ -1,4 +1,7 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+After pulling the files, navigate to the folder and run the following commands.
+
+1. npm install react react-dom --save
+2. npm start run locally.
 
 ## Available Scripts
 
