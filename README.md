@@ -1,7 +1,7 @@
 After pulling the files, navigate to the folder and run the following commands.
 
 1. npm install react react-dom --save
-2. npm start run locally.
+2. npm start to run locally.
 
 ## Available Scripts
 
