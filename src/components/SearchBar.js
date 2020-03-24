@@ -1,24 +1,37 @@
 import React from "react";
-import "../index.css";
-import InputGroup from "react-bootstrap/InputGroup";
-import FormControl from "react-bootstrap/FormControl";
-import Button from "react-bootstrap/Button";
-export class SearchBar extends React.Component {
+import { InputGroup, FormControl, Button } from "react-bootstrap";
+import history from "../history";
+import "bootstrap/dist/css/bootstrap.min.css";
+export default class SearchBar extends React.Component {
+  constructor() {
+    super();
+    this.state = { value: "" };
+  }
+  handleChange = e => {
+    this.setState({ value: e.target.value });
+  };
+  Search() {
+    history.push({
+      pathname: "/Search",
+      search: "?query=" + this.state.value
+    });
+  }
   render() {
     return (
-      <div id="Search bar">
-        <label className="text-primary">Search for database</label>
-        <InputGroup className="mb-3">
-          <FormControl
-            placeholder="Enter Keyword"
-            aria-label="Enter Keyword"
-            aria-describedby="basic-addon2"
-          />
-          <InputGroup.Append>
-            <Button variant="outline-secondary">Button</Button>
-          </InputGroup.Append>
-        </InputGroup>
-      </div>
+      <InputGroup>
+        <FormControl
+          placeholder="Enter Keyword"
+          aria-label="Enter Keyword"
+          aria-describedby="basic-addon2"
+          value={this.state.value}
+          onChange={this.handleChange}
+        />
+        <InputGroup.Append>
+          <Button variant="outline-secondary" onClick={() => this.Search()}>
+            Search
+          </Button>
+        </InputGroup.Append>
+      </InputGroup>
     );
   }
 }

@@ -1,68 +1,70 @@
 import React from "react";
-import Card from "react-bootstrap/Card";
-import InputGroup from "react-bootstrap/InputGroup";
-import FormControl from "react-bootstrap/FormControl";
-import Button from "react-bootstrap/Button";
-import CardDeck from "react-bootstrap/CardDeck";
+import SearchDisplay from "../components/SearchDisplay";
+import SearchBar from "../components/SearchBar";
+import { Row, Col, Button } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+
+const databaseList = [
+  {
+    name: "Database 1",
+    description:
+      "Some descriptiongs of Data. Lorem ipsum dolor sit amet, consectetur adipiscing elit.Nam auctor tellus ut dolor congue"
+  },
+  {
+    name: "Database 2",
+    description:
+      "Some descriptiongs of Data. Lorem ipsum dolor sit amet, consecteturadipiscing elit.Nam auctor tellus ut dolor congue"
+  },
+  {
+    name: "Database 3",
+    description:
+      "Some descriptiongs of Data. Lorem ipsum dolor sit amet, consecteturadipiscing elit.Nam auctor tellus ut dolor congue"
+  },
+  {
+    name: "Database 4",
+    description:
+      "Some descriptiongs of Data. Lorem ipsum dolor sit amet, consecteturadipiscing elit.Nam auctor tellus ut dolor congue"
+  },
+  {
+    name: "Database 5",
+    description:
+      "Some descriptiongs of Data. Lorem ipsum dolor sit amet, consecteturadipiscing elit.Nam auctor tellus ut dolor congue"
+  },
+  {
+    name: "Database 6",
+    description:
+      "Some descriptiongs of Data. Lorem ipsum dolor sit amet, consecteturadipiscing elit.Nam auctor tellus ut dolor congue"
+  },
+  {
+    name: "Database 7",
+    description:
+      "Some descriptiongs of Data. Lorem ipsum dolor sit amet, consecteturadipiscing elit.Nam auctor tellus ut dolor congue"
+  },
+  {
+    name: "Database 8",
+    description:
+      "Some descriptiongs of Data. Lorem ipsum dolor sit amet, consecteturadipiscing elit.Nam auctor tellus ut dolor congue"
+  }
+];
 
 export default class extends React.Component {
   render() {
     return (
-      <div id="Search bar">
-        <label className="text-primary">Search Results</label>
-        <CardDeck>
-          <Card border="primary" style={{ width: "18rem" }}>
-            <Card.Body>
-              <Card.Title>Data Name</Card.Title>
-              <Card.Text>
-                Some descriptiongs of Data. Lorem ipsum dolor sit amet,
-                consectetur adipiscing elit. Nam auctor tellus ut dolor congue,
-                in facilisis leo rhoncus. Nunc metus nunc, hendrerit a orci et,
-                porttitor aliquet diam. Nunc magna massa, pulvinar id facilisis
-                ultricies, ultricies eget purus.
-              </Card.Text>
-            </Card.Body>
-          </Card>
-
-          <Card border="primary" style={{ width: "18rem" }}>
-            <Card.Body>
-              <Card.Title>Data Name</Card.Title>
-              <Card.Text>
-                Some descriptiongs of Data. Lorem ipsum dolor sit amet,
-                consectetur adipiscing elit. Nam auctor tellus ut dolor congue,
-                in facilisis leo rhoncus. Nunc metus nunc, hendrerit a orci et,
-                porttitor aliquet diam. Nunc magna massa, pulvinar id facilisis
-                ultricies, ultricies eget purus.
-              </Card.Text>
-            </Card.Body>
-          </Card>
-
-          <Card border="primary" style={{ width: "18rem" }}>
-            <Card.Body>
-              <Card.Title>Data Name</Card.Title>
-              <Card.Text>
-                Some descriptiongs of Data. Lorem ipsum dolor sit amet,
-                consectetur adipiscing elit. Nam auctor tellus ut dolor congue,
-                in facilisis leo rhoncus. Nunc metus nunc, hendrerit a orci et,
-                porttitor aliquet diam. Nunc magna massa, pulvinar id facilisis
-                ultricies, ultricies eget purus.
-              </Card.Text>
-            </Card.Body>
-          </Card>
-
-          <Card border="primary" style={{ width: "18rem" }}>
-            <Card.Body>
-              <Card.Title>Data Name</Card.Title>
-              <Card.Text>
-                Some descriptiongs of Data. Lorem ipsum dolor sit amet,
-                consectetur adipiscing elit. Nam auctor tellus ut dolor congue,
-                in facilisis leo rhoncus. Nunc metus nunc, hendrerit a orci et,
-                porttitor aliquet diam. Nunc magna massa, pulvinar id facilisis
-                ultricies, ultricies eget purus.
-              </Card.Text>
-            </Card.Body>
-          </Card>
-        </CardDeck>
+      <div>
+        <Row className="align-items-center mb-3 mt-3">
+          <Col className="ml-2">
+            <SearchBar />
+          </Col>
+          <Col>
+            <Button variant="outline-primary">Filter</Button>
+            <Button variant="outline-primary" className="ml-4">
+              Sort
+            </Button>
+          </Col>
+        </Row>
+        <div className="ml-2 mr-2">
+          <SearchDisplay databaseList={databaseList} />
+        </div>
       </div>
     );
   }
