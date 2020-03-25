@@ -10,12 +10,7 @@ export default class SearchBar extends React.Component {
   handleChange = e => {
     this.setState({ value: e.target.value });
   };
-  Search() {
-    history.push({
-      pathname: "/Search",
-      search: "?query=" + this.state.value
-    });
-  }
+
   render() {
     return (
       <InputGroup>
@@ -27,7 +22,15 @@ export default class SearchBar extends React.Component {
           onChange={this.handleChange}
         />
         <InputGroup.Append>
-          <Button variant="outline-secondary" onClick={() => this.Search()}>
+          <Button
+            variant="outline-secondary"
+            onClick={() =>
+              history.push({
+                pathname: "/Search",
+                search: this.state.value
+              })
+            }
+          >
             Search
           </Button>
         </InputGroup.Append>

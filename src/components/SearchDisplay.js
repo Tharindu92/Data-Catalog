@@ -1,12 +1,7 @@
 import React from "react";
 import "../index.css";
-import InputGroup from "react-bootstrap/InputGroup";
-import FormControl from "react-bootstrap/FormControl";
-import Button from "react-bootstrap/Button";
-import CardColumns from "react-bootstrap/CardColumns";
+import CardDeck from "react-bootstrap/CardDeck";
 import DatabaseCard from "./DatabaseCard";
-
-import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import DrawerContent from "./DrawerContent";
 
@@ -37,17 +32,24 @@ export default function SearchDisplay({ databaseList }) {
   );
   return (
     <div>
-      <CardColumns>
+      <CardDeck
+        style={{
+          display: "flex",
+          flexDirection: "col",
+          justifyContent: "left"
+        }}
+      >
         {databaseList.map(database => (
           <a onClick={toggleDrawer(true, database)}>
-            <DatabaseCard database={database} />
+            <DatabaseCard key={database.id} database={database} />
           </a>
         ))}
-      </CardColumns>
+      </CardDeck>
+
       <Drawer
         anchor="right"
         open={state["right"]}
-        onClose={toggleDrawer(false, {})}
+        onClose={toggleDrawer(false, { tags: [] })}
       >
         {list()}
       </Drawer>

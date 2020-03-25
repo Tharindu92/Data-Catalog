@@ -6,18 +6,9 @@ import Routes from "./Routes";
 
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-// import { SearchBar } from "./components/SearchBar";
-// import { Categories } from "./components/Categories";
-// import NavBar from "./NavBar";
 
 function App() {
   return (
-    // <div>
-    //   <NavBar />
-    //   <Welcome name="Jay" />
-    //   <SearchBar />
-    //   <Categories />
-    // </div>
     <Router>
       <div className="App">
         <NavBar />

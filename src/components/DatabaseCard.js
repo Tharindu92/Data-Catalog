@@ -1,22 +1,31 @@
 import React from "react";
-
-import InputGroup from "react-bootstrap/InputGroup";
-import FormControl from "react-bootstrap/FormControl";
-import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+import Tags from "./Tags";
 
 export default function DatabaseCard({ database }) {
   return (
-    <Card border="primary" style={{ width: "100%" }}>
+    <Card
+      border="primary"
+      className="mt-2"
+      style={{ width: "14em", height: "15em" }}
+    >
       <Card.Body>
         <Card.Title>{database.name}</Card.Title>
-        <Card.Text>
-          Some descriptiongs of Data. Lorem ipsum dolor sit amet, consectetur
-          adipiscing elit. Nam auctor tellus ut dolor congue, in facilisis leo
-          rhoncus. Nunc metus nunc, hendrerit a orci et, porttitor aliquet diam.
-          Nunc magna massa, pulvinar id facilisis ultricies, ultricies eget
-          purus.
+        <Card.Text style={{ fontSize: 11 }}>
+          {database.description}. Lorem ipsum dolor sit amet, consectetur
+          adipiscing elit.
         </Card.Text>
+      </Card.Body>
+      <Card.Body>
+        <Tags tags={database.tags} />
+        <Card.Link className="float-right" href="#">
+          Download
+        </Card.Link>
+        <br />
+        {/* <span className="float-left">Rating: </span> */}
+        <p className="float-right" style={{ fontSize: 10 }}>
+          Last updated {database.last_updated}
+        </p>
       </Card.Body>
     </Card>
   );
