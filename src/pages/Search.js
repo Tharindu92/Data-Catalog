@@ -56,19 +56,20 @@ const options = {
 };
 export default class extends React.Component {
   state = {
-    databaseList: [
-      {
-        name: "Database 1",
-        description:
-          "Some descriptiongs of Data. Lorem ipsum dolor sit amet, consectetur adipiscing elit.Nam auctor tellus ut dolor congue"
-      }
-    ],
+    databaseList: [],
     loading: true,
     error: false
   };
   componentDidMount() {
+    const query = this.props.location.search.replace("?", "");
+    var search_string =
+      "http://localhost:8080/api/v2/datacatalog/_table/databases";
+    if (query) {
+      search_string += "?filter=name%20like%20" + query;
+    }
+    console.log(search_string);
     axios
-      .get("http://localhost:8080/api/v2/datacatalog/_table/databases", options)
+      .get(search_string, options)
       .then(response => {
         var data = response.data.resource;
         this.setState({ databaseList: data, loading: false });
@@ -81,6 +82,7 @@ export default class extends React.Component {
   }
   render() {
     const query = this.props.location.search;
+
     if (this.state.loading) {
       return (
         <div>
@@ -96,21 +98,84 @@ export default class extends React.Component {
         </div>
       );
     }
+    if (this.state.databaseList.length < 1) {
+      return (
+        <div>
+          <Row className="align-items-center mb-3 mt-3 ">
+            <Col className="ml-2">
+              <SearchBar />
+            </Col>
+            <Col>
+              <Button
+                variant="outline-primary"
+                style={{
+                  borderColor: "#264c8c",
+                  color: "#264c8c",
+                  borderRadius: 5
+                }}
+              >
+                Filter
+              </Button>
+              <Button
+                variant="outline-primary"
+                className="ml-4"
+                style={{
+                  borderColor: "#264c8c",
+                  color: "#264c8c",
+                  borderRadius: 5
+                }}
+              >
+                Sort
+              </Button>
+            </Col>
+          </Row>
+          <div style={{ backgroundColor: "#f2f2f2" }}>
+            <div className="ml-2 mr-2 mt-2">
+              <p
+                className="textColor"
+                style={{ display: "flex", justifyContent: "center" }}
+              >
+                No Results Found
+              </p>
+            </div>
+          </div>
+        </div>
+      );
+    }
     return (
       <div>
-        <Row className="align-items-center mb-3 mt-3">
+        <Row className="align-items-center mb-3 mt-3 ">
           <Col className="ml-2">
             <SearchBar />
           </Col>
           <Col>
-            <Button variant="outline-primary">Filter</Button>
-            <Button variant="outline-primary" className="ml-4">
+            <Button
+              variant="outline-primary"
+              style={{
+                borderColor: "#264c8c",
+                color: "#264c8c",
+                borderRadius: 5
+              }}
+            >
+              Filter
+            </Button>
+            <Button
+              variant="outline-primary"
+              className="ml-4"
+              style={{
+                borderColor: "#264c8c",
+                color: "#264c8c",
+                borderRadius: 5
+              }}
+            >
               Sort
             </Button>
           </Col>
         </Row>
-        <div className="ml-2 mr-2">
-          <SearchDisplay databaseList={this.state.databaseList} />
+        <div style={{ backgroundColor: "#f2f2f2" }}>
+          <div className="ml-2 mr-2 mt-2">
+            <SearchDisplay databaseList={this.state.databaseList} />
+          </div>
         </div>
       </div>
     );

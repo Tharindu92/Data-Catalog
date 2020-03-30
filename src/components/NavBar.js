@@ -3,11 +3,11 @@ import "./NavBarCss.css";
 import { Navbar, Nav } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import "../globalcss.css";
 const Navigation = props => {
   console.log(props);
   return (
-    <Navbar bg="primary" variant="dark">
+    <Navbar className="bgColor" variant="dark">
       <Navbar.Brand href="#home">JTC</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">

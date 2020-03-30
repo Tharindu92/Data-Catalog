@@ -1,7 +1,12 @@
 import React from "react";
-import { InputGroup, FormControl, Button } from "react-bootstrap";
+import Paper from "@material-ui/core/Paper";
+import InputBase from "@material-ui/core/InputBase";
+import IconButton from "@material-ui/core/IconButton";
+import SearchIcon from "@material-ui/icons/Search";
 import history from "../history";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "../globalcss.css";
+
 export default class SearchBar extends React.Component {
   constructor() {
     super();
@@ -13,28 +18,39 @@ export default class SearchBar extends React.Component {
 
   render() {
     return (
-      <InputGroup>
-        <FormControl
-          placeholder="Enter Keyword"
-          aria-label="Enter Keyword"
-          aria-describedby="basic-addon2"
-          value={this.state.value}
+      <Paper
+        component="form"
+        style={{
+          padding: "2px 4px",
+          display: "flex",
+          alignitems: "center",
+          borderRadius: 50,
+          border: "1px solid #264c8c"
+        }}
+      >
+        <InputBase
+          placeholder="Search JTC's internal data"
+          inputProps={{
+            "aria-label": "Search JTC's internal data"
+          }}
+          className="ml-4"
+          style={{ flex: 1 }}
           onChange={this.handleChange}
         />
-        <InputGroup.Append>
-          <Button
-            variant="outline-secondary"
-            onClick={() =>
-              history.push({
-                pathname: "/Search",
-                search: this.state.value
-              })
-            }
-          >
-            Search
-          </Button>
-        </InputGroup.Append>
-      </InputGroup>
+        <IconButton
+          type="submit"
+          aria-label="search"
+          style={{ padding: 10 }}
+          onClick={() =>
+            history.push({
+              pathname: "/Search",
+              search: this.state.value
+            })
+          }
+        >
+          <SearchIcon />
+        </IconButton>
+      </Paper>
     );
   }
 }

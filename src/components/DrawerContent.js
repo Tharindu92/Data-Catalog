@@ -80,15 +80,16 @@ export default function DrawerContent({ database }) {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-          <h3>Name:</h3>
+          <h3 className="textColor">Name:</h3>
           <label>{database.name}</label>
-          <h3>Description:</h3>
+          <h3 className="textColor">Description:</h3>
           <p>{database.description}</p>
-          <h3>Tags:</h3>
+          <h3 className="textColor">Tags:</h3>
           <Tags tags={database.tags} />
-          <h3>Rating:</h3>
-
-          <h3>Connection Info</h3>
+          <br />
+          <h3 className="textColor">Rating:</h3>
+          <br />
+          <h3 className="textColor">Connection Info</h3>
           <label>Data Source: {database.data_source}</label>
           <br />
           <label>Database Name: {database.database_name}</label>

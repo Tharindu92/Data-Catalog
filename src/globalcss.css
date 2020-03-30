@@ -1,0 +1,22 @@
+.textColor {
+  color: #264c8c;
+}
+
+.bgColor {
+  background-color: #264c8c;
+  color: white;
+}
+
+.borderColor {
+  border-color: #264c8c;
+}
+
+.categories {
+  border: 2px solid;
+  color: #264c8c;
+  width: 400;
+  height: 400;
+}
+.categories:on-hover {
+  background-color: #264c8c;
+}
