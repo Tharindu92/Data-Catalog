@@ -2,6 +2,8 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Chip from "@material-ui/core/Chip";
 import "../globalcss.css";
+
+//style for the tag chips
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex",
@@ -12,7 +14,8 @@ const useStyles = makeStyles(theme => ({
     }
   }
 }));
-
+//Tags display for databases, takes in array of tags and display each tag as pill shape(chips)
+// sample input, ['tag 1', 'tag 2',...]
 export default function Tags({ tags }) {
   const classes = useStyles();
   const handleClick = () => {

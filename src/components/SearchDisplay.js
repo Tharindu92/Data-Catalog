@@ -5,6 +5,8 @@ import DatabaseCard from "./DatabaseCard";
 import Drawer from "@material-ui/core/Drawer";
 import DrawerContent from "./DrawerContent";
 
+//Display search results, takes in array of database dict and out put as individual cards
+//sample input, [{'name':'db1,'description:'sample text',...},{'name':'db2,'description:'sample text',...}]
 export default function SearchDisplay({ databaseList }) {
   const [state, setState] = React.useState({
     right: false
@@ -14,6 +16,7 @@ export default function SearchDisplay({ databaseList }) {
     description: "test description"
   });
 
+  // toggle function for the right drawer to slide out when individual database card is clicked.
   const toggleDrawer = (open, database) => event => {
     if (
       event.type === "keydown" &&
@@ -39,13 +42,18 @@ export default function SearchDisplay({ databaseList }) {
           justifyContent: "left"
         }}
       >
+        {/* for each database dict, input into database card component, and display the information on cards */}
         {databaseList.map(database => (
-          <a onClick={toggleDrawer(true, database)}>
-            <DatabaseCard key={database.id} database={database} />
-          </a>
+          <div>
+            <DatabaseCard
+              key={database.id}
+              database={database}
+              function={toggleDrawer(true, database)}
+            />
+          </div>
         ))}
       </CardDeck>
-
+      {/* takes in single database dict to display infromation*/}
       <Drawer
         anchor="right"
         open={state["right"]}

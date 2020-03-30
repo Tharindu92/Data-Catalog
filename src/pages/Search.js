@@ -4,49 +4,7 @@ import SearchBar from "../components/SearchBar";
 import { Row, Col, Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
-// var databaseList = [
-// {
-//   name: "Database 1",
-//   description:
-//     "Some descriptiongs of Data. Lorem ipsum dolor sit amet, consectetur adipiscing elit.Nam auctor tellus ut dolor congue"
-// },
-//   {
-//     name: "Database 2",
-//     description:
-//       "Some descriptiongs of Data. Lorem ipsum dolor sit amet, consecteturadipiscing elit.Nam auctor tellus ut dolor congue"
-//   },
-//   {
-//     name: "Database 3",
-//     description:
-//       "Some descriptiongs of Data. Lorem ipsum dolor sit amet, consecteturadipiscing elit.Nam auctor tellus ut dolor congue"
-//   },
-//   {
-//     name: "Database 4",
-//     description:
-//       "Some descriptiongs of Data. Lorem ipsum dolor sit amet, consecteturadipiscing elit.Nam auctor tellus ut dolor congue"
-//   },
-//   {
-//     name: "Database 5",
-//     description:
-//       "Some descriptiongs of Data. Lorem ipsum dolor sit amet, consecteturadipiscing elit.Nam auctor tellus ut dolor congue"
-//   },
-//   {
-//     name: "Database 6",
-//     description:
-//       "Some descriptiongs of Data. Lorem ipsum dolor sit amet, consecteturadipiscing elit.Nam auctor tellus ut dolor congue"
-//   },
-//   {
-//     name: "Database 7",
-//     description:
-//       "Some descriptiongs of Data. Lorem ipsum dolor sit amet, consecteturadipiscing elit.Nam auctor tellus ut dolor congue"
-//   },
-//   {
-//     name: "Database 8",
-//     description:
-//       "Some descriptiongs of Data. Lorem ipsum dolor sit amet, consecteturadipiscing elit.Nam auctor tellus ut dolor congue"
-//   }
-// ];
-
+// headers for api call
 const options = {
   headers: {
     "Content-Type": "application/json",
@@ -54,12 +12,15 @@ const options = {
       "ff36aa23e74ec3839f246d4b06e08e1243b2dda56935885c3dd3c2e8b5731e39"
   }
 };
+
 export default class extends React.Component {
   state = {
     databaseList: [],
     loading: true,
     error: false
   };
+  //When page loads, call api to get an array of database dict that matches the entered keyword
+  //sample input, [{'name':'db1,'description:'sample text',...},{'name':'db2,'description:'sample text',...}]
   componentDidMount() {
     const query = this.props.location.search.replace("?", "");
     var search_string =
@@ -68,12 +29,13 @@ export default class extends React.Component {
       search_string += "?filter=name%20like%20" + query;
     }
     console.log(search_string);
+
+    //Axios API call
     axios
       .get(search_string, options)
       .then(response => {
         var data = response.data.resource;
         this.setState({ databaseList: data, loading: false });
-        // console.log(response.data.resource);
       })
       .catch(error => {
         this.setState({ error: true });
@@ -84,6 +46,7 @@ export default class extends React.Component {
     const query = this.props.location.search;
 
     if (this.state.loading) {
+      // Loading
       return (
         <div>
           <p> Loading... </p>
@@ -99,6 +62,7 @@ export default class extends React.Component {
       );
     }
     if (this.state.databaseList.length < 1) {
+      // if no matching results returned.
       return (
         <div>
           <Row className="align-items-center mb-3 mt-3 ">

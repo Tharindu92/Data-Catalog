@@ -1,7 +1,10 @@
 import React from "react";
 import SearchBar from "../components/SearchBar";
 import { Row, Col } from "react-bootstrap";
-
+import ApartmentIcon from "@material-ui/icons/Apartment";
+import ReceiptIcon from "@material-ui/icons/Receipt";
+import StorageIcon from "@material-ui/icons/Storage";
+import LandscapeIcon from "@material-ui/icons/Landscape";
 export default class extends React.Component {
   constructor() {
     super();
@@ -14,6 +17,7 @@ export default class extends React.Component {
   render() {
     return (
       <div className="align-items-center">
+        {/* Search bar  */}
         <Row
           className="align-items-center mt-4 pt-4"
           style={{
@@ -23,15 +27,27 @@ export default class extends React.Component {
           }}
         >
           <Col id="Search bar" xs={8}>
-            <h3
+            <h2
               className="textColor mb-4"
               style={{ display: "flex", justifyContent: "center" }}
             >
               JTC Data Catalog
-            </h3>
+            </h2>
             <SearchBar />
           </Col>
         </Row>
+
+        {/* Topics  */}
+        <h3
+          className="mt-4 textColor"
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center"
+          }}
+        >
+          Topics
+        </h3>
         <Row className="pt-4 mt-4">
           <Col
             style={{
@@ -48,6 +64,8 @@ export default class extends React.Component {
                 borderRadius: 5
               }}
             >
+              <ReceiptIcon />
+              <br />
               Transaction
             </button>
             <button
@@ -58,6 +76,8 @@ export default class extends React.Component {
                 borderRadius: 5
               }}
             >
+              <ApartmentIcon />
+              <br />
               Building
             </button>
             <button
@@ -68,6 +88,8 @@ export default class extends React.Component {
                 borderRadius: 5
               }}
             >
+              <StorageIcon />
+              <br />
               System
             </button>
             <button
@@ -78,6 +100,8 @@ export default class extends React.Component {
                 borderRadius: 5
               }}
             >
+              <LandscapeIcon />
+              <br />
               Land
             </button>
           </Col>

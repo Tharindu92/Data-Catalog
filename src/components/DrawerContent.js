@@ -45,6 +45,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+//Right Drawer content, input database dict to display data table information
+//sample input, {name:'db name',description:'sample text'....}
 export default function DrawerContent({ database }) {
   const classes = useStyles();
   const theme = useTheme();
@@ -69,6 +71,7 @@ export default function DrawerContent({ database }) {
           variant="fullWidth"
           aria-label="full width tabs example"
         >
+          {/* tab headers */}
           <Tab label="Properties" {...a11yProps(0)} />
           <Tab label="Preview" {...a11yProps(1)} />
           <Tab label="Columns" {...a11yProps(2)} />
@@ -79,6 +82,7 @@ export default function DrawerContent({ database }) {
         index={value}
         onChangeIndex={handleChangeIndex}
       >
+        {/* content in Properties tab */}
         <TabPanel value={value} index={0} dir={theme.direction}>
           <h3 className="textColor">Name:</h3>
           <label>{database.name}</label>
@@ -98,9 +102,11 @@ export default function DrawerContent({ database }) {
           <br />
           <label>Last Updated By: {database.last_updated_by}</label>
         </TabPanel>
+        {/* content in Preview tab */}
         <TabPanel value={value} index={1} dir={theme.direction}>
           Preview
         </TabPanel>
+        {/* content in Columns tab */}
         <TabPanel value={value} index={2} dir={theme.direction}>
           Columns
         </TabPanel>
