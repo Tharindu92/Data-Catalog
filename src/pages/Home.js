@@ -5,6 +5,8 @@ import ApartmentIcon from "@material-ui/icons/Apartment";
 import ReceiptIcon from "@material-ui/icons/Receipt";
 import StorageIcon from "@material-ui/icons/Storage";
 import LandscapeIcon from "@material-ui/icons/Landscape";
+import history from "../history";
+
 export default class extends React.Component {
   constructor() {
     super();
@@ -19,7 +21,7 @@ export default class extends React.Component {
       <div className="align-items-center">
         {/* Search bar  */}
         <Row
-          className="align-items-center mt-4 pt-4"
+          className="align-items-center mt-4 pt-4  "
           style={{
             display: "flex",
             justifyContent: "center",
@@ -57,12 +59,18 @@ export default class extends React.Component {
             }}
           >
             <button
-              className="categories mr-2"
+              className="categories mr-2 mobile-only"
               style={{
                 borderColor: "#264c8c",
                 color: "#264c8c",
                 borderRadius: 5
               }}
+              onClick={() =>
+                history.push({
+                  pathname: "/Search",
+                  search: "Transaction"
+                })
+              }
             >
               <ReceiptIcon />
               <br />
@@ -75,6 +83,12 @@ export default class extends React.Component {
                 color: "#264c8c",
                 borderRadius: 5
               }}
+              onClick={() =>
+                history.push({
+                  pathname: "/Search",
+                  search: "Building"
+                })
+              }
             >
               <ApartmentIcon />
               <br />
@@ -87,6 +101,12 @@ export default class extends React.Component {
                 color: "#264c8c",
                 borderRadius: 5
               }}
+              onClick={() =>
+                history.push({
+                  pathname: "/Search",
+                  search: "System"
+                })
+              }
             >
               <StorageIcon />
               <br />
@@ -99,6 +119,12 @@ export default class extends React.Component {
                 color: "#264c8c",
                 borderRadius: 5
               }}
+              onClick={() =>
+                history.push({
+                  pathname: "/Search",
+                  search: "Land"
+                })
+              }
             >
               <LandscapeIcon />
               <br />

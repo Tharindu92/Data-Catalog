@@ -20,3 +20,9 @@
 .categories:on-hover {
   background-color: #264c8c;
 }
+
+.mobile-only {
+  @media (min-width: 768px) {
+    display: none;
+  }
+}
