@@ -9,15 +9,15 @@ import DrawerContent from "./DrawerContent";
 //sample input, [{'name':'db1,'description:'sample text',...},{'name':'db2,'description:'sample text',...}]
 export default function SearchDisplay({ databaseList }) {
   const [state, setState] = React.useState({
-    right: false
+    right: false,
   });
   const [selectedDatabase, setDatabase] = React.useState({
     name: "test",
-    description: "test description"
+    description: "test description",
   });
 
   // toggle function for the right drawer to slide out when individual database card is clicked.
-  const toggleDrawer = (open, database) => event => {
+  const toggleDrawer = (open, database) => (event) => {
     if (
       event.type === "keydown" &&
       (event.key === "Tab" || event.key === "Shift")
@@ -39,14 +39,13 @@ export default function SearchDisplay({ databaseList }) {
         style={{
           display: "flex",
           flexDirection: "col",
-          justifyContent: "left"
+          justifyContent: "left",
         }}
       >
         {/* for each database dict, input into database card component, and display the information on cards */}
-        {databaseList.map(database => (
-          <div>
+        {databaseList.map((database, id) => (
+          <div key={id}>
             <DatabaseCard
-              key={database.id}
               database={database}
               function={toggleDrawer(true, database)}
             />

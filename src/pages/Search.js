@@ -15,14 +15,28 @@ const sort_options = [
   "Name Ascending",
   "Name Descending",
 ];
-const filter_options = [
-  "Transaction",
-  "Building",
-  "System",
-  "Land",
-  "2019",
-  "JMAP",
-];
+const filter_options = {
+  transaction: false,
+  building: false,
+  System: false,
+  Land: false,
+  2019: false,
+  JMAP: false,
+};
+// const filter_options = [
+//   { option: "Transaction", click: false },
+//   { option: "Building", click: false },
+//   { option: "System", click: false },
+//   { option: "Land", click: false },
+//   { option: "2019", click: false },
+//   { option: "JMAP", click: false },
+//   // "Transaction",
+//   // "Building",
+//   // "System",
+//   // "Land",
+//   // "2019",
+//   // "JMAP",
+// ];
 
 // headers for api call
 const options = {
@@ -33,28 +47,6 @@ const options = {
   },
 };
 
-// const sortClick = (sortby) => {
-//   if (sortby > 3) {
-//     this.state.databaseList.sort(function (first, second) {
-//       return second["name"] - first["name"];
-//     });
-//   } else if (sortby > 2) {
-//     this.state.databaseList.sort(function (first, second) {
-//       return second["name"] - first["name"];
-//     });
-//   } else if (sortby > 1) {
-//     this.state.databaseList.sort(function (first, second) {
-//       return second["name"] - first["name"];
-//     });
-//   } else {
-//     this.state.databaseList.sort(function (first, second) {
-//       return second["name"] - first["name"];
-//     });
-//   }
-
-//   console.info("You clicked the Chip.");
-// };
-
 export default class extends React.Component {
   constructor(props) {
     super(props);
@@ -62,11 +54,26 @@ export default class extends React.Component {
       databaseList: [],
       loading: true,
       error: false,
+      filter: {},
     };
+
     this.sortByNameAsc = this.sortByNameAsc.bind(this);
     this.sortByNameDesc = this.sortByNameDesc.bind(this);
     this.sortByDateAsc = this.sortByDateAsc.bind(this);
     this.sortByDateDesc = this.sortByDateDesc.bind(this);
+    this.handleFilterChange = this.handleFilterChange.bind(this);
+    // let filters = filter_options;
+    // this.setState({
+    //   ...this.state, databaseList: {
+    //   let
+    // }})
+  }
+
+  reducer(state, { field, value, type }) {
+    return {
+      ...state,
+      [field]: value,
+    };
   }
 
   sortByNameAsc() {
@@ -96,6 +103,18 @@ export default class extends React.Component {
     );
     this.setState({ ...this.state, databaseList: sorted });
   }
+  handleFilterChange(e) {
+    let { id, checked } = e.target;
+    console.info(this.state);
+    this.setState({
+      ...this.state,
+      filter: this.reducer(this.state.filter, {
+        field: id,
+        value: checked,
+        type: "filter",
+      }),
+    });
+  }
 
   //When page loads, call api to get an array of database dict that matches the entered keyword
   //sample input, [{'name':'db1,'description:'sample text',...},{'name':'db2,'description:'sample text',...}]
@@ -119,6 +138,9 @@ export default class extends React.Component {
         this.setState({ error: true });
         console.log(error);
       });
+
+    //Set all filters being passed over into the state
+    this.setState({ ...this.state, filter: filter_options });
   }
 
   render() {
@@ -296,7 +318,13 @@ export default class extends React.Component {
                 />
 
                 <h4 className="textColor ml-2 mt-4">Filter By:</h4>
-                <FilterTags tags={filter_options} />
+                <FilterTags
+                  tags={this.state.filter}
+                  handleClick={this.handleFilterChange}
+                />
+                <button value="asd" id="test" onClick={this.handleFilterChange}>
+                  test
+                </button>
               </div>
             </Col>
           </Hidden>

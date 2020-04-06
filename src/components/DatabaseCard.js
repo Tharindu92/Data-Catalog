@@ -11,6 +11,7 @@ export default class extends React.Component {
     return (
       <Card
         // border="primary"
+
         className="mb-1 mt-2 borderColor"
         style={{ width: "14em", height: "15em" }}
       >
@@ -36,7 +37,7 @@ export default class extends React.Component {
           onClick={this.props.function}
           style={{
             backgroundColor: "#fff",
-            border: 0
+            border: 0,
           }}
         >
           <span className="float-left textColor" style={{ fontSize: 10 }}>
