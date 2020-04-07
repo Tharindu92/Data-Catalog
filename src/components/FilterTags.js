@@ -13,11 +13,6 @@ const useStyles = makeStyles((theme) => ({
     "& > *": {
       margin: theme.spacing(0.5),
     },
-    selectedStyle: {
-      backgroundColor: "#4b6674",
-      color: "#ffffff",
-      transition: "background-color 0.5s, color 0.5s",
-    },
   },
 }));
 
@@ -28,16 +23,23 @@ export default function FilterTags({ tags, handleClick }) {
   // const handleClick = () => {
   //   console.info("You clicked the Chip.");
   // };
+  const selectedStyle = {
+    // backgroundColor: "#4b6674",
+    // color: "#cccccc",
+    transition: "background-color 0.5s, color 0.5s",
+    border: "2px solid #46674",
+  };
   return (
     <div className={classes.root}>
       {Object.entries(tags).map(([key, value], id) => (
         <Form.Check
+          custom
           key={id}
           id={key}
           checked={value}
           label={key}
           onChange={handleClick}
-          style={value ? classes.root.selectedStyle : {}}
+          style={value ? selectedStyle : {}}
         />
       ))}
       {/* {tags.map((tag, id) => (

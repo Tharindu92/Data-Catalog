@@ -23,6 +23,9 @@ const filter_options = {
   2019: false,
   JMAP: false,
 };
+
+const test1 = ["transaction", "customer", "gef"];
+const test2 = ["abc", "ttt", "ggg"];
 // const filter_options = [
 //   { option: "Transaction", click: false },
 //   { option: "Building", click: false },
@@ -52,9 +55,11 @@ export default class extends React.Component {
     super(props);
     this.state = {
       databaseList: [],
+      searchResult: [],
       loading: true,
       error: false,
       filter: {},
+      filter_selection: [],
     };
 
     this.sortByNameAsc = this.sortByNameAsc.bind(this);
@@ -68,14 +73,14 @@ export default class extends React.Component {
     //   let
     // }})
   }
-
-  reducer(state, { field, value, type }) {
+  //update filter checkbox value
+  reducer(state, { field, value }) {
     return {
       ...state,
       [field]: value,
     };
   }
-
+  //Sorting
   sortByNameAsc() {
     const sorted = this.state.databaseList.sort((a, b) =>
       b.name.localeCompare(a.name)
@@ -103,7 +108,17 @@ export default class extends React.Component {
     );
     this.setState({ ...this.state, databaseList: sorted });
   }
+  updateFilter() {
+    const filtered = this.state.databaseList.filter(
+      (database) =>
+        database.tags.filter((value) => test1.includes(value)).length > 0
+    );
+    // this.setState({ ...this.state, searchResult: filtered });
+    console.log(filtered);
+  }
+  //Filtering
   handleFilterChange(e) {
+    //Update state on each filter chips
     let { id, checked } = e.target;
     console.info(this.state);
     this.setState({
@@ -114,6 +129,32 @@ export default class extends React.Component {
         type: "filter",
       }),
     });
+
+    console.log(this.state.filter);
+    // var temp = [];
+    // //Update search results
+    // for (var key in this.state.filter) {
+    //   // console.log(this.state.filter[key]);
+
+    //   if (this.state.filter[key]) {
+    //     temp.push(key);
+    //   }
+    //   console.log(temp);
+    // if (
+    //   this.state.filter[key]) {
+    //   if (!this.state.filter_selection.includes(key)) {
+    //     this.state.filter_selection.push(key);
+    //   }
+    // }
+    // else {
+    //   if (this.state.filter_selection.includes(key)) {
+    //     this.state.filter_selection.drop()
+    //   }
+
+    // }
+    // }
+    // this.updateFilter();
+    // console.log(this.state);
   }
 
   //When page loads, call api to get an array of database dict that matches the entered keyword
@@ -132,7 +173,11 @@ export default class extends React.Component {
       .get(search_string, options)
       .then((response) => {
         var data = response.data.resource;
-        this.setState({ databaseList: data, loading: false });
+        this.setState({
+          databaseList: data,
+          searchResult: data,
+          loading: false,
+        });
       })
       .catch((error) => {
         this.setState({ error: true });
@@ -322,9 +367,6 @@ export default class extends React.Component {
                   tags={this.state.filter}
                   handleClick={this.handleFilterChange}
                 />
-                <button value="asd" id="test" onClick={this.handleFilterChange}>
-                  test
-                </button>
               </div>
             </Col>
           </Hidden>
@@ -334,7 +376,7 @@ export default class extends React.Component {
             <label className="textColor ">
               {this.state.databaseList.length} Results
             </label>
-            <SearchDisplay databaseList={this.state.databaseList} />
+            <SearchDisplay databaseList={this.state.searchResult} />
           </Col>
         </Row>
       </div>
