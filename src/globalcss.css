@@ -26,3 +26,37 @@
     display: none;
   }
 }
+.filterCategories {
+  /* text-align: center; */
+  border: 2px solid#264c8c;
+  border-radius: 50px;
+  background-color: white;
+}
+
+.filterCategories:checked + label {
+  background-color: violet;
+}
+.filterCategories input[type="checkbox"] {
+  display: none;
+
+  /* position: absolute; */
+  /* left: -9999px; */
+  /* width: 0px; */
+}
+
+.filterCategories label {
+  box-shadow: none;
+  /* text-align: center; */
+
+  position: relative;
+  cursor: pointer;
+  right: 15%;
+  /* display: block;
+  position: relative; */
+
+  /* padding: 2px 2px 2px 2px; */
+}
+
+.filterCategories label:checked {
+  background-color: #ccc;
+}

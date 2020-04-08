@@ -24,8 +24,8 @@ export default function FilterTags({ tags, handleClick }) {
   //   console.info("You clicked the Chip.");
   // };
   const selectedStyle = {
-    // backgroundColor: "#4b6674",
-    // color: "#cccccc",
+    backgroundColor: "#264c8c",
+    color: "#fff",
     transition: "background-color 0.5s, color 0.5s",
     border: "2px solid #46674",
   };
@@ -33,13 +33,13 @@ export default function FilterTags({ tags, handleClick }) {
     <div className={classes.root}>
       {Object.entries(tags).map(([key, value], id) => (
         <Form.Check
-          custom
           key={id}
           id={key}
           checked={value}
           label={key}
           onChange={handleClick}
           style={value ? selectedStyle : {}}
+          className="filterCategories"
         />
       ))}
       {/* {tags.map((tag, id) => (

@@ -120,7 +120,8 @@ export default class extends React.Component {
   handleFilterChange(e) {
     //Update state on each filter chips
     let { id, checked } = e.target;
-    console.info(this.state);
+
+    console.info(checked);
     this.setState({
       ...this.state,
       filter: this.reducer(this.state.filter, {
