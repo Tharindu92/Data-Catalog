@@ -146,23 +146,35 @@ export default class extends React.Component {
           searchResult: filtered,
         });
       } else {
-        const filtered = this.state.databaseList.filter(
-          (database) =>
-            database.tags.filter(
-              (value) =>
-                this.state.filter_selection.includes(value) && value !== id
-            ).length > 0
-        );
-        const remainder = this.state.filter_selection.filter(
-          (item) => item !== id
-        );
+        if (
+          this.state.filter_selection.length < 2 &&
+          this.state.filter_selection.includes(id)
+        ) {
+          this.setState({
+            ...this.state.filter,
+            filter: filter_options,
+            filter_selection: [],
+            searchResult: this.state.databaseList,
+          });
+        } else {
+          const filtered = this.state.databaseList.filter(
+            (database) =>
+              database.tags.filter(
+                (value) =>
+                  this.state.filter_selection.includes(value) && value !== id
+              ).length > 0
+          );
+          const remainder = this.state.filter_selection.filter(
+            (item) => item !== id
+          );
 
-        this.setState({
-          ...this.state.filter,
-          filter: { ...this.state.filter, [id]: false },
-          filter_selection: remainder,
-          searchResult: filtered,
-        });
+          this.setState({
+            ...this.state.filter,
+            filter: { ...this.state.filter, [id]: false },
+            filter_selection: remainder,
+            searchResult: filtered,
+          });
+        }
       }
     }
 
