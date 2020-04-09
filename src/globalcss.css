@@ -28,8 +28,10 @@
 }
 .filterCategories {
   /* text-align: center; */
-  border: 2px solid#264c8c;
+  border: 1px solid#264c8c;
   border-radius: 50px;
+  color: #264c8c;
+  font-size: 1em;
   background-color: white;
 }
 
@@ -46,11 +48,11 @@
 
 .filterCategories label {
   box-shadow: none;
-  /* text-align: center; */
+  text-align: center;
 
   position: relative;
   cursor: pointer;
-  right: 15%;
+  right: 10px;
   /* display: block;
   position: relative; */
 

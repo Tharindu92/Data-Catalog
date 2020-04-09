@@ -16,12 +16,14 @@ const sort_options = [
   "Name Descending",
 ];
 const filter_options = {
-  transaction: false,
-  building: false,
+  All: true,
+  Transaction: false,
+  Building: false,
   System: false,
   Land: false,
   2019: false,
   JMAP: false,
+  Customer: false,
 };
 
 const test1 = ["transaction", "customer", "gef"];
@@ -120,18 +122,101 @@ export default class extends React.Component {
   handleFilterChange(e) {
     //Update state on each filter chips
     let { id, checked } = e.target;
+    if (id === "All") {
+      this.setState({
+        ...this.state.filter,
+        filter: filter_options,
+        filter_selection: [],
+        searchResult: this.state.databaseList,
+      });
+    } else {
+      if (checked) {
+        const filtered = this.state.databaseList.filter(
+          (database) =>
+            database.tags.filter(
+              (value) =>
+                this.state.filter_selection.includes(value) || value === id
+            ).length > 0
+        );
+        console.log(filtered);
+        this.setState({
+          ...this.state.filter,
+          filter: { ...this.state.filter, [id]: true, All: false },
+          filter_selection: this.state.filter_selection.concat([id]),
+          searchResult: filtered,
+        });
+      } else {
+        const filtered = this.state.databaseList.filter(
+          (database) =>
+            database.tags.filter(
+              (value) =>
+                this.state.filter_selection.includes(value) && value !== id
+            ).length > 0
+        );
+        const remainder = this.state.filter_selection.filter(
+          (item) => item !== id
+        );
 
-    console.info(checked);
-    this.setState({
-      ...this.state,
-      filter: this.reducer(this.state.filter, {
-        field: id,
-        value: checked,
-        type: "filter",
-      }),
-    });
+        this.setState({
+          ...this.state.filter,
+          filter: { ...this.state.filter, [id]: false },
+          filter_selection: remainder,
+          searchResult: filtered,
+        });
+      }
+    }
 
-    console.log(this.state.filter);
+    // console.log(this.state);
+    // if (id === "All") {
+    //   for (const key in this.state.filter) {
+    //     this.setState({
+    //       ...this.state,
+    //       filter: this.reducer(this.state.filter, {
+    //         field: key,
+    //         value: false,
+    //         type: "filter",
+    //       }),
+    //     });
+    //   }
+
+    //   this.setState({
+    //     ...this.state,
+    //     filter: this.reducer(this.state.filter, {
+    //       field: "All",
+    //       value: true,
+    //       type: "filter",
+    //     }),
+    //   });
+    // } else {
+    //   if (this.state.filter_selection.includes(id)) {
+    //     const remainder = this.state.filter_selection.filter(
+    //       (item) => item !== id
+    //     );
+    //     this.setState({ ...this.state, filter_selection: remainder });
+    //   } else {
+    //     this.state.filter_selection.push(id);
+    //   }
+    //   console.log(this.state.filter_selection);
+    //   this.setState({
+    //     ...this.state,
+    //     filter: this.reducer(this.state.filter, {
+    //       field: id,
+    //       value: checked,
+    //       type: "filter",
+    //     }),
+    //   });
+
+    // this.setState({
+    //   ...this.state,
+    //   filter: this.reducer(this.state.filter, {
+    //     field: "All",
+    //     value: false,
+    //     type: "filter",
+    //   }),
+    // });
+    // }
+
+    console.log(this.state.filter_selection);
     // var temp = [];
     // //Update search results
     // for (var key in this.state.filter) {
