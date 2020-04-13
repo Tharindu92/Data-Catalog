@@ -9,6 +9,7 @@ import SortTags from "../components/SortTags";
 import FilterTags from "../components/FilterTags";
 import Chip from "@material-ui/core/Chip";
 import { makeStyles } from "@material-ui/core/styles";
+import SearchSort from "../components/SearchSort";
 const sort_options = [
   "Date Published",
   "Rating",
@@ -25,23 +26,6 @@ const filter_options = {
   JMAP: false,
   Customer: false,
 };
-
-const test1 = ["transaction", "customer", "gef"];
-const test2 = ["abc", "ttt", "ggg"];
-// const filter_options = [
-//   { option: "Transaction", click: false },
-//   { option: "Building", click: false },
-//   { option: "System", click: false },
-//   { option: "Land", click: false },
-//   { option: "2019", click: false },
-//   { option: "JMAP", click: false },
-//   // "Transaction",
-//   // "Building",
-//   // "System",
-//   // "Land",
-//   // "2019",
-//   // "JMAP",
-// ];
 
 // headers for api call
 const options = {
@@ -62,6 +46,7 @@ export default class extends React.Component {
       error: false,
       filter: {},
       filter_selection: [],
+      sortBy: 1,
     };
 
     this.sortByNameAsc = this.sortByNameAsc.bind(this);
@@ -69,11 +54,7 @@ export default class extends React.Component {
     this.sortByDateAsc = this.sortByDateAsc.bind(this);
     this.sortByDateDesc = this.sortByDateDesc.bind(this);
     this.handleFilterChange = this.handleFilterChange.bind(this);
-    // let filters = filter_options;
-    // this.setState({
-    //   ...this.state, databaseList: {
-    //   let
-    // }})
+    this.handleSort = this.handleSort.bind(this);
   }
   //update filter checkbox value
   reducer(state, { field, value }) {
@@ -82,42 +63,49 @@ export default class extends React.Component {
       [field]: value,
     };
   }
+  handleSort(e) {
+    let value = e.target.value;
+    console.log(value);
+
+    if (value < 2) {
+      this.sortByNameAsc();
+    } else if (value < 3) {
+      this.sortByNameDesc();
+    } else if (value < 4) {
+      this.sortByDateAsc();
+    } else {
+      this.sortByDateDesc();
+    }
+  }
   //Sorting
   sortByNameAsc() {
     const sorted = this.state.databaseList.sort((a, b) =>
       b.name.localeCompare(a.name)
     );
-    this.setState({ ...this.state, databaseList: sorted });
+    this.setState({ ...this.state, databaseList: sorted, sortBy: 1 });
   }
 
   sortByNameDesc() {
     const sorted = this.state.databaseList.sort((a, b) =>
       a.name.localeCompare(b.name)
     );
-    this.setState({ ...this.state, databaseList: sorted });
+    this.setState({ ...this.state, databaseList: sorted, sortBy: 2 });
   }
 
   sortByDateAsc() {
     const sorted = this.state.databaseList.sort(
       (a, b) => new Date(a.last_updated) - new Date(b.last_updated)
     );
-    this.setState({ ...this.state, databaseList: sorted });
+    this.setState({ ...this.state, databaseList: sorted, sortBy: 3 });
   }
 
   sortByDateDesc() {
     const sorted = this.state.databaseList.sort(
       (a, b) => new Date(b.last_updated) - new Date(a.last_updated)
     );
-    this.setState({ ...this.state, databaseList: sorted });
+    this.setState({ ...this.state, databaseList: sorted, sortBy: 4 });
   }
-  updateFilter() {
-    const filtered = this.state.databaseList.filter(
-      (database) =>
-        database.tags.filter((value) => test1.includes(value)).length > 0
-    );
-    // this.setState({ ...this.state, searchResult: filtered });
-    console.log(filtered);
-  }
+
   //Filtering
   handleFilterChange(e) {
     //Update state on each filter chips
@@ -177,87 +165,10 @@ export default class extends React.Component {
         }
       }
     }
-
-    // console.log(this.state);
-    // if (id === "All") {
-    //   for (const key in this.state.filter) {
-    //     this.setState({
-    //       ...this.state,
-    //       filter: this.reducer(this.state.filter, {
-    //         field: key,
-    //         value: false,
-    //         type: "filter",
-    //       }),
-    //     });
-    //   }
-
-    //   this.setState({
-    //     ...this.state,
-    //     filter: this.reducer(this.state.filter, {
-    //       field: "All",
-    //       value: true,
-    //       type: "filter",
-    //     }),
-    //   });
-    // } else {
-    //   if (this.state.filter_selection.includes(id)) {
-    //     const remainder = this.state.filter_selection.filter(
-    //       (item) => item !== id
-    //     );
-    //     this.setState({ ...this.state, filter_selection: remainder });
-    //   } else {
-    //     this.state.filter_selection.push(id);
-    //   }
-    //   console.log(this.state.filter_selection);
-    //   this.setState({
-    //     ...this.state,
-    //     filter: this.reducer(this.state.filter, {
-    //       field: id,
-    //       value: checked,
-    //       type: "filter",
-    //     }),
-    //   });
-
-    // this.setState({
-    //   ...this.state,
-    //   filter: this.reducer(this.state.filter, {
-    //     field: "All",
-    //     value: false,
-    //     type: "filter",
-    //   }),
-    // });
-    // }
-
     console.log(this.state.filter_selection);
-    // var temp = [];
-    // //Update search results
-    // for (var key in this.state.filter) {
-    //   // console.log(this.state.filter[key]);
-
-    //   if (this.state.filter[key]) {
-    //     temp.push(key);
-    //   }
-    //   console.log(temp);
-    // if (
-    //   this.state.filter[key]) {
-    //   if (!this.state.filter_selection.includes(key)) {
-    //     this.state.filter_selection.push(key);
-    //   }
-    // }
-    // else {
-    //   if (this.state.filter_selection.includes(key)) {
-    //     this.state.filter_selection.drop()
-    //   }
-
-    // }
-    // }
-    // this.updateFilter();
-    // console.log(this.state);
   }
 
-  //When page loads, call api to get an array of database dict that matches the entered keyword
-  //sample input, [{'name':'db1,'description:'sample text',...},{'name':'db2,'description:'sample text',...}]
-  componentDidMount() {
+  getSearchResult() {
     const query = this.props.location.search.replace("?", "");
     var search_string =
       "http://localhost:8080/api/v2/datacatalog/_table/databases";
@@ -284,6 +195,11 @@ export default class extends React.Component {
 
     //Set all filters being passed over into the state
     this.setState({ ...this.state, filter: filter_options });
+  }
+  //When page loads, call api to get an array of database dict that matches the entered keyword
+  //sample input, [{'name':'db1,'description:'sample text',...},{'name':'db2,'description:'sample text',...}]
+  componentDidMount() {
+    this.getSearchResult();
   }
 
   render() {
@@ -314,7 +230,7 @@ export default class extends React.Component {
             style={{ height: "90%vh" }}
           >
             <Col className="ml-2">
-              <SearchBar />
+              <SearchBar onClick={this.getSearchResult()} />
             </Col>
             <Col>
               <Button
@@ -363,7 +279,9 @@ export default class extends React.Component {
               <SearchBar />
             </Col>
             <Col>
-              <Button
+              <SearchSort age={this.state.sortBy} onChange={this.handleSort} />
+
+              {/* <Button
                 variant="outline-primary"
                 style={{
                   borderColor: "#264c8c",
@@ -372,8 +290,8 @@ export default class extends React.Component {
                 }}
               >
                 Filter
-              </Button>
-              <Button
+              </Button> */}
+              {/* <Button
                 variant="outline-primary"
                 className="ml-4"
                 style={{
@@ -383,7 +301,7 @@ export default class extends React.Component {
                 }}
               >
                 Sort
-              </Button>
+              </Button> */}
             </Col>
           </Row>
         </Hidden>

@@ -12,8 +12,15 @@ export default class SearchBar extends React.Component {
     super();
     this.state = { value: "" };
   }
-  handleChange = e => {
+  handleChange = (e) => {
     this.setState({ value: e.target.value });
+  };
+  handleClick = (e) => {
+    e.preventDefault();
+    history.push({
+      pathname: "/Search",
+      search: this.state.value,
+    });
   };
 
   render() {
@@ -25,13 +32,13 @@ export default class SearchBar extends React.Component {
           display: "flex",
           alignitems: "center",
           borderRadius: 50,
-          border: "1px solid #264c8c"
+          border: "1px solid #264c8c",
         }}
       >
         <InputBase
           placeholder="Search JTC's internal data"
           inputProps={{
-            "aria-label": "Search JTC's internal data"
+            "aria-label": "Search JTC's internal data",
           }}
           className="ml-4"
           style={{ flex: 1 }}
@@ -41,12 +48,7 @@ export default class SearchBar extends React.Component {
           type="submit"
           aria-label="search"
           style={{ padding: 10 }}
-          onClick={() =>
-            history.push({
-              pathname: "/Search",
-              search: this.state.value
-            })
-          }
+          onClick={this.handleClick}
         >
           <SearchIcon />
         </IconButton>
