@@ -9,7 +9,8 @@ import SortTags from "../components/SortTags";
 import FilterTags from "../components/FilterTags";
 import Chip from "@material-ui/core/Chip";
 import { makeStyles } from "@material-ui/core/styles";
-import SearchSort from "../components/SearchSort";
+import SearchSortProtrait from "../components/SearchSortProtrait";
+import SearchFilterProtrait from "../components/SearchFilterProtrait";
 const sort_options = [
   "Date Published",
   "Rating",
@@ -19,11 +20,13 @@ const sort_options = [
 const filter_options = {
   All: true,
   Transaction: false,
+  Land: false,
   Building: false,
   System: false,
-  Land: false,
-  2019: false,
   JMAP: false,
+
+  Housing: false,
+
   Customer: false,
 };
 
@@ -46,7 +49,7 @@ export default class extends React.Component {
       error: false,
       filter: {},
       filter_selection: [],
-      sortBy: 1,
+      sortBy: "",
     };
 
     this.sortByNameAsc = this.sortByNameAsc.bind(this);
@@ -65,7 +68,6 @@ export default class extends React.Component {
   }
   handleSort(e) {
     let value = e.target.value;
-    console.log(value);
 
     if (value < 2) {
       this.sortByNameAsc();
@@ -110,6 +112,7 @@ export default class extends React.Component {
   handleFilterChange(e) {
     //Update state on each filter chips
     let { id, checked } = e.target;
+    console.log(e.target);
     if (id === "All") {
       this.setState({
         ...this.state.filter,
@@ -275,33 +278,21 @@ export default class extends React.Component {
         {/* Top bar when screen size <= 760 width */}
         <Hidden mdUp>
           <Row className="align-items-center mb-3 mt-3 ">
-            <Col className="ml-2">
+            <Col md={5} className="ml-2">
               <SearchBar />
             </Col>
             <Col>
-              <SearchSort age={this.state.sortBy} onChange={this.handleSort} />
-
-              {/* <Button
-                variant="outline-primary"
-                style={{
-                  borderColor: "#264c8c",
-                  color: "#264c8c",
-                  borderRadius: 5,
-                }}
-              >
-                Filter
-              </Button> */}
-              {/* <Button
-                variant="outline-primary"
-                className="ml-4"
-                style={{
-                  borderColor: "#264c8c",
-                  color: "#264c8c",
-                  borderRadius: 5,
-                }}
-              >
-                Sort
-              </Button> */}
+              <SearchSortProtrait
+                sortBy={this.state.sortBy}
+                onChange={this.handleSort}
+              />
+            </Col>
+            <Col>
+              <SearchFilterProtrait
+                filters={this.state.filter}
+                handleChange={this.handleFilterChange}
+                filterarr={this.filter_selection}
+              />
             </Col>
           </Row>
         </Hidden>
@@ -334,6 +325,7 @@ export default class extends React.Component {
                     color: "#264C8C",
                     fontSize: 9,
                     width: "45%",
+                    marginRight: 8,
                   }}
                   onClick={this.sortByNameAsc}
                   size="small"
@@ -360,6 +352,7 @@ export default class extends React.Component {
                     color: "#264C8C",
                     fontSize: 9,
                     width: "45%",
+                    marginRight: 8,
                   }}
                   onClick={this.sortByDateAsc}
                   size="small"

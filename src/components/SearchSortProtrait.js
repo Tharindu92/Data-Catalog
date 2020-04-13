@@ -13,20 +13,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SearchSort({ age, onChange }) {
+export default function SearchSort({ sortBy, onChange }) {
   const classes = useStyles();
-
-  //   const [age, setAge] = React.useState(1);
-  //   const handleChange = (event) => {
-  //     setAge(event.target.value);
-  //   };
 
   return (
     <div>
       <FormControl className={classes.formControl}>
         <InputLabel htmlFor="age-native-simple">Sort By</InputLabel>
         <Select
-          value={age}
+          value={sortBy}
           onChange={onChange}
           inputProps={{
             name: "Sort By",
