@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 
 //Tags display for databases, takes in array of tags and display each tag as pill shape(chips)
 // sample input, ['tag 1', 'tag 2',...]
-export default function FilterTags({ tags, handleClick }) {
+export default function FilterTags({ tags, handleClick, selectedFilters }) {
   const classes = useStyles();
   // const handleClick = () => {
   //   console.info("You clicked the Chip.");
@@ -31,14 +31,14 @@ export default function FilterTags({ tags, handleClick }) {
   };
   return (
     <div className={classes.root}>
-      {Object.entries(tags).map(([key, value], id) => (
+      {tags.map((value) => (
         <Form.Check
-          key={id}
-          id={key}
-          checked={value}
-          label={key}
+          key={value}
+          id={value}
+          checked={selectedFilters.indexOf(value) > -1}
+          label={value}
           onChange={handleClick}
-          style={value ? selectedStyle : {}}
+          style={selectedFilters.indexOf(value) > -1 ? selectedStyle : {}}
           className="filterCategories"
         />
       ))}

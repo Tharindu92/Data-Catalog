@@ -8,6 +8,12 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Select from "@material-ui/core/Select";
 import Checkbox from "@material-ui/core/Checkbox";
 
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+// import ListItemText from '@material-ui/core/ListItemText';
+// import Checkbox from '@material-ui/core/Checkbox';
+
 const useStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
@@ -19,17 +25,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SearchFilterProtrait({
+export default function SearchFilterPortrait({
   filters,
   handleChange,
-  filterarr,
+  selectedFilters,
 }) {
   const classes = useStyles();
 
-  var selected_filters = [];
-  Object.entries(filters).map(([key, value]) =>
-    value === true ? selected_filters.push(key) : "nothing"
-  );
   return (
     <div>
       <FormControl className={classes.formControl}>
@@ -37,17 +39,26 @@ export default function SearchFilterProtrait({
         <Select
           id="filterProtrait"
           multiple
-          value={selected_filters}
+          value={selectedFilters}
           onChange={handleChange}
           input={<Input />}
           renderValue={(selected) => selected.join(", ")}
         >
-          {Object.entries(filters).map(([key, value]) => (
+          {filters.map((name) => (
+            <MenuItem key={name} value={name}>
+              <Checkbox
+                checked={selectedFilters.indexOf(name) > -1}
+                color="primary"
+              />
+              <ListItemText primary={name} />
+            </MenuItem>
+          ))}
+          {/* {Object.entries(filters).map(([key, value]) => (
             <MenuItem key={key} value={key} id={key}>
               <Checkbox checked={value} color="primary" />
               <ListItemText primary={key} />
             </MenuItem>
-          ))}
+          ))} */}
         </Select>
       </FormControl>
     </div>

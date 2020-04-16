@@ -9,8 +9,8 @@ import SortTags from "../components/SortTags";
 import FilterTags from "../components/FilterTags";
 import Chip from "@material-ui/core/Chip";
 import { makeStyles } from "@material-ui/core/styles";
-import SearchSortProtrait from "../components/SearchSortProtrait";
-import SearchFilterProtrait from "../components/SearchFilterProtrait";
+import SearchSortPortrait from "../components/SearchSortPortrait";
+import SearchFilterPortrait from "../components/SearchFilterPortrait";
 const sort_options = [
   "Date Published",
   "Rating",
@@ -30,6 +30,17 @@ const filter_options = {
   Customer: false,
 };
 
+const all_filters = [
+  "All",
+  "Transaction",
+  "Land",
+  "Building",
+  "System",
+  "JMAP",
+  "Housing",
+  "Customer",
+];
+
 // headers for api call
 const options = {
   headers: {
@@ -48,7 +59,7 @@ export default class extends React.Component {
       loading: true,
       error: false,
       filter: {},
-      filter_selection: [],
+      filter_selection: ["All"],
       sortBy: "",
     };
 
@@ -111,64 +122,97 @@ export default class extends React.Component {
   //Filtering
   handleFilterChange(e) {
     //Update state on each filter chips
-    let { id, checked } = e.target;
-    console.log(e.target);
-    if (id === "All") {
-      this.setState({
-        ...this.state.filter,
-        filter: filter_options,
-        filter_selection: [],
-        searchResult: this.state.databaseList,
-      });
-    } else {
-      if (checked) {
-        const filtered = this.state.databaseList.filter(
-          (database) =>
-            database.tags.filter(
-              (value) =>
-                this.state.filter_selection.includes(value) || value === id
-            ).length > 0
-        );
-        console.log(filtered);
+
+    let { id, checked, value } = e.target;
+    //Check if its portrait mode
+    if (value !== "on") {
+      //Portrait mode filtering
+      if (
+        !this.state.filter_selection.includes("All") &&
+        value.includes("All")
+      ) {
         this.setState({
           ...this.state.filter,
-          filter: { ...this.state.filter, [id]: true, All: false },
-          filter_selection: this.state.filter_selection.concat([id]),
+          filter_selection: ["All"],
+          searchResult: this.state.databaseList,
+        });
+        value = ["All"];
+      } else {
+        if (value.includes("All")) {
+          value = value.filter((x) => x !== "All");
+        }
+
+        const filtered = this.state.databaseList.filter(
+          (database) =>
+            database.tags.filter((item) => value.includes(item)).length > 0
+        );
+
+        this.setState({
+          ...this.state.filter,
+          filter_selection: value,
           searchResult: filtered,
         });
+      }
+      this.setState({
+        ...this.state.filter,
+        filter_selection: value,
+      });
+    } else {
+      //Landscape mode filtering
+      if (id === "All") {
+        this.setState({
+          ...this.state.filter,
+          filter: filter_options,
+          filter_selection: ["All"],
+          searchResult: this.state.databaseList,
+        });
       } else {
-        if (
-          this.state.filter_selection.length < 2 &&
-          this.state.filter_selection.includes(id)
-        ) {
-          this.setState({
-            ...this.state.filter,
-            filter: filter_options,
-            filter_selection: [],
-            searchResult: this.state.databaseList,
-          });
-        } else {
+        if (checked) {
           const filtered = this.state.databaseList.filter(
             (database) =>
               database.tags.filter(
                 (value) =>
-                  this.state.filter_selection.includes(value) && value !== id
+                  this.state.filter_selection.includes(value) || value === id
               ).length > 0
           );
-          const remainder = this.state.filter_selection.filter(
-            (item) => item !== id
-          );
+          var selected = this.state.filter_selection.filter((x) => x !== "All");
 
           this.setState({
             ...this.state.filter,
-            filter: { ...this.state.filter, [id]: false },
-            filter_selection: remainder,
+            filter_selection: selected.concat([id]),
             searchResult: filtered,
           });
+        } else {
+          if (
+            this.state.filter_selection.length < 2 &&
+            this.state.filter_selection.includes(id)
+          ) {
+            this.setState({
+              ...this.state.filter,
+              filter_selection: ["All"],
+              searchResult: this.state.databaseList,
+            });
+          } else {
+            const filtered = this.state.databaseList.filter(
+              (database) =>
+                database.tags.filter(
+                  (value) =>
+                    this.state.filter_selection.includes(value) && value !== id
+                ).length > 0
+            );
+            const remainder = this.state.filter_selection.filter(
+              (item) => item !== id
+            );
+
+            this.setState({
+              ...this.state.filter,
+              filter_selection: remainder,
+              searchResult: filtered,
+            });
+          }
         }
       }
     }
-    console.log(this.state.filter_selection);
   }
 
   getSearchResult() {
@@ -282,16 +326,16 @@ export default class extends React.Component {
               <SearchBar />
             </Col>
             <Col>
-              <SearchSortProtrait
+              <SearchSortPortrait
                 sortBy={this.state.sortBy}
                 onChange={this.handleSort}
               />
             </Col>
             <Col>
-              <SearchFilterProtrait
-                filters={this.state.filter}
+              <SearchFilterPortrait
+                filters={all_filters}
                 handleChange={this.handleFilterChange}
-                filterarr={this.filter_selection}
+                selectedFilters={this.state.filter_selection}
               />
             </Col>
           </Row>
@@ -373,8 +417,9 @@ export default class extends React.Component {
 
                 <h4 className="textColor ml-2 mt-4">Filter By:</h4>
                 <FilterTags
-                  tags={this.state.filter}
+                  tags={all_filters}
                   handleClick={this.handleFilterChange}
+                  selectedFilters={this.state.filter_selection}
                 />
               </div>
             </Col>

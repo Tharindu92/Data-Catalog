@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SearchSort({ sortBy, onChange }) {
+export default function SearchSortPortrait({ sortBy, onChange }) {
   const classes = useStyles();
 
   return (
