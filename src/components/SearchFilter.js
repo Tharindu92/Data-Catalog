@@ -1,6 +1,5 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Chip from "@material-ui/core/Chip";
 import "../globalcss.css";
 import { Form } from "react-bootstrap";
 
@@ -18,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
 
 //Tags display for databases, takes in array of tags and display each tag as pill shape(chips)
 // sample input, ['tag 1', 'tag 2',...]
-export default function FilterTags({ tags, handleClick, selectedFilters }) {
+export default function SearchFilter({ tags, handleClick, selectedFilters }) {
   const classes = useStyles();
   // const handleClick = () => {
   //   console.info("You clicked the Chip.");

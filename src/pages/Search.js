@@ -6,7 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import Hidden from "@material-ui/core/Hidden";
 import SortTags from "../components/SortTags";
-import FilterTags from "../components/FilterTags";
+import SearchFilter from "../components/SearchFilter";
 import Chip from "@material-ui/core/Chip";
 import { makeStyles } from "@material-ui/core/styles";
 import SearchSortPortrait from "../components/SearchSortPortrait";
@@ -17,18 +17,6 @@ const sort_options = [
   "Name Ascending",
   "Name Descending",
 ];
-const filter_options = {
-  All: true,
-  Transaction: false,
-  Land: false,
-  Building: false,
-  System: false,
-  JMAP: false,
-
-  Housing: false,
-
-  Customer: false,
-};
 
 const all_filters = [
   "All",
@@ -162,7 +150,6 @@ export default class extends React.Component {
       if (id === "All") {
         this.setState({
           ...this.state.filter,
-          filter: filter_options,
           filter_selection: ["All"],
           searchResult: this.state.databaseList,
         });
@@ -214,7 +201,7 @@ export default class extends React.Component {
       }
     }
   }
-
+  //Get data from API
   getSearchResult() {
     const query = this.props.location.search.replace("?", "");
     var search_string =
@@ -239,9 +226,6 @@ export default class extends React.Component {
         this.setState({ error: true });
         console.log(error);
       });
-
-    //Set all filters being passed over into the state
-    this.setState({ ...this.state, filter: filter_options });
   }
   //When page loads, call api to get an array of database dict that matches the entered keyword
   //sample input, [{'name':'db1,'description:'sample text',...},{'name':'db2,'description:'sample text',...}]
@@ -416,7 +400,7 @@ export default class extends React.Component {
                 />
 
                 <h4 className="textColor ml-2 mt-4">Filter By:</h4>
-                <FilterTags
+                <SearchFilter
                   tags={all_filters}
                   handleClick={this.handleFilterChange}
                   selectedFilters={this.state.filter_selection}
