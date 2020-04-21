@@ -7,52 +7,47 @@ import history from "../history";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../globalcss.css";
 
-export default class SearchBar extends React.Component {
-  constructor() {
-    super();
-    this.state = { value: "" };
-  }
-  handleChange = (e) => {
-    this.setState({ value: e.target.value });
+export default function SearchBar({ getSearchResult }) {
+  const [state, setState] = React.useState({ value: "" });
+  const handleChange = (e) => {
+    setState({ value: e.target.value });
   };
-  handleClick = (e) => {
+  const handleClick = (e) => {
     e.preventDefault();
     history.push({
       pathname: "/Search",
-      search: this.state.value,
+      search: state.value,
     });
+    window.location.reload();
   };
-
-  render() {
-    return (
-      <Paper
-        component="form"
-        style={{
-          padding: "2px 4px",
-          display: "flex",
-          alignitems: "center",
-          borderRadius: 50,
-          border: "1px solid #264c8c",
+  return (
+    <Paper
+      component="form"
+      style={{
+        padding: "2px 4px",
+        display: "flex",
+        alignitems: "center",
+        borderRadius: 50,
+        border: "1px solid #264c8c",
+      }}
+    >
+      <InputBase
+        placeholder="Search internal data"
+        inputProps={{
+          "aria-label": "Search internal data",
         }}
+        className="ml-4"
+        style={{ flex: 1 }}
+        onChange={handleChange}
+      />
+      <IconButton
+        type="submit"
+        aria-label="search"
+        style={{ padding: 10 }}
+        onClick={handleClick}
       >
-        <InputBase
-          placeholder="Search JTC's internal data"
-          inputProps={{
-            "aria-label": "Search JTC's internal data",
-          }}
-          className="ml-4"
-          style={{ flex: 1 }}
-          onChange={this.handleChange}
-        />
-        <IconButton
-          type="submit"
-          aria-label="search"
-          style={{ padding: 10 }}
-          onClick={this.handleClick}
-        >
-          <SearchIcon />
-        </IconButton>
-      </Paper>
-    );
-  }
+        <SearchIcon />
+      </IconButton>
+    </Paper>
+  );
 }

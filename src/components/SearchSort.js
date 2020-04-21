@@ -3,6 +3,13 @@ import { makeStyles } from "@material-ui/core/styles";
 import "../globalcss.css";
 import { Form } from "react-bootstrap";
 
+const sortOptions = {
+  1: "Name Ascending",
+  2: "Name Decending",
+  3: "Date Ascending",
+  4: "Date Decending",
+};
+
 //style for the tag chips
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 
 //Tags display for databases, takes in array of tags and display each tag as pill shape(chips)
 // sample input, ['tag 1', 'tag 2',...]
-export default function SearchFilter({ tags, handleClick, selectedFilters }) {
+export default function SearchSort({ onChange, sortBy }) {
   const classes = useStyles();
   const selectedStyle = {
     backgroundColor: "#264c8c",
@@ -27,15 +34,16 @@ export default function SearchFilter({ tags, handleClick, selectedFilters }) {
   };
   return (
     <div className={classes.root}>
-      {tags.map((value) => (
+      {Object.entries(sortOptions).map(([key, value]) => (
         <Form.Check
-          key={value}
-          id={value}
-          checked={selectedFilters.indexOf(value) > -1}
+          key={key}
+          id={key}
+          checked={sortBy - key === 0}
+          value={key}
           label={value}
-          onChange={handleClick}
-          style={selectedFilters.indexOf(value) > -1 ? selectedStyle : {}}
-          className="filterCategories"
+          onChange={onChange}
+          style={sortBy - key === 0 ? selectedStyle : {}}
+          className="sortCategories"
         />
       ))}
     </div>

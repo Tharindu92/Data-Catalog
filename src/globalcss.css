@@ -35,15 +35,8 @@
   background-color: white;
 }
 
-.filterCategories:checked + label {
-  background-color: violet;
-}
 .filterCategories input[type="checkbox"] {
   display: none;
-
-  /* position: absolute; */
-  /* left: -9999px; */
-  /* width: 0px; */
 }
 
 .filterCategories label {
@@ -60,5 +53,38 @@
 }
 
 .filterCategories label:checked {
+  background-color: #ccc;
+}
+
+/*Sort Categories*/
+.sortCategories {
+  /* text-align: center; */
+  border: 1px solid#264c8c;
+  border-radius: 50px;
+  color: #264c8c;
+  font-size: 10px;
+  width: 45%;
+  background-color: white;
+}
+
+.sortCategories input[type="checkbox"] {
+  display: none;
+}
+
+.sortCategories label {
+  box-shadow: none;
+  text-align: middle;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  position: relative;
+  cursor: pointer;
+  right: 8px;
+  /* display: block;
+  position: relative; */
+
+  /* padding: 2px 2px 2px 2px; */
+}
+
+.sortCategories label:checked {
   background-color: #ccc;
 }
