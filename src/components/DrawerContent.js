@@ -8,6 +8,8 @@ import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Tags from "./Tags";
+import DatabasePreview from "./DatabasePreview";
+import DatabaseColumns from "./DatabaseColumns";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -28,21 +30,21 @@ function TabPanel(props) {
 TabPanel.propTypes = {
   children: PropTypes.node,
   index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired
+  value: PropTypes.any.isRequired,
 };
 
 function a11yProps(index) {
   return {
     id: `full-width-tab-${index}`,
-    "aria-controls": `full-width-tabpanel-${index}`
+    "aria-controls": `full-width-tabpanel-${index}`,
   };
 }
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.paper,
-    width: 500
-  }
+    width: 500,
+  },
 }));
 
 //Right Drawer content, input database dict to display data table information
@@ -56,7 +58,7 @@ export default function DrawerContent({ database }) {
     setValue(newValue);
   };
 
-  const handleChangeIndex = index => {
+  const handleChangeIndex = (index) => {
     setValue(index);
   };
 
@@ -104,11 +106,12 @@ export default function DrawerContent({ database }) {
         </TabPanel>
         {/* content in Preview tab */}
         <TabPanel value={value} index={1} dir={theme.direction}>
-          Preview
+          <DatabasePreview selected_id={database["_id"]} />
         </TabPanel>
         {/* content in Columns tab */}
         <TabPanel value={value} index={2} dir={theme.direction}>
-          Columns
+          Column Info
+          <DatabaseColumns selected_id={database["_id"]} />
         </TabPanel>
       </SwipeableViews>
     </div>

@@ -11,7 +11,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 const useStyles = makeStyles((theme) => ({
   formControl: {
     minWidth: 120,
-    maxWidth: 200,
+    maxWidth: 180,
   },
   noLabel: {
     marginTop: theme.spacing(1),

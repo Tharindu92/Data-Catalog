@@ -35,10 +35,11 @@ export default class extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      databaseList: [],
-      searchResult: [],
+      databaseList: [], //database list related to keyword
+      searchResult: [], //filtered version based on selected filters/sorts
       loading: true,
       error: false,
+      all_filters: [],
       filter: {},
       filter_selection: ["All"],
       sortBy: "",
@@ -55,6 +56,8 @@ export default class extends React.Component {
       [field]: value,
     };
   }
+
+  //Sorting
   handleSort(e) {
     let value = e.target.value;
     if (value < 2) {
@@ -67,7 +70,7 @@ export default class extends React.Component {
       this.sortByDateDesc();
     }
   }
-  //Sorting
+
   sortByNameAsc() {
     const sorted = this.state.searchResult.sort((a, b) =>
       a.name.localeCompare(b.name)
@@ -131,11 +134,6 @@ export default class extends React.Component {
           sortBy: "",
         });
       }
-      this.setState({
-        ...this.state.filter,
-        filter_selection: value,
-        sortBy: "",
-      });
     } else {
       //Landscape mode filtering
       if (id === "All") {
@@ -201,20 +199,29 @@ export default class extends React.Component {
     const query = this.props.location.search.replace("?", "");
 
     var search_string =
-      "http://localhost:8080/api/v2/datacatalog/_table/databases";
+      "http://localhost:8080/api/v2/datacatalog2/_table/database_tables";
     if (query) {
       search_string += "?filter=name%20like%20" + query;
     }
-    console.log(search_string);
+
     //Axios API call
     axios
       .get(search_string, options)
       .then((response) => {
         var data = response.data.resource;
+        var unique_tags = ["All"];
+
+        data.map((row) =>
+          row.tags.map((tag) =>
+            unique_tags.includes(tag) ? "" : unique_tags.push(tag)
+          )
+        );
+
         this.setState({
           databaseList: data,
           searchResult: data,
           loading: false,
+          all_filters: unique_tags,
         });
       })
       .catch((error) => {
@@ -251,39 +258,82 @@ export default class extends React.Component {
       // if no matching results returned.
       return (
         <div>
-          <Row className="align-items-center mb-3 mt-3 ">
-            <Col md={5} className="ml-2">
-              <SearchBar />
-            </Col>
-            <Col>
-              <SearchSortPortrait
-                sortBy={this.state.sortBy}
-                onChange={this.handleSort}
-              />
-            </Col>
-            <Col>
-              <SearchFilterPortrait
-                filters={all_filters}
-                handleChange={this.handleFilterChange}
-                selectedFilters={this.state.filter_selection}
-              />
-            </Col>
-          </Row>
+          {/* Screen size <= 760 width */}
+          <Hidden mdUp>
+            <Row className="align-items-center mb-3 mt-3 ">
+              <Col md={5} className="ml-2">
+                <SearchBar />
+              </Col>
+              <Col>
+                <SearchSortPortrait
+                  sortBy={this.state.sortBy}
+                  onChange={this.handleSort}
+                />
+              </Col>
+              <Col>
+                <SearchFilterPortrait
+                  filters={this.state.all_filters}
+                  handleChange={this.handleFilterChange}
+                  selectedFilters={this.state.filter_selection}
+                />
+              </Col>
+            </Row>
 
-          <div style={{ backgroundColor: "#f2f2f2" }}>
-            <div className="ml-2 mr-2 mt-2">
-              <p
-                className="textColor"
-                style={{ display: "flex", justifyContent: "center" }}
-              >
-                No Results Found
-              </p>
+            <div
+              style={{
+                backgroundColor: "#f2f2f2",
+                minHeight: "90vh",
+                maxHeight: "90%vh",
+              }}
+            >
+              <div className="ml-2 mr-2 mt-2">
+                <p
+                  className="textColor"
+                  style={{ display: "flex", justifyContent: "center" }}
+                >
+                  No Results Found
+                </p>
+              </div>
             </div>
-          </div>
+          </Hidden>
+
+          {/* Screen size > 760 width */}
+          <Hidden smDown>
+            <Row
+              style={{
+                backgroundColor: "#f2f2f2",
+                minHeight: "90vh",
+                maxHeight: "90%vh",
+              }}
+            >
+              <Col md={3} style={{ backgroundColor: "#fff" }}>
+                <div className="mt-3 ml-1">
+                  <SearchBar />
+
+                  <h4 className="textColor ml-2 mt-4">Sort By:</h4>
+                  <SearchSort
+                    sortBy={this.state.sortBy}
+                    onChange={this.handleSort}
+                  />
+
+                  <h4 className="textColor ml-2 mt-4">Filter By:</h4>
+                  <SearchFilter
+                    tags={this.state.all_filters}
+                    handleClick={this.handleFilterChange}
+                    selectedFilters={this.state.filter_selection}
+                  />
+                </div>
+              </Col>
+              <Col className="ml-2 mr-2 mt-2">
+                <label className="textColor ">No Results Found</label>
+              </Col>
+            </Row>
+          </Hidden>
         </div>
       );
     }
     return (
+      //When there are results found
       <div>
         {/* Top bar when screen size <= 760 width */}
         <Hidden mdUp>
@@ -299,7 +349,7 @@ export default class extends React.Component {
             </Col>
             <Col>
               <SearchFilterPortrait
-                filters={all_filters}
+                filters={this.state.all_filters}
                 handleChange={this.handleFilterChange}
                 selectedFilters={this.state.filter_selection}
               />
@@ -308,17 +358,11 @@ export default class extends React.Component {
         </Hidden>
 
         <Row
-          style={
-            this.state.databaseList.length < 8
-              ? {
-                  backgroundColor: "#f2f2f2",
-                  height: "90vh",
-                }
-              : {
-                  backgroundColor: "#f2f2f2",
-                  height: "90%vh",
-                }
-          }
+          style={{
+            backgroundColor: "#f2f2f2",
+            minHeight: "90vh",
+            maxHeight: "90%vh",
+          }}
         >
           {/* Side bar when screen size > 760 width */}
           <Hidden smDown>
@@ -334,7 +378,7 @@ export default class extends React.Component {
 
                 <h4 className="textColor ml-2 mt-4">Filter By:</h4>
                 <SearchFilter
-                  tags={all_filters}
+                  tags={this.state.all_filters}
                   handleClick={this.handleFilterChange}
                   selectedFilters={this.state.filter_selection}
                 />
