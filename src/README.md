@@ -1,3 +1,4 @@
+
 ### Setup
 File name | Description
 ------------- | -------------
@@ -6,10 +7,16 @@ globalcss | css for all pages
 Routes | For routing between pages
 history | Session history
 
+=======
+
 ### Pages
 
 File name | Description
 ------------- | -------------
+
+=======
+Index | Base page
+
 Home   | First page user see after login
 Search |Search results page
 Publish |Intended for user to publish datasets
