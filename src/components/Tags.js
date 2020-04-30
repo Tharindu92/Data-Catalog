@@ -18,9 +18,7 @@ const useStyles = makeStyles((theme) => ({
 // sample input, ['tag 1', 'tag 2',...]
 export default function Tags({ tags }) {
   const classes = useStyles();
-  const handleClick = () => {
-    console.info("You clicked the Chip.");
-  };
+
   return (
     <div className={classes.root}>
       {tags.map((tag, id) => (
@@ -28,7 +26,6 @@ export default function Tags({ tags }) {
           key={id}
           label={tag}
           style={{ backgroundColor: "#264C8C", color: "white", fontSize: 10 }}
-          onClick={handleClick}
           size="small"
         />
       ))}

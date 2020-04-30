@@ -2,9 +2,7 @@ import React from "react";
 import "../globalcss.css";
 import axios from "axios";
 import { Table } from "react-bootstrap";
-// Card component for search results, takes in a database dict and display as a card
-// input example, {name:'db name',description:'sample text',}
-const col_headers = ["Name", "Data Type", "% Missing", "Description"];
+
 // headers for api call
 const options = {
   headers: {
