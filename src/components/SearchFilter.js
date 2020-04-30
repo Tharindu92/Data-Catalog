@@ -15,9 +15,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-//Tags display for databases, takes in array of tags and display each tag as pill shape(chips)
-// sample input, ['tag 1', 'tag 2',...]
-export default function SearchFilter({ tags, handleClick, selectedFilters }) {
+export default function SearchFilter({
+  filters,
+  handleClick,
+  selectedFilters,
+}) {
   const classes = useStyles();
   const selectedStyle = {
     backgroundColor: "#264c8c",
@@ -27,7 +29,8 @@ export default function SearchFilter({ tags, handleClick, selectedFilters }) {
   };
   return (
     <div className={classes.root}>
-      {tags.map((value) => (
+      {/* Create a checkbox for each filter option input */}
+      {filters.map((value) => (
         <Form.Check
           key={value}
           id={value}

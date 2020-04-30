@@ -37,6 +37,7 @@ export default function SearchFilterPortrait({
           input={<Input />}
           renderValue={(selected) => selected.join(", ")}
         >
+          {/* Create a checkbox for each filter option input */}
           {filters.map((name) => (
             <MenuItem key={name} value={name}>
               <Checkbox

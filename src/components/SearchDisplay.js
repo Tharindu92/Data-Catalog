@@ -28,7 +28,7 @@ export default function SearchDisplay({ databaseList }) {
     setState({ right: open });
   };
 
-  const list = () => (
+  const drawerContent = () => (
     <div style={{ width: 500 }}>
       <DrawerContent database={selectedDatabase} />
     </div>
@@ -58,7 +58,7 @@ export default function SearchDisplay({ databaseList }) {
         open={state["right"]}
         onClose={toggleDrawer(false, { tags: [] })}
       >
-        {list()}
+        {drawerContent()}
       </Drawer>
     </div>
   );

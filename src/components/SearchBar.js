@@ -7,11 +7,15 @@ import history from "../history";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../globalcss.css";
 
-export default function SearchBar({ getSearchResult }) {
+export default function SearchBar() {
   const [state, setState] = React.useState({ value: "" });
+
+  //update value shown in search bar input
   const handleChange = (e) => {
     setState({ value: e.target.value });
   };
+
+  //Navigate to search page
   const handleClick = (e) => {
     e.preventDefault();
     history.push({

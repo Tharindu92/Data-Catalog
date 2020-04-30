@@ -206,6 +206,7 @@ export default class extends React.Component {
           all_filters: unique_tags,
         });
       })
+      //if error
       .catch((error) => {
         this.setState({ error: true });
         console.log(error);

@@ -10,20 +10,23 @@ export default class extends React.Component {
   render() {
     return (
       <Card
-        // border="primary"
-
         className="mb-1 mt-2 borderColor"
         style={{ width: "14em", height: "15em" }}
       >
         <Card.Body onClick={this.props.function}>
+          {/* Data table Name/title */}
           <Card.Title className="textColor">
             {this.props.database.name}
           </Card.Title>
+
+          {/* Description */}
           <Card.Text style={{ fontSize: 11 }}>
             {this.props.database.description}. Lorem ipsum dolor sit amet,
             consectetur adipiscing elit.
           </Card.Text>
         </Card.Body>
+
+        {/* Tags and download */}
         <Card.Body>
           <Tags tags={this.props.database.tags} />
           <Card.Link className="float-right textColor mt-1" href="#">
@@ -31,8 +34,9 @@ export default class extends React.Component {
             Download
           </Card.Link>
           <br />
-          {/* <span className="float-left">Rating: </span> */}
         </Card.Body>
+
+        {/* Rating and last updated */}
         <Card.Footer
           onClick={this.props.function}
           style={{

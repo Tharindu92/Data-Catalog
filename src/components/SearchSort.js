@@ -22,8 +22,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-//Tags display for databases, takes in array of tags and display each tag as pill shape(chips)
-// sample input, ['tag 1', 'tag 2',...]
 export default function SearchSort({ onChange, sortBy }) {
   const classes = useStyles();
   const selectedStyle = {
@@ -34,6 +32,7 @@ export default function SearchSort({ onChange, sortBy }) {
   };
   return (
     <div className={classes.root}>
+      {/* Create a checkbox for each sort option input */}
       {Object.entries(sortOptions).map(([key, value]) => (
         <Form.Check
           key={key}

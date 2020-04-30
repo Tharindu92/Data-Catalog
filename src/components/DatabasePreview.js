@@ -24,6 +24,7 @@ export default class extends React.Component {
     };
   }
   componentDidMount() {
+    //API url
     var search_string =
       "http://localhost:8080/api/v2/datacatalog2/_table/database_preview?filter=_id%20%3D%20" +
       this.props.selected_id;
@@ -43,11 +44,13 @@ export default class extends React.Component {
   render() {
     return (
       <div>
+        {/* Number of rows and columns of data table */}
         <label>
           {this.state.databasePreview.num_cols} Columns x{" "}
           {this.state.databasePreview.num_rows} Rows
         </label>
         <Table bordered hover size="sm">
+          {/* Data table headers */}
           <thead>
             <tr className="bgColor" style={{ fontSize: 12 }}>
               {Object.entries(this.state.databasePreview.headers).map(
@@ -57,6 +60,8 @@ export default class extends React.Component {
               )}
             </tr>
           </thead>
+
+          {/* Data table rows */}
           <tbody className="textColor" style={{ fontSize: 12 }}>
             {this.state.databasePreview.preview.map((row, id) => (
               <tr key={id}>

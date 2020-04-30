@@ -2,8 +2,7 @@ import React from "react";
 import "../globalcss.css";
 import axios from "axios";
 import { Table } from "react-bootstrap";
-// Card component for search results, takes in a database dict and display as a card
-// input example, {name:'db name',description:'sample text',}
+
 const col_headers = ["Name", "Data Type", "% Missing", "Description"];
 // headers for api call
 const options = {
@@ -41,6 +40,7 @@ export default class extends React.Component {
   render() {
     return (
       <Table bordered hover size="sm">
+        {/* Header */}
         <thead>
           <tr className="bgColor" style={{ fontSize: 12 }}>
             {col_headers.map((header, id) => (
@@ -48,6 +48,7 @@ export default class extends React.Component {
             ))}
           </tr>
         </thead>
+        {/* Content */}
         <tbody className="textColor" style={{ fontSize: 12 }}>
           {Object.entries(this.state.databasePreview.headers).map(
             ([key, info], id) => (
