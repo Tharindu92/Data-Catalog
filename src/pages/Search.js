@@ -1,7 +1,7 @@
 import React from "react";
 import SearchDisplay from "../components/SearchDisplay";
 import SearchBar from "../components/SearchBar";
-import { Row, Col, Button } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import Hidden from "@material-ui/core/Hidden";
@@ -9,18 +9,6 @@ import SearchSort from "../components/SearchSort";
 import SearchFilter from "../components/SearchFilter";
 import SearchSortPortrait from "../components/SearchSortPortrait";
 import SearchFilterPortrait from "../components/SearchFilterPortrait";
-import history from "../history";
-
-const all_filters = [
-  "All",
-  "Transaction",
-  "Land",
-  "Building",
-  "System",
-  "JMAP",
-  "Housing",
-  "Customer",
-];
 
 // headers for api call
 const options = {
@@ -39,22 +27,14 @@ export default class extends React.Component {
       searchResult: [], //filtered version based on selected filters/sorts
       loading: true,
       error: false,
-      all_filters: [],
-      filter: {},
-      filter_selection: ["All"],
+      all_filters: [], //All unique tags from search results
+      filter_selection: ["All"], //Selected filter list
       sortBy: "",
     };
 
     this.handleFilterChange = this.handleFilterChange.bind(this);
     this.handleSort = this.handleSort.bind(this);
     this.getSearchResult = this.getSearchResult.bind(this);
-  }
-  //update filter checkbox value
-  reducer(state, { field, value }) {
-    return {
-      ...state,
-      [field]: value,
-    };
   }
 
   //Sorting
@@ -101,7 +81,7 @@ export default class extends React.Component {
 
   //Filtering
   handleFilterChange(e) {
-    //Update state on each filter chips
+    //Update state on each filter change
 
     let { id, checked, value } = e.target;
     //Check if its portrait mode
@@ -112,7 +92,7 @@ export default class extends React.Component {
         value.includes("All")
       ) {
         this.setState({
-          ...this.state.filter,
+          ...this.state,
           filter_selection: ["All"],
           searchResult: this.state.databaseList,
         });
@@ -128,7 +108,7 @@ export default class extends React.Component {
         );
 
         this.setState({
-          ...this.state.filter,
+          ...this.state,
           filter_selection: value,
           searchResult: filtered,
           sortBy: "",
@@ -138,7 +118,7 @@ export default class extends React.Component {
       //Landscape mode filtering
       if (id === "All") {
         this.setState({
-          ...this.state.filter,
+          ...this.state,
           filter_selection: ["All"],
           searchResult: this.state.databaseList,
           sortBy: "",
@@ -155,7 +135,7 @@ export default class extends React.Component {
           var selected = this.state.filter_selection.filter((x) => x !== "All");
 
           this.setState({
-            ...this.state.filter,
+            ...this.state,
             filter_selection: selected.concat([id]),
             searchResult: filtered,
             sortBy: "",
@@ -166,7 +146,7 @@ export default class extends React.Component {
             this.state.filter_selection.includes(id)
           ) {
             this.setState({
-              ...this.state.filter,
+              ...this.state,
               filter_selection: ["All"],
               searchResult: this.state.databaseList,
               sortBy: "",
@@ -184,7 +164,7 @@ export default class extends React.Component {
             );
 
             this.setState({
-              ...this.state.filter,
+              ...this.state,
               filter_selection: remainder,
               searchResult: filtered,
               sortBy: "",
@@ -195,6 +175,7 @@ export default class extends React.Component {
     }
   }
   //Get data from API
+  //sample result, [{'name':'db1,'description:'sample text',...},{'name':'db2,'description:'sample text',...}]
   getSearchResult() {
     const query = this.props.location.search.replace("?", "");
 
@@ -211,12 +192,13 @@ export default class extends React.Component {
         var data = response.data.resource;
         var unique_tags = ["All"];
 
+        //Get Unique Tags
         data.map((row) =>
           row.tags.map((tag) =>
             unique_tags.includes(tag) ? "" : unique_tags.push(tag)
           )
         );
-
+        //transfer data to state
         this.setState({
           databaseList: data,
           searchResult: data,
@@ -230,14 +212,11 @@ export default class extends React.Component {
       });
   }
   //When page loads, call api to get an array of database dict that matches the entered keyword
-  //sample input, [{'name':'db1,'description:'sample text',...},{'name':'db2,'description:'sample text',...}]
   componentDidMount() {
     this.getSearchResult();
   }
 
   render() {
-    // const query = this.props.location.search;
-
     if (this.state.loading) {
       // Loading
       return (
@@ -247,7 +226,7 @@ export default class extends React.Component {
       );
     }
     if (this.state.error) {
-      // if request failed or data is empty don't try to access it either
+      // if request failed
       return (
         <div>
           <p> An error occured </p>

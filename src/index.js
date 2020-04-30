@@ -5,7 +5,6 @@ import NavBar from "./components/NavBar";
 import Routes from "./Routes";
 import "react-app-polyfill/ie11";
 import "react-app-polyfill/stable";
-import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {

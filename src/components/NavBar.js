@@ -1,10 +1,9 @@
 import React from "react";
-import "./NavBarCss.css";
 import { Navbar, Nav } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../globalcss.css";
-const Navigation = props => {
+const Navigation = (props) => {
   console.log(props);
   return (
     <Navbar className="bgColor" variant="dark">

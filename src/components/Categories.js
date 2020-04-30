@@ -1,5 +1,4 @@
 import React from "react";
-import "../index.css";
 import button from "react-bootstrap/Button";
 export class Categories extends React.Component {
   render() {
