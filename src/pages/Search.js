@@ -358,7 +358,7 @@ export default class extends React.Component {
 
                 <h4 className="textColor ml-2 mt-4">Filter By:</h4>
                 <SearchFilter
-                  tags={this.state.all_filters}
+                  filters={this.state.all_filters}
                   handleClick={this.handleFilterChange}
                   selectedFilters={this.state.filter_selection}
                 />

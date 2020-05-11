@@ -12,7 +12,7 @@ export default class extends React.Component {
     super();
     this.state = { value: "" };
   }
-  handleChange = e => {
+  handleChange = (e) => {
     this.setState({ value: e.target.value });
   };
 
@@ -25,7 +25,7 @@ export default class extends React.Component {
           style={{
             display: "flex",
             justifyContent: "center",
-            alignItems: "center"
+            alignItems: "center",
           }}
         >
           <Col id="Search bar" xs={8}>
@@ -45,7 +45,7 @@ export default class extends React.Component {
           style={{
             display: "flex",
             justifyContent: "center",
-            alignItems: "center"
+            alignItems: "center",
           }}
         >
           Topics
@@ -55,7 +55,7 @@ export default class extends React.Component {
             style={{
               display: "flex",
               justifyContent: "center",
-              alignItems: "center"
+              alignItems: "center",
             }}
           >
             <button
@@ -63,12 +63,12 @@ export default class extends React.Component {
               style={{
                 borderColor: "#264c8c",
                 color: "#264c8c",
-                borderRadius: 5
+                borderRadius: 5,
               }}
               onClick={() =>
                 history.push({
                   pathname: "/Search",
-                  search: "Transaction"
+                  search: "Transaction",
                 })
               }
             >
@@ -81,12 +81,12 @@ export default class extends React.Component {
               style={{
                 borderColor: "#264c8c",
                 color: "#264c8c",
-                borderRadius: 5
+                borderRadius: 5,
               }}
               onClick={() =>
                 history.push({
                   pathname: "/Search",
-                  search: "Building"
+                  search: "Building",
                 })
               }
             >
@@ -99,12 +99,12 @@ export default class extends React.Component {
               style={{
                 borderColor: "#264c8c",
                 color: "#264c8c",
-                borderRadius: 5
+                borderRadius: 5,
               }}
               onClick={() =>
                 history.push({
                   pathname: "/Search",
-                  search: "System"
+                  search: "System",
                 })
               }
             >
@@ -117,12 +117,12 @@ export default class extends React.Component {
               style={{
                 borderColor: "#264c8c",
                 color: "#264c8c",
-                borderRadius: 5
+                borderRadius: 5,
               }}
               onClick={() =>
                 history.push({
                   pathname: "/Search",
-                  search: "Land"
+                  search: "Land",
                 })
               }
             >

@@ -2,10 +2,11 @@ import React from "react";
 import { Navbar, Nav } from "react-bootstrap";
 import { withRouter } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useLocation } from "react-router-dom";
 import "../globalcss.css";
 const Navigation = (props) => {
-  console.log(props);
-  return (
+  const location = useLocation();
+  return location.pathname === "/Login" ? null : (
     <Navbar className="bgColor" variant="dark">
       <Navbar.Brand href="#home">JTC</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
