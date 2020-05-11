@@ -6,6 +6,17 @@ import SearchIcon from "@material-ui/icons/Search";
 import history from "../history";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../globalcss.css";
+import { makeStyles } from "@material-ui/core/styles";
+import Autocomplete from "@material-ui/lab/Autocomplete";
+import TextField from "@material-ui/core/TextField";
+
+const dataTables = [
+  { name: "Overall Transaction Data 2019" },
+  { name: "Housing Data 2019" },
+  { name: "JMAP Customer" },
+  { name: "JMAP Product" },
+  { name: "JMAP Transaction" },
+];
 
 export default function SearchBar() {
   const [state, setState] = React.useState({ value: "" });
@@ -35,7 +46,24 @@ export default function SearchBar() {
         border: "1px solid #264c8c",
       }}
     >
-      <InputBase
+      <Autocomplete
+        id="size-small-standard"
+        size="small"
+        style={{ flex: 1 }}
+        className="ml-4"
+        options={dataTables}
+        getOptionLabel={(option) => option.name}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            variant="standard"
+            label="Search internal data"
+            style={{ border: "none" }}
+            onChange={handleChange}
+          />
+        )}
+      />
+      {/* <InputBase
         placeholder="Search internal data"
         inputProps={{
           "aria-label": "Search internal data",
@@ -43,7 +71,7 @@ export default function SearchBar() {
         className="ml-4"
         style={{ flex: 1 }}
         onChange={handleChange}
-      />
+      /> */}
       <IconButton
         type="submit"
         aria-label="search"
