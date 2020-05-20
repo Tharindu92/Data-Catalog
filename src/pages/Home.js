@@ -6,7 +6,7 @@ import ReceiptIcon from "@material-ui/icons/Receipt";
 import StorageIcon from "@material-ui/icons/Storage";
 import LandscapeIcon from "@material-ui/icons/Landscape";
 import history from "../history";
-import cookie from "react-cookies";
+
 export default class extends React.Component {
   constructor() {
     super();
@@ -18,9 +18,7 @@ export default class extends React.Component {
   handleChange = (e) => {
     this.setState({ ...this.state, value: e.target.value });
   };
-  componentDidMount() {
-    console.log("home" + cookie.load("session_token"));
-  }
+
   render() {
     return (
       <div className="align-items-center">

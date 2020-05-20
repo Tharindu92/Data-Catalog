@@ -27,8 +27,6 @@ export default class extends React.Component {
     this.handleFilterChange = this.handleFilterChange.bind(this);
     this.handleSort = this.handleSort.bind(this);
     this.getSearchResult = this.getSearchResult.bind(this);
-
-    // console.log("passed" + session_token);
   }
 
   //Sorting
@@ -224,7 +222,6 @@ export default class extends React.Component {
   //When page loads, call api to get an array of database dict that matches the entered keyword
   componentDidMount() {
     this.getSearchResult();
-    console.log(cookie.load("test_session"));
   }
 
   render() {

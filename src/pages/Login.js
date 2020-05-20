@@ -65,7 +65,7 @@ export default function SignIn() {
     axios
       .post("https://api.emailjs.com/api/v1.0/email/send", mailOptions)
       .then(() => {
-        console.log("Your mail is sent!");
+        console.log("Mail sent!");
       })
       .catch((error) => {
         console.log("Oops... " + error);
@@ -83,7 +83,7 @@ export default function SignIn() {
     axios
       .post(search_string, login)
       .then((response) => {
-        sendMail(response.data.session_token);
+        // sendMail(response.data.session_token);
         console.log(response.data.session_token);
       })
       //if error
@@ -113,7 +113,7 @@ export default function SignIn() {
           }}
           open={state.open}
           onClose={handleClose}
-          message="Invalid username or password, please try again."
+          message="Unregistered email, please contact administrator."
         />
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
@@ -136,19 +136,7 @@ export default function SignIn() {
             autoFocus
             onChange={handleChange}
           />
-          {/* <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            value={state.password}
-            onChange={handleChange}
-          /> */}
+
           <Button
             type="button"
             fullWidth
@@ -158,21 +146,8 @@ export default function SignIn() {
           >
             Get Login Link
           </Button>
-          {/* <Button
-            type="button"
-            fullWidth
-            variant="contained"
-            className={classes.submit}
-            onClick={processLogin}
-          >
-            Sign In
-          </Button>*/}
+
           <Grid container>
-            {/* <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid> */}
             <Grid item>
               <Link href="#" variant="body2">
                 {"Request Access"}

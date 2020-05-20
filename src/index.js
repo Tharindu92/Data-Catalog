@@ -24,13 +24,13 @@ function App() {
     };
     axios
       .get("http://localhost:8080/api/v2/datacatalog/_schema", options)
-      .then((response) => {
-        console.log("Authenticate passed");
+      .then(() => {
+        console.log("Authentication passed");
       })
       //if error
       .catch((error) => {
         // this.setState({ error: true });
-        console.log("Authenticate failed");
+        console.log("Authentication failed");
         // history.push({ pathname: "/Login" });
       });
   }
@@ -38,11 +38,8 @@ function App() {
   expires.setDate(Date.now() + 60 * 30);
   var session_token = cookie.load("session_token"); //get session token from cookie
 
-  //if there is token
-  if (session_token) {
-    authenticate(session_token);
-  } else if (window.location.href.indexOf("?session=") > 0) {
-    //if cookie does not have session take from url
+  if (window.location.href.indexOf("?session=") > 0) {
+    //if  url as token
     //save token
     session_token = window.location.href.split("?session=")[1];
     cookie.save("session_token", session_token, {
@@ -51,6 +48,9 @@ function App() {
     });
     authenticate(session_token);
     console.log(session_token);
+  } else if (session_token) {
+    //if token exist
+    authenticate(session_token);
   } else {
     //else return user to login page
     history.push({ pathname: "/Login" });
