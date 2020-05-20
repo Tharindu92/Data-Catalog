@@ -2,7 +2,6 @@ import React from "react";
 import Card from "react-bootstrap/Card";
 import Tags from "./Tags";
 import "../globalcss.css";
-import GetAppIcon from "@material-ui/icons/GetApp";
 
 // Card component for search results, takes in a database dict and display as a card
 // input example, {name:'db name',description:'sample text',}
@@ -29,10 +28,10 @@ export default class extends React.Component {
         {/* Tags and download */}
         <Card.Body>
           <Tags tags={this.props.database.tags} />
-          <Card.Link className="float-right textColor mt-1" href="#">
+          {/* <Card.Link className="float-right textColor mt-1" href="#">
             <GetAppIcon />
             Download
-          </Card.Link>
+          </Card.Link> */}
           <br />
         </Card.Body>
 

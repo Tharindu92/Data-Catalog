@@ -10,6 +10,7 @@ import Box from "@material-ui/core/Box";
 import Tags from "./Tags";
 import DatabasePreview from "./DatabasePreview";
 import DatabaseColumns from "./DatabaseColumns";
+import StarIcon from "@material-ui/icons/Star";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -49,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 
 //Right Drawer content, input database dict to display data table information
 //sample input, {name:'db name',description:'sample text'....}
-export default function DrawerContent({ database }) {
+export default function DrawerContent({ database, session_token }) {
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
@@ -93,7 +94,13 @@ export default function DrawerContent({ database }) {
           <h3 className="textColor">Tags:</h3>
           <Tags tags={database.tags} />
           <br />
-          <h3 className="textColor">Rating:</h3>
+          <h3 className="textColor">
+            Rating: <StarIcon />
+            <StarIcon />
+            <StarIcon />
+            <StarIcon />
+          </h3>
+
           <br />
           <h3 className="textColor">Connection Info</h3>
           <label>Data Source: {database.data_source}</label>

@@ -10,15 +10,7 @@ import SearchFilter from "../components/SearchFilter";
 import SearchSortPortrait from "../components/SearchSortPortrait";
 import SearchFilterPortrait from "../components/SearchFilterPortrait";
 
-// headers for api call
-const options = {
-  headers: {
-    "Content-Type": "application/json",
-    "X-DreamFactory-Api-Key":
-      "ff36aa23e74ec3839f246d4b06e08e1243b2dda56935885c3dd3c2e8b5731e39",
-  },
-};
-
+import cookie from "react-cookies";
 export default class extends React.Component {
   constructor(props) {
     super(props);
@@ -27,7 +19,7 @@ export default class extends React.Component {
       searchResult: [], //filtered version based on selected filters/sorts
       loading: true,
       error: false,
-      all_filters: [], //All unique tags from search results
+      all_filters: ["All"], //All unique tags from search results
       filter_selection: ["All"], //Selected filter list
       sortBy: "",
     };
@@ -35,6 +27,8 @@ export default class extends React.Component {
     this.handleFilterChange = this.handleFilterChange.bind(this);
     this.handleSort = this.handleSort.bind(this);
     this.getSearchResult = this.getSearchResult.bind(this);
+
+    // console.log("passed" + session_token);
   }
 
   //Sorting
@@ -177,44 +171,60 @@ export default class extends React.Component {
   //Get data from API
   //sample result, [{'name':'db1,'description:'sample text',...},{'name':'db2,'description:'sample text',...}]
   getSearchResult() {
+    // headers for api call
+    const options = {
+      headers: {
+        "Content-Type": "application/json",
+        "X-DreamFactory-Session-Token": cookie.load("session_token"),
+        "X-DreamFactory-Api-Key":
+          "ff36aa23e74ec3839f246d4b06e08e1243b2dda56935885c3dd3c2e8b5731e39",
+      },
+    };
     const query = this.props.location.search.replace("?", "");
 
-    var search_string =
-      "http://localhost:8080/api/v2/datacatalog2/_table/database_tables";
-    if (query) {
-      search_string += "?filter=name%20like%20" + query;
-    }
+    const tables = [
+      "unclassified_tables",
+      "restricted_tables",
+      "classified_tables",
+    ];
 
-    //Axios API call
-    axios
-      .get(search_string, options)
-      .then((response) => {
-        var data = response.data.resource;
-        var unique_tags = ["All"];
+    var unique_tags = ["All"];
+    var search_string = "http://localhost:8080/api/v2/datacatalog/_table/";
+    tables.map((table) => {
+      var search_request = search_string + table;
+      if (query) {
+        search_request += "?filter=name%20like%20" + query;
+      }
+      //Axios API call
+      axios
+        .get(search_request, options)
+        .then((response) => {
+          var data = response.data.resource;
 
-        //Get Unique Tags
-        data.map((row) =>
-          row.tags.map((tag) =>
-            unique_tags.includes(tag) ? "" : unique_tags.push(tag)
-          )
-        );
-        //transfer data to state
-        this.setState({
-          databaseList: data,
-          searchResult: data,
-          loading: false,
-          all_filters: unique_tags,
+          //Get Unique Tags
+          data.map((row) =>
+            row.tags.map((tag) =>
+              unique_tags.includes(tag) ? "" : unique_tags.push(tag)
+            )
+          );
+          this.setState({
+            databaseList: [...this.state.databaseList, ...data],
+            searchResult: [...this.state.searchResult, ...data],
+            loading: false,
+            all_filters: unique_tags,
+          });
+        })
+        //if error
+        .catch((error) => {
+          // this.setState({ error: true });
+          console.log(table + error);
         });
-      })
-      //if error
-      .catch((error) => {
-        this.setState({ error: true });
-        console.log(error);
-      });
+    });
   }
   //When page loads, call api to get an array of database dict that matches the entered keyword
   componentDidMount() {
     this.getSearchResult();
+    console.log(cookie.load("test_session"));
   }
 
   render() {
@@ -225,16 +235,14 @@ export default class extends React.Component {
           <p> Loading... </p>
         </div>
       );
-    }
-    if (this.state.error) {
+    } else if (this.state.error) {
       // if request failed
       return (
         <div>
           <p> An error occured </p>
         </div>
       );
-    }
-    if (this.state.databaseList.length < 1) {
+    } else if (this.state.databaseList.length < 1) {
       // if no matching results returned.
       return (
         <div>
@@ -298,7 +306,7 @@ export default class extends React.Component {
 
                   <h4 className="textColor ml-2 mt-4">Filter By:</h4>
                   <SearchFilter
-                    tags={this.state.all_filters}
+                    filters={this.state.all_filters}
                     handleClick={this.handleFilterChange}
                     selectedFilters={this.state.filter_selection}
                   />
@@ -319,7 +327,7 @@ export default class extends React.Component {
         <Hidden mdUp>
           <Row className="align-items-center mb-3 mt-3 ">
             <Col md={5} className="ml-2">
-              <SearchBar onClick={this.getSearchResult} />
+              <SearchBar />
             </Col>
             <Col>
               <SearchSortPortrait

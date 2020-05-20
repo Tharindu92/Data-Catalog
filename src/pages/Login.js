@@ -11,14 +11,8 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import axios from "axios";
-import history from "../history";
 import Snackbar from "@material-ui/core/Snackbar";
-import bcrypt from "bcryptjs";
 
-// var salt = bcrypt.genSaltSync(10);
-// var hash = bcrypt.hashSync("B4c0//", salt);
-// console.log(hash);
-// console.log(bcrypt.hashSync("B4c0//", salt));
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -41,20 +35,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// headers for api call
-const options = {
-  headers: {
-    "Content-Type": "application/json",
-    "X-DreamFactory-Api-Key":
-      "ff36aa23e74ec3839f246d4b06e08e1243b2dda56935885c3dd3c2e8b5731e39",
-  },
-};
-
 export default function SignIn() {
   const classes = useStyles();
   const [state, setState] = React.useState({
     email: "",
-    password: "",
+    session_token: "",
     error: "",
     open: false,
     userInfo: "",
@@ -66,33 +51,48 @@ export default function SignIn() {
       [id]: value,
     }));
   };
+
+  function sendMail(session_token) {
+    var mailOptions = {
+      service_id: "wadawiz_gmail_com",
+      template_id: "otp",
+      user_id: "user_fRgH9aiv9ZgBqcL8D9tWV",
+      template_params: {
+        toMail: state.email,
+        token: session_token,
+      },
+    };
+    axios
+      .post("https://api.emailjs.com/api/v1.0/email/send", mailOptions)
+      .then(() => {
+        console.log("Your mail is sent!");
+      })
+      .catch((error) => {
+        console.log("Oops... " + error);
+      });
+  }
+
   function processLogin() {
-    var search_string =
-      "http://localhost:8080/api/v2/datacatalog2/_table/user_credentials?filter=Login_ID%20%3D%20" +
-      state.email;
+    var login = {
+      email: state.email,
+      password: "123qweasD",
+      duration: 5,
+    };
+    var search_string = "http://localhost:8080/api/v2/user/session";
     //Axios API call
     axios
-      .get(search_string, options)
+      .post(search_string, login)
       .then((response) => {
-        if (response.data.resource.length > 0) {
-          bcrypt
-            .compare(state.password, response.data.resource[0].Login_Password)
-            .then((isMatch) => {
-              if (isMatch) {
-                history.push({
-                  pathname: "/",
-                });
-                window.location.reload();
-              } else {
-                setState({ ...state, open: true });
-              }
-            });
-        }
+        sendMail(response.data.session_token);
+        console.log(response.data.session_token);
       })
       //if error
       .catch((error) => {
         setState({ ...state, open: true });
+        console.log(error);
       });
+
+    console.log(state.session_token);
   }
 
   const handleClose = () => {
@@ -100,6 +100,10 @@ export default function SignIn() {
   };
   return (
     <Container component="main" maxWidth="xs">
+      <br />
+      <br />
+      <br />
+      <br />
       <CssBaseline />
       <div className={classes.paper}>
         <Snackbar
@@ -132,7 +136,7 @@ export default function SignIn() {
             autoFocus
             onChange={handleChange}
           />
-          <TextField
+          {/* <TextField
             variant="outlined"
             margin="normal"
             required
@@ -144,8 +148,7 @@ export default function SignIn() {
             autoComplete="current-password"
             value={state.password}
             onChange={handleChange}
-          />
-
+          /> */}
           <Button
             type="button"
             fullWidth
@@ -153,17 +156,26 @@ export default function SignIn() {
             className={classes.submit}
             onClick={processLogin}
           >
-            Sign In
+            Get Login Link
           </Button>
+          {/* <Button
+            type="button"
+            fullWidth
+            variant="contained"
+            className={classes.submit}
+            onClick={processLogin}
+          >
+            Sign In
+          </Button>*/}
           <Grid container>
-            <Grid item xs>
+            {/* <Grid item xs>
               <Link href="#" variant="body2">
                 Forgot password?
               </Link>
-            </Grid>
+            </Grid> */}
             <Grid item>
               <Link href="#" variant="body2">
-                {"Request for account"}
+                {"Request Access"}
               </Link>
             </Grid>
           </Grid>

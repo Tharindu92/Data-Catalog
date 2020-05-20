@@ -7,7 +7,7 @@ import DrawerContent from "./DrawerContent";
 
 //Display search results, takes in array of database dict and out put as individual cards
 //sample input, [{'name':'db1,'description:'sample text',...},{'name':'db2,'description:'sample text',...}]
-export default function SearchDisplay({ databaseList }) {
+export default function SearchDisplay({ databaseList, session_token }) {
   const [state, setState] = React.useState({
     right: false,
   });
@@ -30,7 +30,10 @@ export default function SearchDisplay({ databaseList }) {
 
   const drawerContent = () => (
     <div style={{ width: 500 }}>
-      <DrawerContent database={selectedDatabase} />
+      <DrawerContent
+        database={selectedDatabase}
+        session_token={session_token}
+      />
     </div>
   );
   return (
