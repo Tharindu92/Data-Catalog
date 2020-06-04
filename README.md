@@ -46,3 +46,6 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 Material ui
 React Bootstrap
 Axios 
+xlsx 
+file-saver 
+Victory (for charts)

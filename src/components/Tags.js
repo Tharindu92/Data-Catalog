@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "left",
     flexWrap: "wrap",
     "& > *": {
-      margin: theme.spacing(0.5),
+      margin: theme.spacing(0.3),
     },
   },
 }));
@@ -25,7 +25,7 @@ export default function Tags({ tags }) {
         <Chip
           key={id}
           label={tag}
-          style={{ backgroundColor: "#264C8C", color: "white", fontSize: 10 }}
+          style={{ backgroundColor: "#264C8C", color: "white", fontSize: 9 }}
           size="small"
         />
       ))}

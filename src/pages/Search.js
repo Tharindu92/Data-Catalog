@@ -175,19 +175,15 @@ export default class extends React.Component {
         "Content-Type": "application/json",
         "X-DreamFactory-Session-Token": cookie.load("session_token"),
         "X-DreamFactory-Api-Key":
-          "ff36aa23e74ec3839f246d4b06e08e1243b2dda56935885c3dd3c2e8b5731e39",
+          "cd080889bfe864cba1145ce111825d8ca7e176d3bf8c0f44d658cd5bf6ad0fc2",
       },
     };
     const query = this.props.location.search.replace("?", "");
 
-    const tables = [
-      "unclassified_tables",
-      "restricted_tables",
-      "classified_tables",
-    ];
+    const tables = ["data_unclassified", "data_restricted", "data_classified"];
 
     var unique_tags = ["All"];
-    var search_string = "http://localhost:8080/api/v2/datacatalog/_table/";
+    var search_string = "http://127.0.0.1:82/api/v2/datacatalog/_table/";
     tables.map((table) => {
       var search_request = search_string + table;
       if (query) {

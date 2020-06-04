@@ -4,6 +4,7 @@ import axios from "axios";
 import { Table } from "react-bootstrap";
 import cookie from "react-cookies";
 import TextField from "@material-ui/core/TextField";
+
 export default class extends React.Component {
   constructor(props) {
     super(props);
@@ -32,12 +33,12 @@ export default class extends React.Component {
         "Content-Type": "application/json",
         "X-DreamFactory-Session-Token": cookie.load("session_token"),
         "X-DreamFactory-Api-Key":
-          "ff36aa23e74ec3839f246d4b06e08e1243b2dda56935885c3dd3c2e8b5731e39",
+          "cd080889bfe864cba1145ce111825d8ca7e176d3bf8c0f44d658cd5bf6ad0fc2",
       },
     };
     //API url
     var search_string =
-      "http://localhost:8080/api/v2/datacatalog/_table/database_preview?filter=_id%20%3D%20" +
+      "http://127.0.0.1:82/api/v2/datacatalog/_table/database_preview?filter=_id%20%3D%20" +
       this.props.selected_id;
 
     //Axios API call
@@ -47,6 +48,7 @@ export default class extends React.Component {
         var data = response.data.resource;
 
         this.setState({ databasePreview: data[0] });
+        console.log(data[0]);
       })
       .catch((error) => {
         console.log(error);
@@ -61,6 +63,7 @@ export default class extends React.Component {
           value={this.state.filter}
           onChange={this.handleChange}
         />
+
         {/* Number of rows and columns of data table */}
         <h5>
           {this.state.databasePreview.num_cols} Columns x{" "}

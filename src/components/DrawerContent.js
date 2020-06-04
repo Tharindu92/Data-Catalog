@@ -11,6 +11,7 @@ import Tags from "./Tags";
 import DatabasePreview from "./DatabasePreview";
 import DatabaseColumns from "./DatabaseColumns";
 import StarIcon from "@material-ui/icons/Star";
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -93,6 +94,8 @@ export default function DrawerContent({ database, session_token }) {
           <p>{database.description}</p>
           <h3 className="textColor">Tags:</h3>
           <Tags tags={database.tags} />
+          <br />
+
           <br />
           <h3 className="textColor">
             Rating: <StarIcon />

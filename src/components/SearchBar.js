@@ -8,6 +8,7 @@ import "../globalcss.css";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import TextField from "@material-ui/core/TextField";
 import cookie from "react-cookies";
+import { useLocation } from "react-router-dom";
 const dataTables = [
   { name: "Overall Transaction Data 2019" },
   { name: "Housing Data 2019" },
@@ -17,6 +18,7 @@ const dataTables = [
 ];
 
 export default function SearchBar() {
+  const location = useLocation();
   const [state, setState] = React.useState({ value: "" });
   const session_token = cookie.load("session_token");
   //update value shown in search bar input
@@ -32,7 +34,10 @@ export default function SearchBar() {
       search: state.value,
       state: session_token,
     });
-    window.location.reload();
+
+    if (location.pathname === "/Search") {
+      window.location.reload();
+    }
   };
   return (
     <Paper
@@ -56,7 +61,7 @@ export default function SearchBar() {
           <TextField
             {...params}
             variant="standard"
-            label="Search internal data"
+            label="Search data"
             style={{ border: "none" }}
             onChange={handleChange}
           />
