@@ -10,6 +10,7 @@ import Box from "@material-ui/core/Box";
 import Tags from "./Tags";
 import DatabasePreview from "./DatabasePreview";
 import DatabaseColumns from "./DatabaseColumns";
+import RatingDisplay from "./RatingDisplay";
 import StarIcon from "@material-ui/icons/Star";
 
 function TabPanel(props) {
@@ -97,12 +98,9 @@ export default function DrawerContent({ database, session_token }) {
           <br />
 
           <br />
-          <h3 className="textColor">
-            Rating: <StarIcon />
-            <StarIcon />
-            <StarIcon />
-            <StarIcon />
-          </h3>
+
+          <RatingDisplay />
+          <br />
 
           <br />
           <h3 className="textColor">Connection Info</h3>
