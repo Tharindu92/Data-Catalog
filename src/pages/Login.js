@@ -84,7 +84,9 @@ export default function SignIn() {
       .post(search_string, login)
       .then((response) => {
         // sendMail(response.data.session_token);
-        console.log(response.data.session_token);
+        console.log(
+          "http://localhost:3000/?session=" + response.data.session_token
+        );
       })
       //if error
       .catch((error) => {
