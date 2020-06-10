@@ -78,13 +78,15 @@ export default function SignIn() {
       password: "123qweasD",
       duration: 5,
     };
-    var search_string = "http://127.0.0.1/api/v2/user/session";
+    var search_string = "http://127.0.0.1:82/api/v2/user/session";
     //Axios API call
     axios
       .post(search_string, login)
       .then((response) => {
         // sendMail(response.data.session_token);
-        console.log(response.data.session_token);
+        console.log(
+          "http://localhost:3000/?session=" + response.data.session_token
+        );
       })
       //if error
       .catch((error) => {
