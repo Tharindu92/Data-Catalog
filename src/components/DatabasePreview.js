@@ -32,8 +32,7 @@ export default class extends React.Component {
       headers: {
         "Content-Type": "application/json",
         "X-DreamFactory-Session-Token": cookie.load("session_token"),
-        "X-DreamFactory-Api-Key":
-          "cd080889bfe864cba1145ce111825d8ca7e176d3bf8c0f44d658cd5bf6ad0fc2",
+        "X-DreamFactory-Api-Key": cookie.load("api_key"),
       },
     };
     //API url

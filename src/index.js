@@ -10,6 +10,9 @@ import cookie from "react-cookies";
 import history from "./history";
 import axios from "axios";
 
+const api_key =
+  "6498a8ad1beb9d84d63035c5d1120c007fad6de706734db9689f8996707e0f7d";
+
 function App() {
   //authenicate user with token
   function authenticate(session_token) {
@@ -18,8 +21,7 @@ function App() {
       headers: {
         "Content-Type": "application/json",
         "X-DreamFactory-Session-Token": session_token,
-        "X-DreamFactory-Api-Key":
-          "cd080889bfe864cba1145ce111825d8ca7e176d3bf8c0f44d658cd5bf6ad0fc2",
+        "X-DreamFactory-Api-Key": api_key,
       },
     };
     axios
@@ -41,6 +43,10 @@ function App() {
     //save token
     session_token = window.location.href.split("?session=")[1];
     cookie.save("session_token", session_token, {
+      path: "/",
+      expires,
+    });
+    cookie.save("api_key", api_key, {
       path: "/",
       expires,
     });
