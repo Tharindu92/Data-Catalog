@@ -16,85 +16,7 @@ client = pymongo.MongoClient(uri)
 mydb = client["data-catalog"]
 
 
-# In[17]:
-
-
-# collection_tables = mydb["database_tables"]
-
-
-# In[18]:
-
-
-# #sample tables data
-# database_tables = [
-#     {
-#         "_id":101,
-#         "name":"Overall Transaction Data 2019",
-#         "description":"Data description for the above data. ",
-#         "tags": ['Transaction'],
-#         "data_source":"Transaction Management",
-#         "database_name":"transaction",
-#         "last_updated":"25/3/2020 18:14:07",
-#         "last_updated_by":"Junwei@jtc.gov.sg"
-
-
-#     },    {
-#         "_id":102,
-#         "name":"Housing Data 2019",
-#         "description":"Data description for the above data. ",
-#         "tags": ['Housing',"Building"],
-#         "data_source":"Housing Management",
-#         "database_name":"Housing",
-#         "last_updated":"25/3/2020 08:44:07",
-#         "last_updated_by":"Junwei@jtc.gov.sg"
-
-
-#     },    {
-#         "_id":103,
-#         "name":"JMAP Customer",
-#         "description":"Data description for the above data. ",
-#         "tags": ['JMAP',"Customer"],
-#         "data_source":"Jarvis - JMAP",
-#         "database_name":"jvs_customer",
-#         "last_updated":"25/3/2020 07:12:07",
-#         "last_updated_by":"Junwei@jtc.gov.sg"
-
-
-#     },    {
-#         "_id":104,
-#         "name":"JMAP Product",
-#         "description":"Data description for the above data. ",
-#         "tags": ['JMAP',"Product"],
-#         "data_source":"Jarvis - JMAP",
-#         "database_name":"jvs_product",
-#         "last_updated":"25/3/2020 08:24:07",
-#         "last_updated_by":"Junwei@jtc.gov.sg"
-
-
-#     },    {
-#         "_id":105,
-#         "name":"JMAP Transaction",
-#         "description":"Data description for the above data. ",
-#         "tags": ['JMAP','Transaction'],
-#         "data_source":"Jarvis - JMAP",
-#         "database_name":"jvs_transaction",
-#         "last_updated":"25/3/2020 09:14:07",
-#         "last_updated_by":"Junwei@jtc.gov.sg"
-
-
-#     }
-
-# ]
-
-
-# In[19]:
-
-
-
-# collection_tables.insert_many(database_tables) 
-
-
-# In[3]:
+# In[5]:
 
 
 #restricted tables data
@@ -103,7 +25,7 @@ database_tables = [
         "_id":5001,
         "name":"Overall Transaction Data 2019",
         "description":"Data description for the above data. ",
-        "tags": ['Transaction'],
+        "tags": ['Transaction',"Restricted"],
         "data_source":"Transaction Management",
         "database_name":"transaction",
         "last_updated":"25/3/2020 18:14:07",
@@ -114,7 +36,7 @@ database_tables = [
         "_id":5002,
         "name":"Housing Data 2019",
         "description":"Data description for the above data. ",
-        "tags": ['Housing',"Building"],
+        "tags": ['Housing',"Building","Restricted"],
         "data_source":"Housing Management",
         "database_name":"Housing",
         "last_updated":"25/3/2020 08:44:07",
@@ -123,9 +45,9 @@ database_tables = [
 
     },    {
         "_id":5003,
-        "name":"JMAP Customer[R]",
+        "name":"JMAP Customer",
         "description":"Data description for the above data. ",
-        "tags": ['JMAP',"customer"],
+        "tags": ['JMAP',"Customer","Restricted"],
         "data_source":"Jarvis - JMAP",
         "database_name":"jvs_customer",
         "last_updated":"25/3/2020 08:24:07",
@@ -136,7 +58,7 @@ database_tables = [
         "_id":5004,
         "name":"JMAP Product",
         "description":"Data description for the above data. ",
-        "tags": ['JMAP',"Product"],
+        "tags": ['JMAP',"Product","Restricted"],
         "data_source":"Jarvis - JMAP",
         "database_name":"jvs_product",
         "last_updated":"25/3/2020 08:24:07",
@@ -147,79 +69,7 @@ database_tables = [
         "_id":5005,
         "name":"JMAP Transaction",
         "description":"Data description for the above data. ",
-        "tags": ['JMAP','Transaction'],
-        "data_source":"Jarvis - JMAP",
-        "database_name":"jvs_transaction",
-        "last_updated":"25/3/2020 09:14:07",
-        "last_updated_by":"Junwei@jtc.gov.sg"
-
-
-    }
-
-]
-
-
-# In[4]:
-
-
-collection_tables = mydb["restricted_tables"]
-collection_tables.insert_many(database_tables) 
-
-
-# In[5]:
-
-
-#unclassified tables data
-database_tables = [
-    {
-        "_id":1001,
-        "name":"Overall Transaction Data 2019",
-        "description":"Data description for the above data. ",
-        "tags": ['Transaction'],
-        "data_source":"Transaction Management",
-        "database_name":"transaction",
-        "last_updated":"25/3/2020 18:14:07",
-        "last_updated_by":"Junwei@jtc.gov.sg"
-
-
-    },    {
-        "_id":1002,
-        "name":"Housing Data 2019",
-        "description":"Data description for the above data. ",
-        "tags": ['Housing',"Building"],
-        "data_source":"Housing Management",
-        "database_name":"Housing",
-        "last_updated":"25/3/2020 08:44:07",
-        "last_updated_by":"Junwei@jtc.gov.sg"
-
-
-    },    {
-        "_id":1003,
-        "name":"JMAP Customer[U]",
-        "description":"Data description for the above data. ",
-        "tags": ['JMAP',"Customer"],
-        "data_source":"Jarvis - JMAP",
-        "database_name":"jvs_customer",
-        "last_updated":"25/3/2020 07:12:07",
-        "last_updated_by":"Junwei@jtc.gov.sg"
-
-
-    },    {
-        "_id":1004,
-        "name":"JMAP Product",
-        "description":"Data description for the above data. ",
-        "tags": ['JMAP',"Product"],
-        "data_source":"Jarvis - JMAP",
-        "database_name":"jvs_product",
-        "last_updated":"25/3/2020 08:24:07",
-        "last_updated_by":"Junwei@jtc.gov.sg"
-
-
-    },    {
-        "_id":1005,
-        "name":"JMAP Transaction",
-        "description":"Data description for the above data. ",
-        "tags": ['JMAP','Transaction'],
+        "tags": ['JMAP','Transaction',"Restricted"],
         "data_source":"Jarvis - JMAP",
         "database_name":"jvs_transaction",
         "last_updated":"25/3/2020 09:14:07",
@@ -234,65 +84,66 @@ database_tables = [
 # In[6]:
 
 
-collection_tables = mydb["unclassified_tables"]
+collection_tables = mydb["data_restricted"]
 collection_tables.insert_many(database_tables) 
 
 
-# In[7]:
+# In[9]:
 
 
-#Confidential tables data
+#unclassified tables data
 database_tables = [
     {
-        "_id":8001,
-        "name":"Overall Transaction Data 2019",
+        "_id":1001,
+        "name":"Rental Index",
         "description":"Data description for the above data. ",
-        "tags": ['Transaction'],
+        "tags": ['Rental','Unclassified'],
         "data_source":"Transaction Management",
-        "database_name":"transaction",
+        "database_name":"Transaction",
         "last_updated":"25/3/2020 18:14:07",
         "last_updated_by":"Junwei@jtc.gov.sg"
 
+
     },    {
-        "_id":8002,
-        "name":"Housing Data 2019",
+        "_id":1002,
+        "name":"Industrial Stock",
         "description":"Data description for the above data. ",
-        "tags": ['Housing',"Building"],
-        "data_source":"Housing Management",
-        "database_name":"Housing",
+        "tags": ['Land','Unclassified'],
+        "data_source":"Land Management",
+        "database_name":"jvs_land",
         "last_updated":"25/3/2020 08:44:07",
         "last_updated_by":"Junwei@jtc.gov.sg"
 
 
     },    {
-        "_id":8003,
-        "name":"JMAP Customer[C]",
+        "_id":1003,
+        "name":"Building Price Index",
         "description":"Data description for the above data. ",
-        "tags": ['JMAP',"Customer"],
-        "data_source":"Jarvis - JMAP",
-        "database_name":"jvs_customer",
+        "tags": ['Building','Unclassified'],
+        "data_source":"Jarvis",
+        "database_name":"jvs_price",
         "last_updated":"25/3/2020 07:12:07",
         "last_updated_by":"Junwei@jtc.gov.sg"
 
 
     },    {
-        "_id":8004,
-        "name":"JMAP Product",
+        "_id":1004,
+        "name":"JTC Industrial Space",
         "description":"Data description for the above data. ",
-        "tags": ['JMAP',"Product"],
+        "tags": ["Land","Unclassified"],
         "data_source":"Jarvis - JMAP",
-        "database_name":"jvs_product",
+        "database_name":"jvs_land",
         "last_updated":"25/3/2020 08:24:07",
         "last_updated_by":"Junwei@jtc.gov.sg"
 
 
     },    {
-        "_id":8005,
-        "name":"JMAP Transaction",
+        "_id":1005,
+        "name":"JTC Industrial Land",
         "description":"Data description for the above data. ",
-        "tags": ['JMAP','Transaction'],
-        "data_source":"Jarvis - JMAP",
-        "database_name":"jvs_transaction",
+        "tags": ["Land","Unclassified"],
+        "data_source":"Jarvis",
+        "database_name":"jvs_land",
         "last_updated":"25/3/2020 09:14:07",
         "last_updated_by":"Junwei@jtc.gov.sg"
 
@@ -302,10 +153,81 @@ database_tables = [
 ]
 
 
-# In[8]:
+# In[10]:
 
 
-collection_tables = mydb["classified_tables"]
+collection_tables = mydb["data_unclassified"]
+collection_tables.insert_many(database_tables) 
+
+
+# In[11]:
+
+
+#Confidential tables data
+database_tables = [
+    {
+        "_id":8001,
+        "name":"Industrial Space Returns",
+        "description":"Data description for the above data. ",
+        "tags": ['Transaction',"Classified"],
+        "data_source":"Transaction Management",
+        "database_name":"jvs_transaction",
+        "last_updated":"25/3/2020 18:14:07",
+        "last_updated_by":"Junwei@jtc.gov.sg"
+
+    },    {
+        "_id":8002,
+        "name":"Industrial Space Allocation",
+        "description":"Data description for the above data. ",
+        "tags": ["Land","Classified"],
+        "data_source":"Land Management",
+        "database_name":"jvs_land",
+        "last_updated":"25/3/2020 08:44:07",
+        "last_updated_by":"Junwei@jtc.gov.sg"
+
+
+    },    {
+        "_id":8003,
+        "name":"Business Park Buildings",
+        "description":"Data description for the above data. ",
+        "tags": ["Building","Classified"],
+        "data_source":"Jarvis",
+        "database_name":"jvs_building",
+        "last_updated":"25/3/2020 07:12:07",
+        "last_updated_by":"Junwei@jtc.gov.sg"
+
+
+    },    {
+        "_id":8004,
+        "name":"JTC Occupancy Rate",
+        "description":"Data description for the above data. ",
+        "tags": ["Building","Classified"],
+        "data_source":"Jarvis",
+        "database_name":"jvs_building",
+        "last_updated":"25/3/2020 08:24:07",
+        "last_updated_by":"Junwei@jtc.gov.sg"
+
+
+    },    {
+        "_id":8005,
+        "name":"JTC Industrial Stock",
+        "description":"Data description for the above data. ",
+        "tags": ["Classified"],
+        "data_source":"Jarvis",
+        "database_name":"jvs_stock",
+        "last_updated":"25/3/2020 09:14:07",
+        "last_updated_by":"Junwei@jtc.gov.sg"
+
+
+    }
+
+]
+
+
+# In[12]:
+
+
+collection_tables = mydb["data_classified"]
 collection_tables.insert_many(database_tables) 
 
 
