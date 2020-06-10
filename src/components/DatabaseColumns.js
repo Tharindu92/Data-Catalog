@@ -26,7 +26,7 @@ export default class extends React.Component {
       },
     };
     var search_string =
-      "http://127.0.0.1:82/api/v2/datacatalog/_table/database_preview?filter=_id%20%3D%20" +
+      "http://127.0.0.1/api/v2/datacatalog/_table/database_preview?filter=_id%20%3D%20" +
       this.props.selected_id;
 
     //Axios API call
