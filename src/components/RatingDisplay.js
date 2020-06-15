@@ -4,6 +4,8 @@ import Rating from "@material-ui/lab/Rating";
 import StarIcon from "@material-ui/icons/Star";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
 import Snackbar from "@material-ui/core/Snackbar";
+import axios from "axios";
+import cookie from "react-cookies";
 const StyledRating = withStyles({
   iconFilled: {
     color: "#264c8c",
@@ -21,8 +23,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function () {
-  const [value, setValue] = React.useState(2);
+export default function ({ rating, database_id }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -43,17 +44,40 @@ export default function () {
       <label className="textColor h3">Rating:</label>
       <StyledRating
         name="ratingStars"
-        defaultValue={2}
+        defaultValue={0}
+        value={rating}
         precision={0.5}
         onChange={(event, newValue) => {
-          setValue(newValue);
+          var id = cookie.load("session_email").split("@")[0] + database_id;
+          // headers for api call
+          const options = {
+            headers: {
+              "Content-Type": "application/json",
+              "X-DreamFactory-Session-Token": cookie.load("session_token"),
+              "X-DreamFactory-Api-Key": cookie.load("api_key"),
+            },
+          };
+          var api_string =
+            "http://127.0.0.1:81/api/v2/datacatalog/_table/database_rating";
+          var content = {
+            resource: [
+              {
+                _id: id,
+                rating: newValue,
+              },
+            ],
+          };
+
+          //Axios API call
+          axios
+            .put(api_string, content, options)
+            .then((response) => {})
+            .catch((error) => {});
           setOpen(true);
         }}
         icon={<StarIcon fontSize="inherit" />}
         size="large"
       />
-
-      <label>{value}</label>
     </div>
   );
 }

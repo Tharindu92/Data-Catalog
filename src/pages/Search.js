@@ -182,7 +182,7 @@ export default class extends React.Component {
     const tables = ["data_unclassified", "data_restricted", "data_classified"];
 
     var unique_tags = ["All"];
-    var search_string = "http://127.0.0.1/api/v2/datacatalog/_table/";
+    var search_string = "http://127.0.0.1:81/api/v2/datacatalog/_table/";
     tables.map((table) => {
       var search_request = search_string + table;
       if (query) {

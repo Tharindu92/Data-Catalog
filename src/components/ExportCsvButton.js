@@ -36,7 +36,7 @@ export const ExportCsvButton = ({ dataUrl, fileName }) => {
         return download;
       }}
     >
-      Download me
+      Download
     </CSVLink>
   );
 };

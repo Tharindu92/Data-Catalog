@@ -2,7 +2,7 @@ import React from "react";
 import "../globalcss.css";
 import axios from "axios";
 import { Table } from "react-bootstrap";
-import DatabaseColumnInfo from "./DatabaseColumnInfo";
+import DataAttributeInfo from "./DataAttributeInfo";
 import cookie from "react-cookies";
 const col_headers = ["Name", "Data Type", "% Missing", "Description"];
 
@@ -26,7 +26,7 @@ export default class extends React.Component {
       },
     };
     var search_string =
-      "http://127.0.0.1/api/v2/datacatalog/_table/database_preview?filter=_id%20%3D%20" +
+      "http://127.0.0.1:81/api/v2/datacatalog/_table/database_preview?filter=_id%20%3D%20" +
       this.props.selected_id;
 
     //Axios API call
@@ -81,7 +81,7 @@ export default class extends React.Component {
             )}
           </tbody>
         </Table>
-        <DatabaseColumnInfo column_info={this.state.selected} />
+        <DataAttributeInfo column_info={this.state.selected} />
       </div>
     );
   }

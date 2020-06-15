@@ -12,6 +12,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import axios from "axios";
 import Snackbar from "@material-ui/core/Snackbar";
+import cookie from "react-cookies";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -76,9 +77,9 @@ export default function SignIn() {
     var login = {
       email: state.email,
       password: "123qweasD",
-      duration: 5,
+      duration: 30,
     };
-    var search_string = "http://127.0.0.1/api/v2/user/session";
+    var search_string = "http://127.0.0.1:81/api/v2/user/session";
     //Axios API call
     axios
       .post(search_string, login)
@@ -87,6 +88,14 @@ export default function SignIn() {
         console.log(
           "http://localhost:3000/?session=" + response.data.session_token
         );
+
+        const expires = new Date();
+        expires.setDate(Date.now() + 60 * 30);
+        //save user email in cookie
+        cookie.save("session_email", response.data.email, {
+          path: "/",
+          expires,
+        });
       })
       //if error
       .catch((error) => {

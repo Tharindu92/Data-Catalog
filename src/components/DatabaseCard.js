@@ -46,13 +46,6 @@ export default class extends React.Component {
             border: 0,
           }}
         >
-          <span className="float-left textColor" style={{ fontSize: 10 }}>
-            Rating:
-            <StarIcon style={{ fontSize: 10 }} />
-            <StarIcon style={{ fontSize: 10 }} />
-            <StarIcon style={{ fontSize: 10 }} />
-            <StarIcon style={{ fontSize: 10 }} />
-          </span>
           <span className="float-right textColor" style={{ fontSize: 10 }}>
             Last updated {this.props.database.last_updated.split(" ")[0]}
           </span>

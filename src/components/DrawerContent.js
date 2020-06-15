@@ -7,11 +7,10 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import Tags from "./Tags";
-import DatabasePreview from "./DatabasePreview";
-import DatabaseColumns from "./DatabaseColumns";
-import RatingDisplay from "./RatingDisplay";
+import DataPreview from "./DataPreview";
+import DataAttributes from "./DataAttributes";
 import StarIcon from "@material-ui/icons/Star";
+import AboutDataSet from "./AboutDataSet";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -52,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
 
 //Right Drawer content, input database dict to display data table information
 //sample input, {name:'db name',description:'sample text'....}
-export default function DrawerContent({ database, session_token }) {
+export default function DrawerContent({ database }) {
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
@@ -77,9 +76,9 @@ export default function DrawerContent({ database, session_token }) {
           aria-label="full width tabs example"
         >
           {/* tab headers */}
-          <Tab label="Properties" {...a11yProps(0)} />
-          <Tab label="Preview" {...a11yProps(1)} />
-          <Tab label="Columns" {...a11yProps(2)} />
+          <Tab label="About Dataset" {...a11yProps(0)} />
+          <Tab label="Data Attributes" {...a11yProps(1)} />
+          <Tab label="Data Preview" {...a11yProps(2)} />
         </Tabs>
       </AppBar>
       <SwipeableViews
@@ -89,37 +88,16 @@ export default function DrawerContent({ database, session_token }) {
       >
         {/* content in Properties tab */}
         <TabPanel value={value} index={0} dir={theme.direction}>
-          <h3 className="textColor">Name:</h3>
-          <label>{database.name}</label>
-          <h3 className="textColor">Description:</h3>
-          <p>{database.description}</p>
-          <h3 className="textColor">Tags:</h3>
-          <Tags tags={database.tags} />
-          <br />
-
-          <br />
-
-          <RatingDisplay />
-          <br />
-
-          <br />
-          <h3 className="textColor">Connection Info</h3>
-          <label>Data Source: {database.data_source}</label>
-          <br />
-          <label>Database Name: {database.database_name}</label>
-          <br />
-          <label>Last Updated: {database.last_updated}</label>
-          <br />
-          <label>Last Updated By: {database.last_updated_by}</label>
+          <AboutDataSet database={database} />
         </TabPanel>
         {/* content in Preview tab */}
         <TabPanel value={value} index={1} dir={theme.direction}>
-          <DatabasePreview selected_id={database["_id"]} />
+          Attribute Info
+          <DataAttributes selected_id={database["_id"]} />
         </TabPanel>
         {/* content in Columns tab */}
         <TabPanel value={value} index={2} dir={theme.direction}>
-          Column Info
-          <DatabaseColumns selected_id={database["_id"]} />
+          <DataPreview selected_id={database["_id"]} />
         </TabPanel>
       </SwipeableViews>
     </div>

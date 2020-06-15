@@ -1,0 +1,11 @@
+$responseBody = $event['response']['content'];
+$rating = 0;
+$count = 0;
+foreach ($responseBody['resource'] as $n => $record) {
+ $rating += $record["rating"];
+ $count ++ ;
+}
+$responseBody['resource'] = ["rating"=>$rating,"count"=>$count];
+
+$event['response']['content'] = $responseBody;
+
