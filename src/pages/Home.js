@@ -24,7 +24,7 @@ export default class extends React.Component {
       <div className="align-items-center">
         {/* Search bar  */}
 
-        <Row
+        <row
           className="align-items-center mt-4 pt-4  "
           style={{
             display: "flex",
@@ -41,7 +41,7 @@ export default class extends React.Component {
             </h2>
             <SearchBar session_token={this.state.session} />
           </Col>
-        </Row>
+        </row>
 
         {/* Topics  */}
         <h3
@@ -54,7 +54,7 @@ export default class extends React.Component {
         >
           Topics
         </h3>
-        <Row className="pt-4 mt-4">
+        <row className="pt-4 mt-4">
           <Col
             style={{
               display: "flex",
@@ -135,7 +135,7 @@ export default class extends React.Component {
               Land
             </button>
           </Col>
-        </Row>
+        </row>
       </div>
     );
   }

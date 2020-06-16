@@ -1,7 +1,7 @@
 import React from "react";
 import SearchDisplay from "../components/SearchDisplay";
 import SearchBar from "../components/SearchBar";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Container } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import Hidden from "@material-ui/core/Hidden";
@@ -316,64 +316,67 @@ export default class extends React.Component {
       //When there are results found
       <div>
         {/* Top bar when screen size <= 760 width */}
-        <Hidden mdUp>
-          <Row className="align-items-center mb-3 mt-3 ">
-            <Col md={5} className="ml-2">
-              <SearchBar />
-            </Col>
-            <Col>
-              <SearchSortPortrait
-                sortBy={this.state.sortBy}
-                onChange={this.handleSort}
-              />
-            </Col>
-            <Col>
-              <SearchFilterPortrait
-                filters={this.state.all_filters}
-                handleChange={this.handleFilterChange}
-                selectedFilters={this.state.filter_selection}
-              />
-            </Col>
-          </Row>
-        </Hidden>
-
-        <Row
-          style={{
-            backgroundColor: "#f2f2f2",
-            minHeight: "90vh",
-            maxHeight: "90%vh",
-          }}
-        >
-          {/* Side bar when screen size > 760 width */}
-          <Hidden smDown>
-            <Col md={3} style={{ backgroundColor: "#fff" }}>
-              <div className="mt-3 ml-1">
+        <div className="container-fluid">
+          <Hidden mdUp>
+            <div className="align-items-center row mb-3 mt-3 ">
+              <div md={5} className="ml-2 col">
                 <SearchBar />
-
-                <h4 className="textColor ml-2 mt-4">Sort By:</h4>
-                <SearchSort
+              </div>
+              <div className="col">
+                <SearchSortPortrait
                   sortBy={this.state.sortBy}
                   onChange={this.handleSort}
                 />
-
-                <h4 className="textColor ml-2 mt-4">Filter By:</h4>
-                <SearchFilter
+              </div>
+              <div className="col">
+                <SearchFilterPortrait
                   filters={this.state.all_filters}
-                  handleClick={this.handleFilterChange}
+                  handleChange={this.handleFilterChange}
                   selectedFilters={this.state.filter_selection}
                 />
               </div>
-            </Col>
+            </div>
           </Hidden>
 
-          {/* Search Result List */}
-          <Col className="ml-2 mr-2 mt-2">
-            <label className="textColor ">
-              {this.state.databaseList.length} Results
-            </label>
-            <SearchDisplay databaseList={this.state.searchResult} />
-          </Col>
-        </Row>
+          <div
+            className="row"
+            style={{
+              backgroundColor: "#f2f2f2",
+              minHeight: "90vh",
+              maxHeight: "90%vh",
+            }}
+          >
+            {/* Side bar when screen size > 760 width */}
+            <Hidden smDown>
+              <div className="col-3" style={{ backgroundColor: "#fff" }}>
+                <div className="mt-3 ml-1">
+                  <SearchBar />
+
+                  <h4 className="textColor ml-2 mt-4">Sort By:</h4>
+                  <SearchSort
+                    sortBy={this.state.sortBy}
+                    onChange={this.handleSort}
+                  />
+
+                  <h4 className="textColor ml-2 mt-4">Filter By:</h4>
+                  <SearchFilter
+                    filters={this.state.all_filters}
+                    handleClick={this.handleFilterChange}
+                    selectedFilters={this.state.filter_selection}
+                  />
+                </div>
+              </div>
+            </Hidden>
+
+            {/* Search Result List */}
+            <div className="ml-2 mr-2 mt-2 col">
+              <label className="textColor ">
+                {this.state.databaseList.length} Results
+              </label>
+              <SearchDisplay databaseList={this.state.searchResult} />
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

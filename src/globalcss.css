@@ -88,3 +88,24 @@
 .sortCategories label:checked {
   background-color: #ccc;
 }
+
+/*Footer*/
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 2.5rem;
+  align-content: center;
+  text-align: center;
+}
+
+/*Whole page container*/
+#page-container {
+  position: relative;
+  min-height: 100vh;
+}
+
+/*Content panel*/
+#content-wrap {
+  padding-bottom: 2.5rem; /* Footer height */
+}

@@ -12,7 +12,7 @@ export default class extends React.Component {
     return (
       <Card
         className="mb-1 mt-2 borderColor"
-        style={{ width: "14em", height: "15em" }}
+        style={{ width: "13.5em", height: "15em" }}
       >
         <Card.Body onClick={this.props.function}>
           {/* Data table Name/title */}
