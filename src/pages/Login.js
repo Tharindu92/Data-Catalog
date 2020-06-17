@@ -44,6 +44,7 @@ export default function SignIn() {
     error: "",
     open: false,
     userInfo: "",
+    loginMessage: "message",
   });
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -96,10 +97,22 @@ export default function SignIn() {
           path: "/",
           expires,
         });
+
+        //prompt user to close login tab.
+        setState({
+          ...state,
+          open: true,
+          loginMessage:
+            "Login Successful! Login link has been sent to your email and you may close this tab.",
+        });
       })
       //if error
       .catch((error) => {
-        setState({ ...state, open: true });
+        setState({
+          ...state,
+          open: true,
+          loginMessage: "Unregistered email, please contact administrator.",
+        });
         console.log(error);
       });
 
@@ -124,7 +137,7 @@ export default function SignIn() {
           }}
           open={state.open}
           onClose={handleClose}
-          message="Unregistered email, please contact administrator."
+          message={state.loginMessage}
         />
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
