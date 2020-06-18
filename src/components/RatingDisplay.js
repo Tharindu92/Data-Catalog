@@ -58,7 +58,7 @@ export default function ({ rating, database_id }) {
             },
           };
           var api_string =
-            "http://127.0.0.1:81/api/v2/datacatalog/_table/database_rating";
+            "http://127.0.0.1:82/api/v2/datacatalog/_table/database_rating";
           var content = {
             resource: [
               {

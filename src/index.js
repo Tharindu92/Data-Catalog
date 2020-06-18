@@ -26,7 +26,7 @@ function App() {
       },
     };
     axios
-      .get("http://127.0.0.1:81/api/v2/datacatalog/_schema", options)
+      .get("http://127.0.0.1:82/api/v2/datacatalog/_schema", options)
       .then(() => {
         console.log("Authentication passed");
       })

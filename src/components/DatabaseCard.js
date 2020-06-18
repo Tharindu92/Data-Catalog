@@ -32,7 +32,7 @@ export default class extends React.Component {
           <Tags tags={this.props.database.tags} />
           <div className="float-right textColor mt-1">
             <ExportCsvButton
-              dataUrl="http://127.0.0.1:81/api/v2/datacatalog/_table/data_classified"
+              dataUrl="http://127.0.0.1:82/api/v2/datacatalog/_table/data_classified"
               fileName={this.props.database.name}
             />
           </div>
