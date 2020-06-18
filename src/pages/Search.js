@@ -186,7 +186,14 @@ export default class extends React.Component {
     tables.map((table) => {
       var search_request = search_string + table;
       if (query) {
-        search_request += "?filter=name%20like%20" + query;
+        search_request +=
+          "?filter=(name%20like%20" +
+          query +
+          ")%20or%20(description%20like%20" +
+          query +
+          ")%20or%20(tags%20like%20" +
+          query +
+          ")";
       }
       //Axios API call
       axios
