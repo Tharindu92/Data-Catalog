@@ -18,7 +18,14 @@ export default class extends React.Component {
   handleChange = (e) => {
     this.setState({ ...this.state, value: e.target.value });
   };
-
+  componentDidMount() {
+    if (window.location.href.indexOf("?session=") > 0) {
+      history.push({
+        pathname: "/Search",
+        search: "",
+      });
+    }
+  }
   render() {
     return (
       <div className="align-items-center">

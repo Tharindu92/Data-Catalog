@@ -3,7 +3,7 @@ import Card from "react-bootstrap/Card";
 import Tags from "./Tags";
 import "../globalcss.css";
 import StarIcon from "@material-ui/icons/Star";
-import GetAppIcon from "@material-ui/icons/GetApp";
+
 import { ExportCsvButton } from "./ExportCsvButton";
 // Card component for search results, takes in a database dict and display as a card
 // input example, {name:'db name',description:'sample text',}
@@ -31,8 +31,10 @@ export default class extends React.Component {
         <Card.Body>
           <Tags tags={this.props.database.tags} />
           <div className="float-right textColor mt-1">
-            <GetAppIcon />
-            <ExportCsvButton />
+            <ExportCsvButton
+              dataUrl="http://127.0.0.1:81/api/v2/datacatalog/_table/data_classified"
+              fileName={this.props.database.name}
+            />
           </div>
 
           <br />

@@ -2,7 +2,13 @@ import React from "react";
 import { CSVLink } from "react-csv";
 import axios from "axios";
 import cookie from "react-cookies";
-
+import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import GetAppIcon from "@material-ui/icons/GetApp";
 // headers for api call
 const options = {
   headers: {
@@ -13,30 +19,55 @@ const options = {
 };
 export const ExportCsvButton = ({ dataUrl, fileName }) => {
   const [data, setData] = React.useState([
-    ["name", "dat"],
-    ["fdf", "ddd"],
+    ["Download", "Error"],
+    ["Please Download Again", "."],
   ]);
+  const [open, setOpen] = React.useState(false);
 
+  const handleClickOpen = () => {
+    axios
+      .get(dataUrl, options)
+      .then((response) => {
+        setData(response.data.resource);
+
+        // console.log(download);
+      })
+      //if error
+      .catch((error) => {});
+
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   return (
-    <CSVLink
-      style={{ color: "#264c8c", textDecoration: "none" }}
-      data={data}
-      onClick={() => {
-        var download = false;
-        axios
-          .get(dataUrl, options)
-          .then((response) => {
-            setData(response.data.resource);
-            download = true;
-          })
-          //if error
-          .catch((error) => {
-            download = false;
-          });
-        return download;
-      }}
-    >
-      Download
-    </CSVLink>
+    <div>
+      <GetAppIcon />
+      <label onClick={handleClickOpen}>Download</label>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle id="downloadConfirmationAlert">{"Download"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Click confirm to start downloading the dataset.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Cancel
+          </Button>
+          <Button>
+            <CSVLink
+              style={{ color: "#264c8c", textDecoration: "none" }}
+              data={data}
+              filename={fileName + ".csv"}
+              onClick={() => {}}
+            >
+              Confirm
+            </CSVLink>
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
   );
 };
