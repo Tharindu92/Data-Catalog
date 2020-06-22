@@ -221,11 +221,18 @@ export default class extends React.Component {
         });
     });
   }
+
+  //update components when screen size changes, from landscape to portrait or vice versa
+  resize = () => this.forceUpdate();
+
   //When page loads, call api to get an array of database dict that matches the entered keyword
   componentDidMount() {
     this.getSearchResult();
+    window.addEventListener("resize", this.resize);
   }
-
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.resize);
+  }
   render() {
     if (this.state.loading) {
       // Loading
@@ -325,17 +332,24 @@ export default class extends React.Component {
         {/* Top bar when screen size <= 760 width */}
         <div className="container-fluid">
           <Hidden mdUp>
-            <div className="align-items-center row mb-3 mt-3 ">
-              <div md={5} className="ml-2 col">
+            <div
+              className="align-items-center  mb-3 mt-3 "
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                justifyContent: "center",
+              }}
+            >
+              <div className="ml-2 " style={{ width: "60%", minWidth: 280 }}>
                 <SearchBar />
               </div>
-              <div className="col">
+              <div className="">
                 <SearchSortPortrait
                   sortBy={this.state.sortBy}
                   onChange={this.handleSort}
                 />
               </div>
-              <div className="col">
+              <div className="">
                 <SearchFilterPortrait
                   filters={this.state.all_filters}
                   handleChange={this.handleFilterChange}

@@ -46,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.paper,
     width: 500,
+    maxWidth: "80vw",
   },
 }));
 

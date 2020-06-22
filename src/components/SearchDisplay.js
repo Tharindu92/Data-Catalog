@@ -29,7 +29,7 @@ export default function SearchDisplay({ databaseList, session_token }) {
   };
 
   const drawerContent = () => (
-    <div style={{ width: 500 }}>
+    <div>
       <DrawerContent
         database={selectedDatabase}
         session_token={session_token}
@@ -41,8 +41,8 @@ export default function SearchDisplay({ databaseList, session_token }) {
       <CardDeck
         style={{
           display: "flex",
-          flexDirection: "col",
-          justifyContent: "left",
+          flexWrap: "wrap",
+          height: "100%",
         }}
       >
         {/* for each database dict, input into database card component, and display the information on cards */}
