@@ -1,11 +1,11 @@
+import "react-app-polyfill/ie11";
+import "react-app-polyfill/stable";
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import Routes from "./Routes";
 import Footer from "./components/Footer";
-import "react-app-polyfill/ie11";
-import "react-app-polyfill/stable";
 import "bootstrap/dist/css/bootstrap.min.css";
 import cookie from "react-cookies";
 import history from "./history";
@@ -23,7 +23,7 @@ function App() {
         "Content-Type": "application/json",
         "X-DreamFactory-Session-Token": session_token,
         "X-DreamFactory-Api-Key": api_key,
-      },
+      }
     };
     axios
       .get("http://127.0.0.1:82/api/v2/datacatalog/_schema", options)
@@ -45,11 +45,11 @@ function App() {
     session_token = window.location.href.split("?session=")[1];
     cookie.save("session_token", session_token, {
       path: "/",
-      expires,
+      expires
     });
     cookie.save("api_key", api_key, {
       path: "/",
-      expires,
+      expires
     });
     authenticate(session_token);
     console.log(session_token);
