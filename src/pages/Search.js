@@ -96,7 +96,7 @@ export default class extends React.Component {
 
         const filtered = this.state.databaseList.filter(
           (database) =>
-            database.tags.filter((item) => value.includes(item)).length > 0
+            database.Tags.filter((item) => value.includes(item)).length > 0
         );
 
         this.setState({
@@ -119,7 +119,7 @@ export default class extends React.Component {
         if (checked) {
           const filtered = this.state.databaseList.filter(
             (database) =>
-              database.tags.filter(
+              database.Tags.filter(
                 (value) =>
                   this.state.filter_selection.includes(value) || value === id
               ).length > 0
@@ -146,7 +146,7 @@ export default class extends React.Component {
           } else {
             const filtered = this.state.databaseList.filter(
               (database) =>
-                database.tags.filter(
+                database.Tags.filter(
                   (value) =>
                     this.state.filter_selection.includes(value) && value !== id
                 ).length > 0

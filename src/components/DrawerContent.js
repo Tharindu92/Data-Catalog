@@ -44,7 +44,7 @@ function a11yProps(index) {
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.paper,
-    width: 500,
+    width: 600,
     maxWidth: "80vw",
   },
 }));
@@ -93,7 +93,7 @@ export default function DrawerContent({ database }) {
         {/* content in Preview tab */}
         <TabPanel value={value} index={1} dir={theme.direction}>
           Attribute Info
-          {/* <DataAttributes selected_dataset={database.Collection_Tech_Label} /> */}
+          <DataAttributes selected_dataset={database._id} />
         </TabPanel>
         {/* content in Columns tab */}
         <TabPanel value={value} index={2} dir={theme.direction}>
