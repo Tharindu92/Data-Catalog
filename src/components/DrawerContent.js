@@ -9,7 +9,6 @@ import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import DataPreview from "./DataPreview";
 import DataAttributes from "./DataAttributes";
-import StarIcon from "@material-ui/icons/Star";
 import AboutDataSet from "./AboutDataSet";
 
 function TabPanel(props) {
@@ -94,11 +93,11 @@ export default function DrawerContent({ database }) {
         {/* content in Preview tab */}
         <TabPanel value={value} index={1} dir={theme.direction}>
           Attribute Info
-          <DataAttributes selected_id={database["_id"]} />
+          {/* <DataAttributes selected_dataset={database.Collection_Tech_Label} /> */}
         </TabPanel>
         {/* content in Columns tab */}
         <TabPanel value={value} index={2} dir={theme.direction}>
-          <DataPreview selected_id={database["_id"]} />
+          <DataPreview selected_dataset={database.Collection_Tech_Label} />
         </TabPanel>
       </SwipeableViews>
     </div>

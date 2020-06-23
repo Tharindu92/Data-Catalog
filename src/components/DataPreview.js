@@ -9,12 +9,8 @@ export default class extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      databasePreview: {
-        headers: [],
-        preview: [],
-        num_rows: 0,
-        num_col: 0,
-      }, //database info based on id
+      databasePreview: [], //10 samplerows from dataset
+      header: [],
       filter: "",
     };
     this.handleChange = this.handleChange.bind(this);
@@ -37,8 +33,9 @@ export default class extends React.Component {
     };
     //API url
     var search_string =
-      "http://127.0.0.1:82/api/v2/datacatalog/_table/database_preview?filter=_id%20%3D%20" +
-      this.props.selected_id;
+      "http://127.0.0.1:82/api/v2/datacatalog/_table/" +
+      this.props.selected_dataset;
+    console.log(search_string);
 
     //Axios API call
     axios
@@ -46,8 +43,8 @@ export default class extends React.Component {
       .then((response) => {
         var data = response.data.resource;
 
-        this.setState({ databasePreview: data[0] });
-        console.log(data[0]);
+        this.setState({ header: Object.keys(data[0]), databasePreview: data });
+        console.log(data);
       })
       .catch((error) => {
         console.log(error);
@@ -65,25 +62,23 @@ export default class extends React.Component {
 
         {/* Number of rows and columns of data table */}
         <h5>
-          {this.state.databasePreview.num_cols} Columns x{" "}
-          {this.state.databasePreview.num_rows} Rows
+          {/* {this.state.databasePreview.num_cols} Columns x{" "}
+          {this.state.databasePreview.num_rows} Rows */}
         </h5>
 
         <Table bordered hover size="sm">
           {/* Data table headers */}
           <thead>
             <tr className="bgColor" style={{ fontSize: 12 }}>
-              {Object.entries(this.state.databasePreview.headers).map(
-                ([key, info], id) => (
-                  <th key={id}>{key}</th>
-                )
-              )}
+              {Object.entries(this.state.header).map(([key, name], id) => (
+                <th key={id}>{name}</th>
+              ))}
             </tr>
           </thead>
 
           {/* Data table rows */}
           <tbody className="textColor" style={{ fontSize: 12 }}>
-            {this.state.databasePreview.preview
+            {this.state.databasePreview
               .filter(
                 (item) =>
                   JSON.stringify(item)

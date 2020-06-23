@@ -44,11 +44,11 @@ export default class extends React.Component {
     return (
       <div>
         <h3 className="textColor">Name:</h3>
-        <label>{this.props.database.name}</label>
+        <label>{this.props.database.Collection_Tech_Label}</label>
         <h3 className="textColor">Description:</h3>
-        <p>{this.props.database.description}</p>
+        <p>{this.props.database.Collection_Definition}</p>
         <h3 className="textColor">Tags:</h3>
-        <Tags tags={this.props.database.tags} />
+        <Tags tags={this.props.database.Tags} />
         <br />
 
         <br />
@@ -61,13 +61,13 @@ export default class extends React.Component {
 
         <br />
         <h3 className="textColor">Connection Info</h3>
-        <label>Data Source: {this.props.database.data_source}</label>
+        <label>Data Source: {this.props.database.Last_Updated_Date}</label>
         <br />
-        <label>Database Name: {this.props.database.database_name}</label>
+        <label>Database Name: {this.props.database.Last_Updated_Date}</label>
         <br />
-        <label>Last Updated: {this.props.database.last_updated}</label>
+        <label>Last Updated: {this.props.database.Last_Updated_Date}</label>
         <br />
-        <label>Last Updated By: {this.props.database.last_updated_by}</label>
+        <label>Last Updated By: {this.props.database.Last_Updated_Date}</label>
       </div>
     );
   }

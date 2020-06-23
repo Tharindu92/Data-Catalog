@@ -179,47 +179,44 @@ export default class extends React.Component {
     };
     const query = this.props.location.search.replace("?", "");
 
-    const tables = ["data_unclassified", "data_restricted", "data_classified"];
-
     var unique_tags = ["All"];
-    var search_string = "http://127.0.0.1:82/api/v2/datacatalog/_table/";
-    tables.map((table) => {
-      var search_request = search_string + table;
-      if (query) {
-        search_request +=
-          "?filter=(name%20like%20" +
-          query +
-          ")%20or%20(description%20like%20" +
-          query +
-          ")%20or%20(tags%20like%20" +
-          query +
-          ")";
-      }
-      //Axios API call
-      axios
-        .get(search_request, options)
-        .then((response) => {
-          var data = response.data.resource;
+    var search_string =
+      "http://127.0.0.1:82/api/v2/datacatalog/_table/collection_metadata/";
+    if (query) {
+      search_string +=
+        "?filter=(name%20like%20" +
+        query +
+        ")%20or%20(description%20like%20" +
+        query +
+        ")%20or%20(tags%20like%20" +
+        query +
+        ")";
+    }
 
-          //Get Unique Tags
-          data.map((row) =>
-            row.tags.map((tag) =>
-              unique_tags.includes(tag) ? "" : unique_tags.push(tag)
-            )
-          );
-          this.setState({
-            databaseList: [...this.state.databaseList, ...data],
-            searchResult: [...this.state.searchResult, ...data],
-            loading: false,
-            all_filters: unique_tags,
-          });
-        })
-        //if error
-        .catch((error) => {
-          // this.setState({ error: true });
-          console.log(table + error);
+    //Axios API call
+    axios
+      .get(search_string, options)
+      .then((response) => {
+        var data = response.data.resource;
+        console.log(data);
+        //Get Unique Tags
+        data.map((row) =>
+          row.Tags.map((tag) =>
+            unique_tags.includes(tag) ? "" : unique_tags.push(tag)
+          )
+        );
+        this.setState({
+          databaseList: data,
+          searchResult: data,
+          loading: false,
+          all_filters: unique_tags,
         });
-    });
+      })
+      //if error
+      .catch((error) => {
+        // this.setState({ error: true });
+        console.log(error);
+      });
   }
 
   //update components when screen size changes, from landscape to portrait or vice versa

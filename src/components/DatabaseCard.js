@@ -21,23 +21,24 @@ export default class extends React.Component {
         <Card.Body onClick={this.props.function}>
           {/* Data table Name/title */}
           <Card.Title className="textColor">
-            {this.props.database.name}
+            {this.props.database.Collection_Biz_Label}
           </Card.Title>
 
           {/* Description */}
           <Card.Text style={{ fontSize: 11 }}>
-            {this.props.database.description}. Lorem ipsum dolor sit amet,
-            consectetur adipiscing elit.
+            {this.props.database.Collection_Definition.length > 80
+              ? this.props.database.Collection_Definition.slice(0, 80) + "..."
+              : this.props.database.Collection_Definition}
           </Card.Text>
         </Card.Body>
 
         {/* Tags and download */}
         <Card.Body>
-          <Tags tags={this.props.database.tags} />
+          <Tags tags={this.props.database.Tags} />
           <div className="float-right textColor mt-1">
             <ExportCsvButton
               dataUrl="http://127.0.0.1:82/api/v2/datacatalog/_table/data_classified"
-              fileName={this.props.database.name}
+              fileName={this.props.database.Collection_Biz_Label}
             />
           </div>
 
@@ -53,7 +54,7 @@ export default class extends React.Component {
           }}
         >
           <span className="float-right textColor" style={{ fontSize: 10 }}>
-            Last updated {this.props.database.last_updated.split(" ")[0]}
+            Last updated {this.props.database.Last_Updated_Date.split(" ")[0]}
           </span>
         </Card.Footer>
       </Card>

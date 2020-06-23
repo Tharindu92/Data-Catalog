@@ -9,9 +9,9 @@ import {
   VictoryPie,
 } from "victory";
 
-export default function (column_info) {
-  const info = column_info.column_info;
-  if (column_info.column_info !== undefined) {
+export default function ({ column_info }) {
+  const info = column_info;
+  if (column_info !== undefined) {
     return (
       <div>
         <label>Additional info</label>

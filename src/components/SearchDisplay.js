@@ -59,7 +59,7 @@ export default function SearchDisplay({ databaseList, session_token }) {
       <Drawer
         anchor="right"
         open={state["right"]}
-        onClose={toggleDrawer(false, { tags: [] })}
+        onClose={toggleDrawer(false, { Tags: [] })}
       >
         {drawerContent()}
       </Drawer>
