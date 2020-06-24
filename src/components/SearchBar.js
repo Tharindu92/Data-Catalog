@@ -20,7 +20,6 @@ const dataTables = [
 export default function SearchBar() {
   const location = useLocation();
   const [state, setState] = React.useState({ value: "" });
-  const session_token = cookie.load("session_token");
   //update value shown in search bar input
   const handleChange = (e) => {
     setState({ value: e.target.value });
@@ -32,7 +31,6 @@ export default function SearchBar() {
     history.push({
       pathname: "/Search",
       search: state.value,
-      state: session_token,
     });
 
     if (location.pathname === "/Search") {

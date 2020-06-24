@@ -1,6 +1,6 @@
 import React from "react";
 import SearchBar from "../components/SearchBar";
-import { Row, Col } from "react-bootstrap";
+import { Col } from "react-bootstrap";
 import ApartmentIcon from "@material-ui/icons/Apartment";
 import ReceiptIcon from "@material-ui/icons/Receipt";
 import StorageIcon from "@material-ui/icons/Storage";
@@ -18,21 +18,14 @@ export default class extends React.Component {
   handleChange = (e) => {
     this.setState({ ...this.state, value: e.target.value });
   };
-  componentDidMount() {
-    if (window.location.href.indexOf("?session=") > 0) {
-      history.push({
-        pathname: "/Search",
-        search: "",
-      });
-    }
-  }
+  componentDidMount() {}
   render() {
     return (
       <div className="align-items-center">
         {/* Search bar  */}
 
-        <row
-          className="align-items-center mt-4 pt-4  "
+        <div
+          className="align-items-center mt-4 pt-4  row"
           style={{
             display: "flex",
             justifyContent: "center",
@@ -48,7 +41,7 @@ export default class extends React.Component {
             </h2>
             <SearchBar session_token={this.state.session} />
           </Col>
-        </row>
+        </div>
 
         {/* Topics  */}
         <h3
@@ -61,7 +54,7 @@ export default class extends React.Component {
         >
           Topics
         </h3>
-        <row className="pt-4 mt-4">
+        <div className="pt-4 mt-4 row">
           <Col
             style={{
               display: "flex",
@@ -142,7 +135,7 @@ export default class extends React.Component {
               Land
             </button>
           </Col>
-        </row>
+        </div>
       </div>
     );
   }

@@ -20,11 +20,12 @@ export default class extends React.Component {
       headers: {
         "Content-Type": "application/json",
         "X-DreamFactory-Session-Token": cookie.load("session_token"),
-        "X-DreamFactory-Api-Key": cookie.load("api_key"),
+        "X-DreamFactory-Api-Key": process.env.REACT_APP_DF_APP_KEY,
       },
     };
     var search_string =
-      "http://127.0.0.1:82/api/v2/datacatalog/_table/database_rating?filter=_id%20like%20" +
+      process.env.REACT_APP_API_URL +
+      "api/v2/datacatalog/_table/database_rating?filter=_id%20like%20" +
       this.props.database._id;
 
     //Axios API call

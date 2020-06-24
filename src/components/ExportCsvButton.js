@@ -14,13 +14,13 @@ const options = {
   headers: {
     "Content-Type": "application/json",
     "X-DreamFactory-Session-Token": cookie.load("session_token"),
-    "X-DreamFactory-Api-Key": cookie.load("api_key"),
+    "X-DreamFactory-Api-Key": process.env.REACT_APP_DF_APP_KEY,
   },
 };
 export const ExportCsvButton = ({ dataUrl, fileName }) => {
   const [data, setData] = React.useState([
     ["Download", "Error"],
-    ["Please Download Again", "."],
+    ["Please Contact Administrator", "."],
   ]);
   const [open, setOpen] = React.useState(false);
 
@@ -61,7 +61,9 @@ export const ExportCsvButton = ({ dataUrl, fileName }) => {
               style={{ color: "#264c8c", textDecoration: "none" }}
               data={data}
               filename={fileName + ".csv"}
-              onClick={() => {}}
+              onClick={() => {
+                setOpen(false);
+              }}
             >
               Confirm
             </CSVLink>

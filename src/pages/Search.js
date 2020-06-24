@@ -1,7 +1,7 @@
 import React from "react";
 import SearchDisplay from "../components/SearchDisplay";
 import SearchBar from "../components/SearchBar";
-import { Row, Col, Container } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import Hidden from "@material-ui/core/Hidden";
@@ -174,21 +174,25 @@ export default class extends React.Component {
       headers: {
         "Content-Type": "application/json",
         "X-DreamFactory-Session-Token": cookie.load("session_token"),
-        "X-DreamFactory-Api-Key": cookie.load("api_key"),
+        "X-DreamFactory-Api-Key": process.env.REACT_APP_DF_APP_KEY,
       },
     };
-    const query = this.props.location.search.replace("?", "");
+    var query = "";
+    if (this.props.location.search.indexOf("session") < 0) {
+      query = this.props.location.search.replace("?", "");
+    }
 
     var unique_tags = ["All"];
     var search_string =
-      "http://127.0.0.1:82/api/v2/datacatalog/_table/collection_metadata/";
+      process.env.REACT_APP_API_URL +
+      "api/v2/datacatalog/_table/collection_metadata/";
     if (query) {
       search_string +=
-        "?filter=(name%20like%20" +
+        "?filter=(Collection_Biz_Label%20like%20" +
         query +
-        ")%20or%20(description%20like%20" +
+        ")%20or%20(Collection_Definition%20like%20" +
         query +
-        ")%20or%20(tags%20like%20" +
+        ")%20or%20(Tags%20like%20" +
         query +
         ")";
     }
@@ -198,7 +202,7 @@ export default class extends React.Component {
       .get(search_string, options)
       .then((response) => {
         var data = response.data.resource;
-        console.log(data);
+
         //Get Unique Tags
         data.map((row) =>
           row.Tags.map((tag) =>

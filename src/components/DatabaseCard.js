@@ -37,7 +37,11 @@ export default class extends React.Component {
           <Tags tags={this.props.database.Tags} />
           <div className="float-right textColor mt-1">
             <ExportCsvButton
-              dataUrl="http://127.0.0.1:82/api/v2/datacatalog/_table/data_classified"
+              dataUrl={
+                process.env.REACT_APP_API_URL +
+                "/api/v2/datacatalog/_table/" +
+                this.props.database.Collection_Tech_Label
+              }
               fileName={this.props.database.Collection_Biz_Label}
             />
           </div>

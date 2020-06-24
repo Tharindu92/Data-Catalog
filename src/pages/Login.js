@@ -55,39 +55,26 @@ export default function SignIn() {
   };
 
   function sendMail(session_token) {
-    var mailOptions = {
-      service_id: "wadawiz_gmail_com",
-      template_id: "otp",
-      user_id: "user_fRgH9aiv9ZgBqcL8D9tWV",
-      template_params: {
-        toMail: state.email,
-        token: session_token,
-      },
-    };
-    axios
-      .post("https://api.emailjs.com/api/v1.0/email/send", mailOptions)
-      .then(() => {
-        console.log("Mail sent!");
-      })
-      .catch((error) => {
-        console.log("Oops... " + error);
-      });
+    //send mail function
   }
 
   function processLogin() {
     var login = {
       email: state.email,
-      password: "123qweasD",
+      password: process.env.REACT_APP_DF_PASSWORD,
       duration: 30,
     };
-    var search_string = "http://127.0.0.1:82/api/v2/user/session";
+    var search_string = process.env.REACT_APP_API_URL + "api/v2/user/session";
     //Axios API call
     axios
       .post(search_string, login)
       .then((response) => {
         // sendMail(response.data.session_token);
         console.log(
-          "http://localhost:3000/?session=" + response.data.session_token
+          "http://localhost:" +
+            process.env.REACT_APP_DEV_PORT +
+            "/Search?session=" +
+            response.data.session_token
         );
 
         const expires = new Date();
@@ -115,8 +102,6 @@ export default function SignIn() {
         });
         console.log(error);
       });
-
-    console.log(state.session_token);
   }
 
   const handleClose = () => {

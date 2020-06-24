@@ -11,9 +11,6 @@ import cookie from "react-cookies";
 import history from "./history";
 import axios from "axios";
 
-const api_key =
-  "6498a8ad1beb9d84d63035c5d1120c007fad6de706734db9689f8996707e0f7d";
-
 function App() {
   //authenicate user with token
   function authenticate(session_token) {
@@ -22,11 +19,14 @@ function App() {
       headers: {
         "Content-Type": "application/json",
         "X-DreamFactory-Session-Token": session_token,
-        "X-DreamFactory-Api-Key": api_key,
-      }
+        "X-DreamFactory-Api-Key": process.env.REACT_APP_DF_APP_KEY,
+      },
     };
     axios
-      .get("http://127.0.0.1:82/api/v2/datacatalog/_schema", options)
+      .get(
+        process.env.REACT_APP_API_URL + "api/v2/datacatalog/_schema",
+        options
+      )
       .then(() => {
         console.log("Authentication passed");
       })
@@ -45,12 +45,9 @@ function App() {
     session_token = window.location.href.split("?session=")[1];
     cookie.save("session_token", session_token, {
       path: "/",
-      expires
+      expires,
     });
-    cookie.save("api_key", api_key, {
-      path: "/",
-      expires
-    });
+
     authenticate(session_token);
     console.log(session_token);
   } else if (session_token) {
