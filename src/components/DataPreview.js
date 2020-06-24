@@ -88,7 +88,7 @@ export default class extends React.Component {
               .map((row, id) => (
                 <tr key={id}>
                   {Object.entries(row).map(([key, value]) => (
-                    <td key={key}>{value}</td>
+                    <td key={key}>{value.toString()}</td>
                   ))}
                 </tr>
               ))}
