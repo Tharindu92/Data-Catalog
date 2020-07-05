@@ -15,6 +15,7 @@ function App() {
   //authenicate user with token
   function authenticate(session_token) {
     // headers for api call
+
     const options = {
       headers: {
         "Content-Type": "application/json",
@@ -22,6 +23,7 @@ function App() {
         "X-DreamFactory-Api-Key": process.env.REACT_APP_DF_APP_KEY,
       },
     };
+
     axios
       .get(
         process.env.REACT_APP_API_URL + "api/v2/datacatalog/_schema",
@@ -70,4 +72,4 @@ function App() {
   );
 }
 
-ReactDOM.render(React.createElement(App), document.querySelector("#root"));
+ReactDOM.render(<App />, document.querySelector("#root"));

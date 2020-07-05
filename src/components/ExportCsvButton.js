@@ -9,6 +9,24 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import GetAppIcon from "@material-ui/icons/GetApp";
+
+const confirmBtn = {
+  color: "#264c8c",
+  textDecoration: "none",
+  fontSize: "1em",
+  marginBottom: "2px",
+  paddingRight: "1em",
+};
+
+const cancelBtn = {
+  color: "#264c8c",
+  textDecoration: "none",
+  fontSize: "1em",
+  marginBottom: "2px",
+  paddingRight: "1em",
+  backgroundColor: "#fff",
+  border: "none",
+};
 // headers for api call
 const options = {
   headers: {
@@ -30,10 +48,12 @@ export const ExportCsvButton = ({ dataUrl, fileName }) => {
       .then((response) => {
         setData(response.data.resource);
 
-        // console.log(download);
+        console.log(response.data.resource);
       })
       //if error
-      .catch((error) => {});
+      .catch((error) => {
+        console.log(error);
+      });
 
     setOpen(true);
   };
@@ -53,21 +73,19 @@ export const ExportCsvButton = ({ dataUrl, fileName }) => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Cancel
-          </Button>
-          <Button>
-            <CSVLink
-              style={{ color: "#264c8c", textDecoration: "none" }}
-              data={data}
-              filename={fileName + ".csv"}
-              onClick={() => {
-                setOpen(false);
-              }}
-            >
-              Confirm
-            </CSVLink>
-          </Button>
+          <button style={cancelBtn} onClick={handleClose} color="primary">
+            CANCEL
+          </button>
+          <CSVLink
+            style={confirmBtn}
+            data={data}
+            filename={fileName + ".csv"}
+            onClick={() => {
+              setOpen(false);
+            }}
+          >
+            CONFIRM
+          </CSVLink>
         </DialogActions>
       </Dialog>
     </div>

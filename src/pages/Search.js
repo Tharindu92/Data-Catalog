@@ -11,6 +11,7 @@ import SearchSortPortrait from "../components/SearchSortPortrait";
 import SearchFilterPortrait from "../components/SearchFilterPortrait";
 
 import cookie from "react-cookies";
+
 export default class extends React.Component {
   constructor(props) {
     super(props);
