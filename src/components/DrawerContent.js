@@ -10,7 +10,7 @@ import Box from "@material-ui/core/Box";
 import DataPreview from "./DataPreview";
 import DataAttributes from "./DataAttributes";
 import AboutDataSet from "./AboutDataSet";
-
+import DataSetComments from "./DataSetComments";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -89,6 +89,7 @@ export default function DrawerContent({ database }) {
         {/* content in Properties tab */}
         <TabPanel value={value} index={0} dir={theme.direction}>
           <AboutDataSet database={database} />
+          <DataSetComments database={database} />
         </TabPanel>
         {/* content in Preview tab */}
         <TabPanel value={value} index={1} dir={theme.direction}>
