@@ -13,8 +13,9 @@ export default class extends React.Component {
       },
       rating: 0,
     };
+    this.getRating = this.getRating.bind(this);
   }
-  componentDidMount() {
+  getRating() {
     // headers for api call
     const options = {
       headers: {
@@ -40,6 +41,9 @@ export default class extends React.Component {
         console.log(error);
       });
   }
+  componentDidMount() {
+    this.getRating();
+  }
 
   render() {
     return (
@@ -57,6 +61,7 @@ export default class extends React.Component {
         <RatingDisplay
           rating={this.state.rating}
           database_id={this.props.database._id}
+          getRating={this.getRating}
         />
         <br />
 

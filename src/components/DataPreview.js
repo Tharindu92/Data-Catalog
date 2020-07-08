@@ -45,7 +45,6 @@ export default class extends React.Component {
         var data = response.data.resource;
 
         this.setState({ header: Object.keys(data[0]), databasePreview: data });
-        console.log(data);
       })
       .catch((error) => {
         console.log(error);

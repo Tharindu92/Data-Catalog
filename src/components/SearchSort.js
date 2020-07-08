@@ -4,10 +4,8 @@ import "../globalcss.css";
 import { Form } from "react-bootstrap";
 
 const sortOptions = {
-  1: "Name Ascending",
-  2: "Name Decending",
-  3: "Date Ascending",
-  4: "Date Decending",
+  1: "Name A-Z",
+  2: "Name Z-A",
 };
 
 //style for the tag chips

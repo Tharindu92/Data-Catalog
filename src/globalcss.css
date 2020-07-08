@@ -61,10 +61,12 @@
   /* text-align: center; */
   border: 1px solid#264c8c;
   border-radius: 50px;
+  max-width: 140px;
   color: #264c8c;
-  font-size: 10px;
+  font-size: 1em;
   width: 45%;
   background-color: white;
+  text-align: center;
 }
 
 .sortCategories input[type="checkbox"] {
@@ -79,10 +81,6 @@
   position: relative;
   cursor: pointer;
   right: 8px;
-  /* display: block;
-  position: relative; */
-
-  /* padding: 2px 2px 2px 2px; */
 }
 
 .sortCategories label:checked {

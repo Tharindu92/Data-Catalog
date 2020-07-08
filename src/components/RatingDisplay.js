@@ -21,9 +21,13 @@ const useStyles = makeStyles({
     display: "flex",
     alignItems: "center",
   },
+  ratingNumber: {
+    color: "#264c8c",
+    fontSize: "1.5em",
+  },
 });
 
-export default function ({ rating, database_id }) {
+export default function ({ rating, database_id, getRating }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -72,13 +76,18 @@ export default function ({ rating, database_id }) {
           //Axios API call
           axios
             .put(api_string, content, options)
-            .then((response) => {})
+            .then((response) => {
+              getRating();
+            })
             .catch((error) => {});
           setOpen(true);
         }}
         icon={<StarIcon fontSize="inherit" />}
         size="large"
-      />
+      />{" "}
+      {/* <label className={classes.ratingNumber}>
+        {rating ? rating.toFixed(2) : "Unrated"}
+      </label> */}
     </div>
   );
 }

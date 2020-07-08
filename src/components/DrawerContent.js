@@ -1,4 +1,5 @@
 import React from "react";
+import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
@@ -44,8 +45,8 @@ function a11yProps(index) {
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.paper,
-    width: 600,
-    maxWidth: "80vw",
+    width: 500,
+    maxWidth: "90vw",
   },
 }));
 
@@ -64,8 +65,18 @@ export default function DrawerContent({ database }) {
     setValue(index);
   };
 
+  const changeWidthShort = (e) => {
+    let element = document.getElementById("drawerContent");
+    ReactDOM.findDOMNode(element).style.width = "500px";
+  };
+
+  const changeWidthLong = () => {
+    let element = document.getElementById("drawerContent");
+    ReactDOM.findDOMNode(element).style.width = "1000px";
+  };
+
   return (
-    <div className={classes.root}>
+    <div id="drawerContent" className={classes.root}>
       <AppBar position="static" color="default">
         <Tabs
           value={value}
@@ -73,12 +84,23 @@ export default function DrawerContent({ database }) {
           indicatorColor="primary"
           textColor="primary"
           variant="fullWidth"
-          aria-label="full width tabs example"
         >
           {/* tab headers */}
-          <Tab label="About Dataset" {...a11yProps(0)} />
-          <Tab label="Data Attributes" {...a11yProps(1)} />
-          <Tab label="Data Preview" {...a11yProps(2)} />
+          <Tab
+            label="About Dataset"
+            {...a11yProps(0)}
+            onClick={changeWidthShort}
+          />
+          <Tab
+            label="Data Attributes"
+            {...a11yProps(1)}
+            onClick={changeWidthLong}
+          />
+          <Tab
+            label="Data Preview"
+            {...a11yProps(2)}
+            onClick={changeWidthLong}
+          />
         </Tabs>
       </AppBar>
       <SwipeableViews
@@ -91,12 +113,12 @@ export default function DrawerContent({ database }) {
           <AboutDataSet database={database} />
           <DataSetComments database={database} />
         </TabPanel>
-        {/* content in Preview tab */}
+        {/* content in Columns tab */}
         <TabPanel value={value} index={1} dir={theme.direction}>
           Attribute Info
           <DataAttributes selected_dataset={database._id} />
         </TabPanel>
-        {/* content in Columns tab */}
+        {/* content in Preview tab */}
         <TabPanel value={value} index={2} dir={theme.direction}>
           <DataPreview selected_dataset={database.Collection_Tech_Label} />
         </TabPanel>

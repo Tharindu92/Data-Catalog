@@ -46,31 +46,31 @@ export default class extends React.Component {
 
   sortByNameAsc() {
     const sorted = this.state.searchResult.sort((a, b) =>
-      a.name.localeCompare(b.name)
+      a.Collection_Biz_Label.localeCompare(b.Collection_Biz_Label)
     );
     this.setState({ ...this.state, searchResult: sorted, sortBy: 1 });
   }
 
   sortByNameDesc() {
     const sorted = this.state.searchResult.sort((a, b) =>
-      b.name.localeCompare(a.name)
+      b.Collection_Biz_Label.localeCompare(a.Collection_Biz_Label)
     );
     this.setState({ ...this.state, searchResult: sorted, sortBy: 2 });
   }
 
-  sortByDateAsc() {
-    const sorted = this.state.searchResult.sort(
-      (a, b) => new Date(a.last_updated) - new Date(b.last_updated)
-    );
-    this.setState({ ...this.state, searchResult: sorted, sortBy: 3 });
-  }
+  // sortByDateAsc() {
+  //   const sorted = this.state.searchResult.sort(
+  //     (a, b) => new Date(a.last_updated) - new Date(b.last_updated)
+  //   );
+  //   this.setState({ ...this.state, searchResult: sorted, sortBy: 3 });
+  // }
 
-  sortByDateDesc() {
-    const sorted = this.state.searchResult.sort(
-      (a, b) => new Date(b.last_updated) - new Date(a.last_updated)
-    );
-    this.setState({ ...this.state, searchResult: sorted, sortBy: 4 });
-  }
+  // sortByDateDesc() {
+  //   const sorted = this.state.searchResult.sort(
+  //     (a, b) => new Date(b.last_updated) - new Date(a.last_updated)
+  //   );
+  //   this.setState({ ...this.state, searchResult: sorted, sortBy: 4 });
+  // }
 
   //Filtering
   handleFilterChange(e) {
@@ -342,7 +342,7 @@ export default class extends React.Component {
                 justifyContent: "center",
               }}
             >
-              <div className="ml-2 " style={{ width: "60%", minWidth: 280 }}>
+              <div className="ml-2 " style={{ width: "50%", minWidth: 280 }}>
                 <SearchBar />
               </div>
               <div className="">

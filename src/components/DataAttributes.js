@@ -39,7 +39,7 @@ export default class extends React.Component {
       .get(search_string, options)
       .then((response) => {
         var data = response.data.resource;
-        console.log(data);
+
         this.setState({ ...this.state, databAttributes: data });
       })
       .catch((error) => {
@@ -72,8 +72,8 @@ export default class extends React.Component {
                   }
                   key={id}
                 >
-                  <td>{attributes.Attribute_tech_label}</td>
-                  <td>{attributes.Attribute_biz_label}</td>
+                  <td>{attributes.Attribute_name}</td>
+                  <td>{attributes.Business_name}</td>
                   <td>{attributes.Data_type}</td>
                   <td>{attributes.Attribute_definition}</td>
                   <td>{attributes.Attribute_classification}</td>
