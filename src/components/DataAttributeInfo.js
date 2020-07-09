@@ -16,40 +16,9 @@ export default function ({ column_info }) {
       <div>
         <label>Additional info</label>
         <br />
-        <Row>
-          <Col>
-            <label className="textColor">Description:</label>
-            <br />
-            <label>{info.description}</label>
-          </Col>
-        </Row>
         <Row className="mt-2">
           <Col>
-            <label className="textColor">Display Name:</label>
-            <br />
-            <label>{info.display_name}</label>
-          </Col>
-          <Col>
-            <label className="textColor">Variable Name:</label>
-            <br />
-            <label>{info.variable_name}</label>
-          </Col>
-        </Row>
-        <Row className="mt-2">
-          <Col>
-            <label className="textColor">Data Format:</label>
-            <br />
-            <label>{info.data_format}</label>
-          </Col>
-          <Col>
-            <label className="textColor">Data Sample:</label>
-            <br />
-            <label>{info.data_sample}</label>
-          </Col>
-        </Row>
-        <Row className="mt-2">
-          <Col>
-            <label className="textColor">Unique Values:</label>
+            <label className="textColor">Empty Values:</label>
             <br />
             <VictoryPie
               colorScale={[
@@ -61,7 +30,10 @@ export default function ({ column_info }) {
               ]}
               padAngle={({ datum }) => datum.y}
               innerRadius={100}
-              data={info.unique_values}
+              data={[
+                { x: 1, y: 1, label: "Empty" },
+                { x: 1, y: 9, label: "Non-Empty" },
+              ]}
             />
           </Col>
           <Col>
@@ -69,34 +41,35 @@ export default function ({ column_info }) {
             <VictoryChart theme={VictoryTheme.material} domainPadding={20}>
               <VictoryBar
                 style={{ data: { strokeWidth: 0, fill: "#264c8c" } }}
-                data={info.most_occurence}
+                data={[
+                  { x: "Category A", y: 8 },
+                  { x: "Category AA", y: 3 },
+                  { x: "Category AB", y: 2 },
+                ]}
               />
             </VictoryChart>
           </Col>
         </Row>
         <Row className="mt-2">
           <Col>
-            <label className="textColor">Trend:</label>
-            <VictoryChart
-            // theme={VictoryTheme.material}
-            >
-              <VictoryLine
-                style={{
-                  data: { stroke: "#264c8c" },
-                  parent: { border: "2px solid #ccc" },
-                }}
-                data={info.trend}
-              />
-            </VictoryChart>
+            <label className="textColor">Unique Values:</label>
+            <VictoryPie
+              colorScale={[
+                "#27145B",
+                "264c8c",
+                "#42759D",
+                "#7AB8BD",
+                "#97CDC6",
+              ]}
+              padAngle={({ datum }) => datum.y}
+              innerRadius={100}
+              data={[
+                { x: 1, y: 2, label: "Non-Unique" },
+                { x: 2, y: 8, label: "Unique" },
+              ]}
+            />
           </Col>
           <Col>{/* <label className="textColor">Chart3:</label> */}</Col>
-        </Row>
-        <Row className="mt-2">
-          <Col>
-            <label className="textColor">Remarks:</label>
-            <br />
-            <label>{info.remarks}</label>
-          </Col>
         </Row>
       </div>
     );

@@ -13,6 +13,7 @@
     "bcryptjs": "^2.4.3",
     "bootstrap": "^4.4.1",
     "file-saver": "^2.0.2",
+    "material-ui-popup-state": "^1.6.1",
     "react": "^16.13.0",
     "react-bootstrap": "^1.0.0-beta.17",
     "react-cookies": "^0.1.1",

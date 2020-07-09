@@ -67,13 +67,15 @@ export default class extends React.Component {
 
         <br />
         <h3 className="textColor">Connection Info</h3>
-        <label>Data Source: {this.props.database.Last_Updated_Date}</label>
+        <label>Creation Date: {this.props.database.Creation_Date}</label>
         <br />
-        <label>Database Name: {this.props.database.Last_Updated_Date}</label>
+        <label>File Size: {this.props.database.File_Size}</label>
+        <br />
+        <label>
+          Formats Available: {this.props.database.Formats_Available}
+        </label>
         <br />
         <label>Last Updated: {this.props.database.Last_Updated_Date}</label>
-        <br />
-        <label>Last Updated By: {this.props.database.Last_Updated_Date}</label>
       </div>
     );
   }
