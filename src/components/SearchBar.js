@@ -10,19 +10,20 @@ import TextField from "@material-ui/core/TextField";
 import cookie from "react-cookies";
 import { useLocation } from "react-router-dom";
 const dataTables = [
-  { name: "Overall Transaction Data 2019" },
-  { name: "Housing Data 2019" },
-  { name: "JMAP Customer" },
-  { name: "JMAP Product" },
-  { name: "JMAP Transaction" },
+  { name: "Customer Base" },
+  { name: "Land Products" },
+  { name: "Product_Building" },
+  { name: "Product_Space" },
+  { name: "Product_Landbased" },
 ];
 
-export default function SearchBar() {
+export default function SearchBar({ dataSets, handleSearchChange }) {
   const location = useLocation();
   const [state, setState] = React.useState({ value: "" });
   //update value shown in search bar input
   const handleChange = (e) => {
     setState({ value: e.target.value });
+    handleSearchChange(e.target.value);
   };
 
   //Navigate to search page
@@ -53,8 +54,8 @@ export default function SearchBar() {
         size="small"
         style={{ flex: 1 }}
         className="ml-4 mb-2"
-        options={dataTables}
-        getOptionLabel={(option) => option.name}
+        options={dataSets}
+        getOptionLabel={(option) => option.Collection_Biz_Label}
         renderInput={(params) => (
           <TextField
             {...params}

@@ -16,18 +16,23 @@ export default class extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      databaseList: [], //database list related to keyword
+      databaseList: [{ Collection_Biz_Label: "" }], //database list related to keyword
       searchResult: [], //filtered version based on selected filters/sorts
       loading: true,
       error: false,
       all_filters: ["All"], //All unique tags from search results
       filter_selection: ["All"], //Selected filter list
       sortBy: "",
+      searchValue: "",
     };
 
     this.handleFilterChange = this.handleFilterChange.bind(this);
     this.handleSort = this.handleSort.bind(this);
     this.getSearchResult = this.getSearchResult.bind(this);
+    this.handleSearchChange = this.handleSearchChange.bind(this);
+  }
+  handleSearchChange(value) {
+    this.setState({ ...this.state, searchValue: value.toLowerCase() });
   }
 
   //Sorting
@@ -258,7 +263,7 @@ export default class extends React.Component {
           <Hidden mdUp>
             <Row className="align-items-center mb-3 mt-3 ">
               <Col md={5} className="ml-2">
-                <SearchBar />
+                <SearchBar dataSets={this.state.databaseList} />
               </Col>
               <Col>
                 <SearchSortPortrait
@@ -304,7 +309,7 @@ export default class extends React.Component {
             >
               <Col md={3} style={{ backgroundColor: "#fff" }}>
                 <div className="mt-3 ml-1">
-                  <SearchBar />
+                  <SearchBar dataSets={this.state.databaseList} />
 
                   <h4 className="textColor ml-2 mt-4">Sort By:</h4>
                   <SearchSort
@@ -335,7 +340,7 @@ export default class extends React.Component {
         <div className="container-fluid">
           <Hidden mdUp>
             <div
-              className="align-items-center  mb-3 mt-3 "
+              className="align-items-center  mb-3 mt-3 row"
               style={{
                 display: "flex",
                 flexWrap: "wrap",
@@ -343,7 +348,10 @@ export default class extends React.Component {
               }}
             >
               <div className="ml-2 " style={{ width: "50%", minWidth: 280 }}>
-                <SearchBar />
+                <SearchBar
+                  dataSets={this.state.databaseList}
+                  handleSearchChange={this.handleSearchChange}
+                />
               </div>
               <div className="">
                 <SearchSortPortrait
@@ -373,7 +381,10 @@ export default class extends React.Component {
             <Hidden smDown>
               <div className="col-3" style={{ backgroundColor: "#fff" }}>
                 <div className="mt-3 ml-1">
-                  <SearchBar />
+                  <SearchBar
+                    dataSets={this.state.databaseList}
+                    handleSearchChange={this.handleSearchChange}
+                  />
 
                   <h4 className="textColor ml-2 mt-4">Sort By:</h4>
                   <SearchSort
@@ -396,7 +407,14 @@ export default class extends React.Component {
               <label className="textColor ">
                 {this.state.databaseList.length} Results
               </label>
-              <SearchDisplay databaseList={this.state.searchResult} />
+              <SearchDisplay
+                databaseList={this.state.searchResult.filter(
+                  (item) =>
+                    JSON.stringify(item)
+                      .toLocaleLowerCase()
+                      .indexOf(this.state.searchValue) > -1
+                )}
+              />
             </div>
           </div>
         </div>
