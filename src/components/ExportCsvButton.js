@@ -9,6 +9,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import GetAppIcon from "@material-ui/icons/GetApp";
+import { apiHeader } from "../connectionInfo";
 
 const confirmBtn = {
   color: "#264c8c",
@@ -27,14 +28,7 @@ const cancelBtn = {
   backgroundColor: "#fff",
   border: "none",
 };
-// headers for api call
-const options = {
-  headers: {
-    "Content-Type": "application/json",
-    "X-DreamFactory-Session-Token": cookie.load("session_token"),
-    "X-DreamFactory-Api-Key": process.env.REACT_APP_DF_APP_KEY,
-  },
-};
+
 export const ExportCsvButton = ({ dataUrl, fileName }) => {
   const [data, setData] = React.useState([
     ["Download", "Error"],
@@ -44,7 +38,7 @@ export const ExportCsvButton = ({ dataUrl, fileName }) => {
 
   const handleClickOpen = () => {
     axios
-      .get(dataUrl, options)
+      .get(dataUrl, apiHeader)
       .then((response) => {
         setData(response.data.resource);
 

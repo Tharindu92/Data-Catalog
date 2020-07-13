@@ -10,24 +10,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import cookie from "react-cookies";
 import history from "./history";
 import axios from "axios";
-
+import { apiHeader } from "./connectionInfo";
 function App() {
   //authenicate user with token
   function authenticate(session_token) {
-    // headers for api call
-
-    const options = {
-      headers: {
-        "Content-Type": "application/json",
-        "X-DreamFactory-Session-Token": session_token,
-        "X-DreamFactory-Api-Key": process.env.REACT_APP_DF_APP_KEY,
-      },
-    };
-
     axios
       .get(
         process.env.REACT_APP_API_URL + "api/v2/datacatalog/_schema",
-        options
+        apiHeader
       )
       .then(() => {
         console.log("Authentication passed");

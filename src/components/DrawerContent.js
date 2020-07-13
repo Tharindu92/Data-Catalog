@@ -115,7 +115,6 @@ export default function DrawerContent({ database }) {
         </TabPanel>
         {/* content in Columns tab */}
         <TabPanel value={value} index={1} dir={theme.direction}>
-          Attribute Info
           <DataAttributes selected_dataset={database._id} />
         </TabPanel>
         {/* content in Preview tab */}

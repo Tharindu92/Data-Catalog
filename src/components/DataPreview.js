@@ -4,7 +4,7 @@ import axios from "axios";
 import { Table } from "react-bootstrap";
 import cookie from "react-cookies";
 import TextField from "@material-ui/core/TextField";
-
+import { apiHeader } from "../connectionInfo";
 export default class extends React.Component {
   constructor(props) {
     super(props);
@@ -16,31 +16,22 @@ export default class extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
   handleChange(e) {
-    const value = e.target.value;
+    const value = e.target.value.toLowerCase();
     this.setState({
       ...this.state,
       filter: value,
     });
   }
   componentDidMount() {
-    // headers for api call
-    const options = {
-      headers: {
-        "Content-Type": "application/json",
-        "X-DreamFactory-Session-Token": cookie.load("session_token"),
-        "X-DreamFactory-Api-Key": process.env.REACT_APP_DF_APP_KEY,
-      },
-    };
     //API url
     var search_string =
       process.env.REACT_APP_API_URL +
       "api/v2/datacatalog/_table/" +
       this.props.selected_dataset;
-    console.log(search_string);
 
     //Axios API call
     axios
-      .get(search_string, options)
+      .get(search_string, apiHeader)
       .then((response) => {
         var data = response.data.resource;
 

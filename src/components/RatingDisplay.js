@@ -6,6 +6,8 @@ import { withStyles, makeStyles } from "@material-ui/core/styles";
 import Snackbar from "@material-ui/core/Snackbar";
 import axios from "axios";
 import cookie from "react-cookies";
+import { apiHeader } from "../connectionInfo";
+
 const StyledRating = withStyles({
   iconFilled: {
     color: "#264c8c",
@@ -53,14 +55,6 @@ export default function ({ rating, database_id, getRating }) {
         precision={0.5}
         onChange={(event, newValue) => {
           var id = cookie.load("session_email").split("@")[0] + database_id;
-          // headers for api call
-          const options = {
-            headers: {
-              "Content-Type": "application/json",
-              "X-DreamFactory-Session-Token": cookie.load("session_token"),
-              "X-DreamFactory-Api-Key": process.env.REACT_APP_DF_APP_KEY,
-            },
-          };
           var api_string =
             process.env.REACT_APP_API_URL +
             "api/v2/datacatalog/_table/database_rating";
@@ -75,7 +69,7 @@ export default function ({ rating, database_id, getRating }) {
 
           //Axios API call
           axios
-            .put(api_string, content, options)
+            .put(api_string, content, apiHeader)
             .then((response) => {
               getRating();
             })

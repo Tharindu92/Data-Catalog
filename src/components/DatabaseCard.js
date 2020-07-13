@@ -2,7 +2,6 @@ import React from "react";
 import Card from "react-bootstrap/Card";
 import Tags from "./Tags";
 import "../globalcss.css";
-import StarIcon from "@material-ui/icons/Star";
 
 import { ExportCsvButton } from "./ExportCsvButton";
 // Card component for search results, takes in a database dict and display as a card

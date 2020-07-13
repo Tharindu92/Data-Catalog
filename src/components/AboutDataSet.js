@@ -4,6 +4,7 @@ import axios from "axios";
 import cookie from "react-cookies";
 import RatingDisplay from "./RatingDisplay";
 import Tags from "./Tags";
+import { apiHeader } from "../connectionInfo";
 export default class extends React.Component {
   constructor(props) {
     super(props);
@@ -16,14 +17,6 @@ export default class extends React.Component {
     this.getRating = this.getRating.bind(this);
   }
   getRating() {
-    // headers for api call
-    const options = {
-      headers: {
-        "Content-Type": "application/json",
-        "X-DreamFactory-Session-Token": cookie.load("session_token"),
-        "X-DreamFactory-Api-Key": process.env.REACT_APP_DF_APP_KEY,
-      },
-    };
     var search_string =
       process.env.REACT_APP_API_URL +
       "api/v2/datacatalog/_table/database_rating?filter=_id%20like%20" +
@@ -31,7 +24,7 @@ export default class extends React.Component {
 
     //Axios API call
     axios
-      .get(search_string, options)
+      .get(search_string, apiHeader)
       .then((response) => {
         var average_rating =
           response.data.resource.rating / response.data.resource.count;

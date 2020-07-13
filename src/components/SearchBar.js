@@ -7,15 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../globalcss.css";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import TextField from "@material-ui/core/TextField";
-import cookie from "react-cookies";
 import { useLocation } from "react-router-dom";
-const dataTables = [
-  { name: "Customer Base" },
-  { name: "Land Products" },
-  { name: "Product_Building" },
-  { name: "Product_Space" },
-  { name: "Product_Landbased" },
-];
 
 export default function SearchBar({ dataSets, handleSearchChange }) {
   const location = useLocation();

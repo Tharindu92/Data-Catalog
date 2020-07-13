@@ -4,10 +4,11 @@ import axios from "axios";
 import { Table } from "react-bootstrap";
 import DataAttributeInfo from "./DataAttributeInfo";
 import Popover from "@material-ui/core/Popover";
-import Typography from "@material-ui/core/Typography";
 import PopupState, { bindTrigger, bindPopover } from "material-ui-popup-state";
-import cookie from "react-cookies";
 import Box from "@material-ui/core/Box";
+import TextField from "@material-ui/core/TextField";
+import { apiHeader } from "../connectionInfo";
+
 const col_headers = [
   "Tech Label",
   "Biz Label",
@@ -15,14 +16,6 @@ const col_headers = [
   "Definition",
   "Classification",
 ];
-// headers for api call
-const options = {
-  headers: {
-    "Content-Type": "application/json",
-    "X-DreamFactory-Session-Token": cookie.load("session_token"),
-    "X-DreamFactory-Api-Key": process.env.REACT_APP_DF_APP_KEY,
-  },
-};
 
 export default class extends React.Component {
   constructor(props) {
@@ -32,7 +25,17 @@ export default class extends React.Component {
       chart_data: [],
       selected: undefined,
       target: null,
+      filter: "",
     };
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(e) {
+    const value = e.target.value.toLowerCase();
+    this.setState({
+      ...this.state,
+      filter: value,
+    });
   }
   getAttribute() {
     var search_string =
@@ -42,11 +45,12 @@ export default class extends React.Component {
 
     //Axios API call
     axios
-      .get(search_string, options)
+      .get(search_string, apiHeader)
       .then((response) => {
         var data = response.data.resource;
 
         this.setState({ ...this.state, databAttributes: data });
+        console.log(data);
       })
       .catch((error) => {
         console.log(error);
@@ -60,7 +64,7 @@ export default class extends React.Component {
 
     //Axios API call
     axios
-      .get(search_string, options)
+      .get(search_string, apiHeader)
       .then((response) => {
         var data = response.data.resource;
 
@@ -80,6 +84,12 @@ export default class extends React.Component {
         <PopupState variant="popover" popupId="demo-popup-popover">
           {(popupState) => (
             <div>
+              <TextField
+                variant="standard"
+                label="Filter"
+                value={this.state.filter}
+                onChange={this.handleChange}
+              />
               <Table bordered hover size="sm">
                 {/* Header */}
                 <thead>
@@ -91,8 +101,14 @@ export default class extends React.Component {
                 </thead>
                 {/* Content */}
                 <tbody className="textColor" style={{ fontSize: 12 }}>
-                  {Object.entries(this.state.databAttributes).map(
-                    ([key, attributes], id) => (
+                  {Object.entries(this.state.databAttributes)
+                    .filter(
+                      (item) =>
+                        JSON.stringify(item)
+                          .toLocaleLowerCase()
+                          .indexOf(this.state.filter) > -1
+                    )
+                    .map(([key, attributes], id) => (
                       <tr {...bindTrigger(popupState)} key={id}>
                         <td>{attributes.Attribute_name}</td>
                         <td>{attributes.Business_name}</td>
@@ -100,8 +116,7 @@ export default class extends React.Component {
                         <td>{attributes.Attribute_definition}</td>
                         <td>{attributes.Attribute_classification}</td>
                       </tr>
-                    )
-                  )}
+                    ))}
                 </tbody>
               </Table>
               <Popover

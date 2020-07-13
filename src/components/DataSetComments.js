@@ -7,14 +7,7 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Snackbar from "@material-ui/core/Snackbar";
-// headers for api call
-const options = {
-  headers: {
-    "Content-Type": "application/json",
-    "X-DreamFactory-Session-Token": cookie.load("session_token"),
-    "X-DreamFactory-Api-Key": process.env.REACT_APP_DF_APP_KEY,
-  },
-};
+import { apiHeader } from "../connectionInfo";
 
 const DATE_OPTIONS = {
   weekday: "short",
@@ -59,7 +52,7 @@ export default class extends React.Component {
 
     //Axios API call
     axios
-      .post(api_string, content, options)
+      .post(api_string, content, apiHeader)
       .then((response) => {
         this.setState({ ...this.state, open: true, comment: "" });
         this.getComments();
@@ -74,7 +67,7 @@ export default class extends React.Component {
 
     // Axios API call
     axios
-      .get(search_string, options)
+      .get(search_string, apiHeader)
       .then((response) => {
         this.setState({
           ...this.state,
