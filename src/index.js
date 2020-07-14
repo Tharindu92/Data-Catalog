@@ -13,7 +13,7 @@ import axios from "axios";
 import { apiHeader } from "./connectionInfo";
 function App() {
   //authenicate user with token
-  function authenticate(session_token) {
+  function authenticate() {
     axios
       .get(
         process.env.REACT_APP_API_URL + "api/v2/datacatalog/_schema",
@@ -24,7 +24,9 @@ function App() {
       })
       //if error
       .catch((error) => {
-        history.push({ pathname: "/Login" });
+        history.push({
+          pathname: "/Login",
+        });
       });
   }
   const expires = new Date();
@@ -32,7 +34,7 @@ function App() {
   var session_token = cookie.load("session_token"); //get session token from cookie
 
   if (window.location.href.indexOf("?session=") > 0) {
-    //if  url as token
+    //if  url has token
     //save token
     session_token = window.location.href.split("?session=")[1];
     cookie.save("session_token", session_token, {
@@ -41,7 +43,6 @@ function App() {
     });
 
     authenticate(session_token);
-    console.log(session_token);
   } else if (session_token) {
     //if token exist
     authenticate(session_token);

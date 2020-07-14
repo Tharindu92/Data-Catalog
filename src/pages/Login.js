@@ -64,10 +64,10 @@ export default function SignIn() {
       password: process.env.REACT_APP_DF_PASSWORD,
       duration: 30,
     };
-    var search_string = process.env.REACT_APP_API_URL + "api/v2/user/session";
+    var api_string = process.env.REACT_APP_API_URL + "api/v2/user/session";
     //Axios API call
     axios
-      .post(search_string, login)
+      .post(api_string, login)
       .then((response) => {
         // sendMail(response.data.session_token);
         console.log(

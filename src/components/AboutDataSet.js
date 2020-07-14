@@ -5,6 +5,7 @@ import cookie from "react-cookies";
 import RatingDisplay from "./RatingDisplay";
 import Tags from "./Tags";
 import { apiHeader } from "../connectionInfo";
+import ApiGuide from "./ApiGuide";
 export default class extends React.Component {
   constructor(props) {
     super(props);
@@ -48,20 +49,13 @@ export default class extends React.Component {
         <h3 className="textColor">Tags:</h3>
         <Tags tags={this.props.database.Tags} />
         <br />
-
-        <br />
-
         <RatingDisplay
           rating={this.state.rating}
           database_id={this.props.database._id}
           getRating={this.getRating}
         />
-        <br />
 
-        <br />
         <h3 className="textColor">Connection Info</h3>
-        <label>Creation Date: {this.props.database.Creation_Date}</label>
-        <br />
         <label>File Size: {this.props.database.File_Size}</label>
         <br />
         <label>
@@ -69,6 +63,8 @@ export default class extends React.Component {
         </label>
         <br />
         <label>Last Updated: {this.props.database.Last_Updated_Date}</label>
+        <ApiGuide datasetName={this.props.database.Collection_Tech_Label} />
+        <br />
       </div>
     );
   }

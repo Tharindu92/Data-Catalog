@@ -81,7 +81,7 @@ export default class extends React.Component {
   render() {
     return (
       <div>
-        <PopupState variant="popover" popupId="demo-popup-popover">
+        <PopupState variant="popover" popupId="chart-popup-popover">
           {(popupState) => (
             <div>
               <TextField
