@@ -39,9 +39,9 @@ export default function ({ datasetName }) {
     headers: {  
       "Content-Type": "application/json",  
       "X-DreamFactory-Session-Token": <session token>,  
-      "X-DreamFactory-Api-Key": ` +
+      "X-DreamFactory-Api-Key": "` +
     process.env.REACT_APP_DF_APP_KEY +
-    `,  
+    `",  
         },  
     }  
  
@@ -62,9 +62,9 @@ export default function ({ datasetName }) {
     headers = {  
       "Content-Type": "application/json",  
       "X-DreamFactory-Session-Token": <session token>,  
-      "X-DreamFactory-Api-Key": ` +
+      "X-DreamFactory-Api-Key": "` +
     process.env.REACT_APP_DF_APP_KEY +
-    `,  
+    `",  
     },  
     resp = requests.get("` +
     apiUrl +
