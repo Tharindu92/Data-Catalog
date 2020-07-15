@@ -9,7 +9,7 @@ import SearchSort from "../components/SearchSort";
 import SearchFilter from "../components/SearchFilter";
 import SearchSortPortrait from "../components/SearchSortPortrait";
 import SearchFilterPortrait from "../components/SearchFilterPortrait";
-import { apiHeader } from "../connectionInfo";
+import cookie from "react-cookies";
 
 export default class extends React.Component {
   constructor(props) {
@@ -175,7 +175,13 @@ export default class extends React.Component {
   //sample result, [{'name':'db1,'description:'sample text',...},{'name':'db2,'description:'sample text',...}]
   getSearchResult() {
     // headers for api call
-
+    var apiHeader = {
+      headers: {
+        "Content-Type": "application/json",
+        "X-DreamFactory-Session-Token": cookie.load("session_token"),
+        "X-DreamFactory-Api-Key": process.env.REACT_APP_DF_APP_KEY,
+      },
+    };
     var query = "";
     if (this.props.location.search.indexOf("session") < 0) {
       query = this.props.location.search.replace("?", "");
@@ -201,7 +207,7 @@ export default class extends React.Component {
       .get(search_string, apiHeader)
       .then((response) => {
         var data = response.data.resource;
-
+        console.log(data);
         //Get Unique Tags
         data.map((row) =>
           row.Tags.map((tag) =>

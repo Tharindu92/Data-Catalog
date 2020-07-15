@@ -7,7 +7,7 @@ import Popover from "@material-ui/core/Popover";
 import PopupState, { bindTrigger, bindPopover } from "material-ui-popup-state";
 import Box from "@material-ui/core/Box";
 import TextField from "@material-ui/core/TextField";
-import { apiHeader } from "../connectionInfo";
+import cookie from "react-cookies";
 
 const col_headers = [
   "Tech Label",
@@ -15,6 +15,7 @@ const col_headers = [
   "Data Type",
   "Definition",
   "Classification",
+  "Sensitivity",
 ];
 
 export default class extends React.Component {
@@ -38,6 +39,14 @@ export default class extends React.Component {
     });
   }
   getAttribute() {
+    // headers for api call
+    var apiHeader = {
+      headers: {
+        "Content-Type": "application/json",
+        "X-DreamFactory-Session-Token": cookie.load("session_token"),
+        "X-DreamFactory-Api-Key": process.env.REACT_APP_DF_APP_KEY,
+      },
+    };
     var search_string =
       process.env.REACT_APP_API_URL +
       "api/v2/datacatalog/_table/attribute_metadata?filter=Parent_id=" +
@@ -50,13 +59,20 @@ export default class extends React.Component {
         var data = response.data.resource;
 
         this.setState({ ...this.state, databAttributes: data });
-        console.log(data);
       })
       .catch((error) => {
         console.log(error);
       });
   }
   getChartData() {
+    // headers for api call
+    var apiHeader = {
+      headers: {
+        "Content-Type": "application/json",
+        "X-DreamFactory-Session-Token": cookie.load("session_token"),
+        "X-DreamFactory-Api-Key": process.env.REACT_APP_DF_APP_KEY,
+      },
+    };
     var search_string =
       process.env.REACT_APP_API_URL +
       "api/v2/datacatalog/_table/chart_data?filter=Parent_id=" +
@@ -115,6 +131,7 @@ export default class extends React.Component {
                         <td>{attributes.Data_type}</td>
                         <td>{attributes.Attribute_definition}</td>
                         <td>{attributes.Attribute_classification}</td>
+                        <td>{attributes.Attribute_sensitivity}</td>
                       </tr>
                     ))}
                 </tbody>

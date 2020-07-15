@@ -20,14 +20,14 @@ export default class extends React.Component {
         <Card.Body onClick={this.props.function}>
           {/* Data table Name/title */}
           <Card.Title className="textColor">
-            {this.props.database.Collection_Biz_Label}
+            {this.props.database.Collection_business_name}
           </Card.Title>
 
           {/* Description */}
           <Card.Text style={{ fontSize: 11 }}>
-            {this.props.database.Collection_Definition.length > 80
-              ? this.props.database.Collection_Definition.slice(0, 80) + "..."
-              : this.props.database.Collection_Definition}
+            {this.props.database.Collection_description.length > 80
+              ? this.props.database.Collection_description.slice(0, 80) + "..."
+              : this.props.database.Collection_description}
           </Card.Text>
         </Card.Body>
 
@@ -39,7 +39,7 @@ export default class extends React.Component {
               dataUrl={
                 process.env.REACT_APP_API_URL +
                 "api/v2/datacatalog/_table/" +
-                this.props.database.Collection_Tech_Label
+                this.props.database.Collection_name
               }
               fileName={this.props.database.Collection_Biz_Label}
             />
@@ -57,7 +57,7 @@ export default class extends React.Component {
           }}
         >
           <span className="float-right textColor" style={{ fontSize: 10 }}>
-            Last updated {this.props.database.Last_Updated_Date.split(" ")[0]}
+            Last updated {this.props.database.Last_updated_date}
           </span>
         </Card.Footer>
       </Card>

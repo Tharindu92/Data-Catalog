@@ -6,7 +6,6 @@ import { withStyles, makeStyles } from "@material-ui/core/styles";
 import Snackbar from "@material-ui/core/Snackbar";
 import axios from "axios";
 import cookie from "react-cookies";
-import { apiHeader } from "../connectionInfo";
 
 const StyledRating = withStyles({
   iconFilled: {
@@ -66,7 +65,14 @@ export default function ({ rating, database_id, getRating }) {
               },
             ],
           };
-
+          // headers for api call
+          var apiHeader = {
+            headers: {
+              "Content-Type": "application/json",
+              "X-DreamFactory-Session-Token": cookie.load("session_token"),
+              "X-DreamFactory-Api-Key": process.env.REACT_APP_DF_APP_KEY,
+            },
+          };
           //Axios API call
           axios
             .put(api_string, content, apiHeader)

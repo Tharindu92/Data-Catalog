@@ -10,16 +10,25 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import cookie from "react-cookies";
 import history from "./history";
 import axios from "axios";
-import { apiHeader } from "./connectionInfo";
+// import { apiHeader } from "./connectionInfo";
 function App() {
   //authenicate user with token
-  function authenticate() {
+  function authenticate(sessionToken) {
+    // headers for api call
+    var apiHeader = {
+      headers: {
+        "Content-Type": "application/json",
+        "X-DreamFactory-Session-Token": sessionToken,
+        "X-DreamFactory-Api-Key": process.env.REACT_APP_DF_APP_KEY,
+      },
+    };
     axios
       .get(
         process.env.REACT_APP_API_URL + "api/v2/datacatalog/_schema",
         apiHeader
       )
-      .then(() => {
+      .then((response) => {
+        console.log(response);
         console.log("Authentication passed");
       })
       //if error
@@ -28,6 +37,18 @@ function App() {
           pathname: "/Login",
         });
       });
+
+    //Check if user email is logged in cookie
+    if (!cookie.load("session_email")) {
+      axios
+        .get(process.env.REACT_APP_API_URL + "api/v2/user/session", apiHeader)
+        .then((response) => {
+          cookie.save("session_email", response.data.email, {
+            path: "/",
+            expires,
+          });
+        });
+    }
   }
   const expires = new Date();
   expires.setDate(Date.now() + 60 * 30);
@@ -46,10 +67,12 @@ function App() {
   } else if (session_token) {
     //if token exist
     authenticate(session_token);
+    console.log("step2");
   } else {
     //else return user to login page
     history.push({ pathname: "/Login" });
   }
+
   return (
     <Router>
       <div className="App" id="page-container">

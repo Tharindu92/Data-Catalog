@@ -4,20 +4,25 @@ import axios from "axios";
 import cookie from "react-cookies";
 import RatingDisplay from "./RatingDisplay";
 import Tags from "./Tags";
-import { apiHeader } from "../connectionInfo";
 import ApiGuide from "./ApiGuide";
+
 export default class extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      databasePreview: {
-        headers: [],
-      },
       rating: 0,
     };
     this.getRating = this.getRating.bind(this);
   }
   getRating() {
+    // headers for api call
+    const apiHeader = {
+      headers: {
+        "Content-Type": "application/json",
+        "X-DreamFactory-Session-Token": cookie.load("session_token"),
+        "X-DreamFactory-Api-Key": process.env.REACT_APP_DF_APP_KEY,
+      },
+    };
     var search_string =
       process.env.REACT_APP_API_URL +
       "api/v2/datacatalog/_table/database_rating?filter=_id%20like%20" +
@@ -40,12 +45,19 @@ export default class extends React.Component {
   }
 
   render() {
+    var source = "";
+    if (this.props.database.Source) {
+      source = this.props.database.Source.map((tag, id) =>
+        id ? "," + tag : "" + tag
+      );
+    }
+
     return (
       <div>
         <h3 className="textColor">Name:</h3>
-        <label>{this.props.database.Collection_Tech_Label}</label>
+        <label>{this.props.database.Collection_name}</label>
         <h3 className="textColor">Description:</h3>
-        <p>{this.props.database.Collection_Definition}</p>
+        <p>{this.props.database.Collection_description}</p>
         <h3 className="textColor">Tags:</h3>
         <Tags tags={this.props.database.Tags} />
         <br />
@@ -54,16 +66,26 @@ export default class extends React.Component {
           database_id={this.props.database._id}
           getRating={this.getRating}
         />
-
-        <h3 className="textColor">Connection Info</h3>
-        <label>File Size: {this.props.database.File_Size}</label>
         <br />
+        <h3 className="textColor">Connection Info</h3>
+
         <label>
-          Formats Available: {this.props.database.Formats_Available}
+          Data Classification: {this.props.database.Collection_classification}
         </label>
         <br />
-        <label>Last Updated: {this.props.database.Last_Updated_Date}</label>
-        <ApiGuide datasetName={this.props.database.Collection_Tech_Label} />
+        <label>
+          Data Sensitivity: {this.props.database.Collection_sensitivity}
+        </label>
+        <br />
+        <label>
+          Formats Available: {this.props.database.Formats_availability}
+        </label>
+        <br />
+        <label>Source: {source}</label>
+
+        <br />
+        <label>Last Updated: {this.props.database.Last_updated_date}</label>
+        <ApiGuide datasetName={this.props.database.Collection_name} />
         <br />
       </div>
     );

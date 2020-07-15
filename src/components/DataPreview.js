@@ -4,7 +4,7 @@ import axios from "axios";
 import { Table } from "react-bootstrap";
 import cookie from "react-cookies";
 import TextField from "@material-ui/core/TextField";
-import { apiHeader } from "../connectionInfo";
+
 export default class extends React.Component {
   constructor(props) {
     super(props);
@@ -23,6 +23,14 @@ export default class extends React.Component {
     });
   }
   componentDidMount() {
+    // headers for api call
+    var apiHeader = {
+      headers: {
+        "Content-Type": "application/json",
+        "X-DreamFactory-Session-Token": cookie.load("session_token"),
+        "X-DreamFactory-Api-Key": process.env.REACT_APP_DF_APP_KEY,
+      },
+    };
     //API url
     var search_string =
       process.env.REACT_APP_API_URL +

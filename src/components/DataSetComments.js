@@ -7,7 +7,6 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Snackbar from "@material-ui/core/Snackbar";
-import { apiHeader } from "../connectionInfo";
 
 const DATE_OPTIONS = {
   weekday: "short",
@@ -37,6 +36,14 @@ export default class extends React.Component {
     this.setState({ ...this.state, open: false });
   };
   uploadComment() {
+    // headers for api call
+    var apiHeader = {
+      headers: {
+        "Content-Type": "application/json",
+        "X-DreamFactory-Session-Token": cookie.load("session_token"),
+        "X-DreamFactory-Api-Key": process.env.REACT_APP_DF_APP_KEY,
+      },
+    };
     var api_string =
       process.env.REACT_APP_API_URL + "api/v2/datacatalog/_table/data_comments";
     var content = {
@@ -60,6 +67,14 @@ export default class extends React.Component {
       .catch((error) => {});
   }
   getComments() {
+    // headers for api call
+    var apiHeader = {
+      headers: {
+        "Content-Type": "application/json",
+        "X-DreamFactory-Session-Token": cookie.load("session_token"),
+        "X-DreamFactory-Api-Key": process.env.REACT_APP_DF_APP_KEY,
+      },
+    };
     var search_string =
       process.env.REACT_APP_API_URL +
       "api/v2/datacatalog/_table/data_comments?filter=dataset_id=" +

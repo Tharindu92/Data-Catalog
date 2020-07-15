@@ -14,6 +14,7 @@ export default function SearchDisplay({ databaseList, session_token }) {
   const [selectedDatabase, setDatabase] = React.useState({
     name: "test",
     description: "test description",
+    Source: ["-"],
   });
 
   // toggle function for the right drawer to slide out when individual database card is clicked.

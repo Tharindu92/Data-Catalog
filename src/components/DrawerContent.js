@@ -119,7 +119,7 @@ export default function DrawerContent({ database }) {
         </TabPanel>
         {/* content in Preview tab */}
         <TabPanel value={value} index={2} dir={theme.direction}>
-          <DataPreview selected_dataset={database.Collection_Tech_Label} />
+          <DataPreview selected_dataset={database.Collection_name} />
         </TabPanel>
       </SwipeableViews>
     </div>
