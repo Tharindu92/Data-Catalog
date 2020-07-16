@@ -41,7 +41,7 @@ export default class extends React.Component {
                 "api/v2/datacatalog/_table/" +
                 this.props.database.Collection_name
               }
-              fileName={this.props.database.Collection_Biz_Label}
+              fileName={this.props.database.Collection_name}
             />
           </div>
 
