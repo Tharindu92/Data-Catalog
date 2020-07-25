@@ -84,7 +84,6 @@ export default function SignIn() {
           path: "/",
           expires,
         });
-        console.log(response.data.email);
 
         //prompt user to close login tab.
         setState({

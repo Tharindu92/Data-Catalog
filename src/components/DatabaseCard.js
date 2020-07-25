@@ -38,7 +38,7 @@ export default class extends React.Component {
             <ExportCsvButton
               dataUrl={
                 process.env.REACT_APP_API_URL +
-                "api/v2/datacatalog/_table/" +
+                "api/v2/PRD_LDS/_table/" +
                 this.props.database.Collection_name
               }
               fileName={this.props.database.Collection_name}

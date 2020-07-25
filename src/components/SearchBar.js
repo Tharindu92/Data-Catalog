@@ -47,7 +47,7 @@ export default function SearchBar({ dataSets, handleSearchChange }) {
         style={{ flex: 1 }}
         className="ml-4 mb-2"
         options={dataSets}
-        getOptionLabel={(option) => option.Collection_Biz_Label}
+        getOptionLabel={(option) => option.Collection_business_name}
         renderInput={(params) => (
           <TextField
             {...params}
