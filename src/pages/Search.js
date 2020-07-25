@@ -50,14 +50,14 @@ export default class extends React.Component {
 
   sortByNameAsc() {
     const sorted = this.state.searchResult.sort((a, b) =>
-      a.Collection_Biz_Label.localeCompare(b.Collection_Biz_Label)
+      a.Collection_business_name.localeCompare(b.Collection_business_name)
     );
     this.setState({ ...this.state, searchResult: sorted, sortBy: 1 });
   }
 
   sortByNameDesc() {
     const sorted = this.state.searchResult.sort((a, b) =>
-      b.Collection_Biz_Label.localeCompare(a.Collection_Biz_Label)
+      b.Collection_business_name.localeCompare(a.Collection_business_name)
     );
     this.setState({ ...this.state, searchResult: sorted, sortBy: 2 });
   }
@@ -207,7 +207,6 @@ export default class extends React.Component {
       .get(search_string, apiHeader)
       .then((response) => {
         var data = response.data.resource;
-        console.log(data);
         //Get Unique Tags
         data.map((row) =>
           row.Tags.map((tag) =>

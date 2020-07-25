@@ -67,7 +67,6 @@ function App() {
   } else if (session_token) {
     //if token exist
     authenticate(session_token);
-    console.log("step2");
   } else {
     //else return user to login page
     history.push({ pathname: "/Login" });

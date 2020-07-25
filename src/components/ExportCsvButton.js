@@ -47,8 +47,6 @@ export const ExportCsvButton = ({ dataUrl, fileName }) => {
       .get(dataUrl, apiHeader)
       .then((response) => {
         setData(response.data.resource);
-
-        console.log(response.data.resource);
       })
       //if error
       .catch((error) => {

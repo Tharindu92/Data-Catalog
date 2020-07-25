@@ -34,7 +34,7 @@ export default class extends React.Component {
     //API url
     var search_string =
       process.env.REACT_APP_API_URL +
-      "api/v2/datacatalog/_table/" +
+      "api/v2/PRD_LDS/_table/" +
       this.props.selected_dataset;
 
     //Axios API call

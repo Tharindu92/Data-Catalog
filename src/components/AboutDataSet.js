@@ -25,7 +25,7 @@ export default class extends React.Component {
     };
     var search_string =
       process.env.REACT_APP_API_URL +
-      "api/v2/datacatalog/_table/database_rating?filter=_id%20like%20" +
+      "api/v2/datacatalog/_table/collection_rating?filter=_id%20like%20" +
       this.props.database._id;
 
     //Axios API call
