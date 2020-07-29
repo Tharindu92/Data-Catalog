@@ -7,6 +7,7 @@ import StorageIcon from "@material-ui/icons/Storage";
 import LandscapeIcon from "@material-ui/icons/Landscape";
 import history from "../history";
 
+//This page is Currently not in use
 export default class extends React.Component {
   constructor() {
     super();
@@ -37,7 +38,7 @@ export default class extends React.Component {
               className="textColor mb-4"
               style={{ display: "flex", justifyContent: "center" }}
             >
-              JTC Data Catalog
+              Data Portal
             </h2>
             <SearchBar session_token={this.state.session} />
           </Col>

@@ -12,6 +12,7 @@ import Container from "@material-ui/core/Container";
 import axios from "axios";
 import Snackbar from "@material-ui/core/Snackbar";
 import cookie from "react-cookies";
+import history from "../history";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -35,10 +36,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+//This Login page requires password login. Instead of getting login link, user will be redirected to main page instead.
+
 export default function SignIn() {
   const classes = useStyles();
   const [state, setState] = React.useState({
     email: "",
+    password: "",
     session_token: "",
     error: "",
     open: false,
@@ -53,14 +57,10 @@ export default function SignIn() {
     }));
   };
 
-  function sendMail(session_token) {
-    //send mail function
-  }
-
   function processLogin() {
     var login = {
       email: state.email,
-      password: process.env.REACT_APP_DF_PASSWORD,
+      password: state.password,
       duration: 30,
     };
     var api_string = process.env.REACT_APP_API_URL + "api/v2/user/session";
@@ -68,13 +68,12 @@ export default function SignIn() {
     axios
       .post(api_string, login)
       .then((response) => {
-        // sendMail(response.data.session_token);
-        console.log(
+        // redirect to main page ;
+        window.location =
           "http://localhost:" +
-            process.env.REACT_APP_DEV_PORT +
-            "/Search?session=" +
-            response.data.session_token
-        );
+          process.env.REACT_APP_DEV_PORT +
+          "/Search?session=" +
+          response.data.session_token;
 
         const expires = new Date();
         expires.setDate(Date.now() + 60 * 30);
@@ -141,6 +140,19 @@ export default function SignIn() {
             name="email"
             value={state.email}
             autoComplete="email"
+            autoFocus
+            onChange={handleChange}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            type="password"
+            id="password"
+            label="Password Field"
+            name="Password"
+            value={state.password}
             autoFocus
             onChange={handleChange}
           />

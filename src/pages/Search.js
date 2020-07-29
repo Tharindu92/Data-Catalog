@@ -62,20 +62,6 @@ export default class extends React.Component {
     this.setState({ ...this.state, searchResult: sorted, sortBy: 2 });
   }
 
-  // sortByDateAsc() {
-  //   const sorted = this.state.searchResult.sort(
-  //     (a, b) => new Date(a.last_updated) - new Date(b.last_updated)
-  //   );
-  //   this.setState({ ...this.state, searchResult: sorted, sortBy: 3 });
-  // }
-
-  // sortByDateDesc() {
-  //   const sorted = this.state.searchResult.sort(
-  //     (a, b) => new Date(b.last_updated) - new Date(a.last_updated)
-  //   );
-  //   this.setState({ ...this.state, searchResult: sorted, sortBy: 4 });
-  // }
-
   //Filtering
   handleFilterChange(e) {
     //Update state on each filter change

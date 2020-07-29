@@ -61,6 +61,7 @@ export default function ({ rating, database_id, getRating }) {
             resource: [
               {
                 _id: id,
+                parent_id: database_id,
                 rating: newValue,
               },
             ],

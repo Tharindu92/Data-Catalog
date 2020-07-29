@@ -8,7 +8,7 @@ const Navigation = (props) => {
   const location = useLocation();
   return location.pathname === "/Login" ? null : (
     <Navbar className="bgColor" variant="dark">
-      <Navbar.Brand href="/Login">Data Catalog</Navbar.Brand>
+      <Navbar.Brand href="/Login">Data Portal</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto justify-content-end" style={{ width: "100%" }}>

@@ -33,7 +33,7 @@ export default function ({ datasetName }) {
   const jsExample =
     `
     //Axios API call  
-    //Session token can be gotten from email when you logged in to the data catalog
+    //Session token can be gotten from email when you logged in to the Data Portal
 
     const apiHeader = {  
     headers: {  
@@ -57,7 +57,7 @@ export default function ({ datasetName }) {
   const pyExmaple =
     `
     #python request
-    #Session token can be gotten from email when you logged in to the data catalog
+    #Session token can be gotten from email when you logged in to the Data Portal
     import requests
     headers = {  
       "Content-Type": "application/json",  

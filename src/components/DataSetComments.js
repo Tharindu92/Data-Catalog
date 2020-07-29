@@ -45,7 +45,7 @@ export default class extends React.Component {
       },
     };
     var api_string =
-      process.env.REACT_APP_API_URL + "api/v2/datacatalog/_table/data_comments";
+      process.env.REACT_APP_API_URL + "api/v2/datacatalog/_table/collection_comment";
     var content = {
       resource: [
         {
@@ -77,7 +77,7 @@ export default class extends React.Component {
     };
     var search_string =
       process.env.REACT_APP_API_URL +
-      "api/v2/datacatalog/_table/data_comments?filter=dataset_id=" +
+      "api/v2/datacatalog/_table/collection_comment?filter=dataset_id=" +
       this.props.database._id;
 
     // Axios API call
