@@ -3,7 +3,6 @@ import "../globalcss.css";
 import axios from "axios";
 import { Table } from "react-bootstrap";
 import cookie from "react-cookies";
-import TextField from "@material-ui/core/TextField";
 
 export default class extends React.Component {
   constructor(props) {
@@ -13,15 +12,8 @@ export default class extends React.Component {
       header: [],
       filter: "",
     };
-    this.handleChange = this.handleChange.bind(this);
   }
-  handleChange(e) {
-    const value = e.target.value.toLowerCase();
-    this.setState({
-      ...this.state,
-      filter: value,
-    });
-  }
+
   componentDidMount() {
     // headers for api call
     var apiHeader = {
@@ -35,7 +27,8 @@ export default class extends React.Component {
     var search_string =
       process.env.REACT_APP_API_URL +
       "api/v2/PRD_LDS/_table/" +
-      this.props.selected_dataset;
+      this.props.selected_dataset +
+      "?limit=10";
 
     //Axios API call
     axios
@@ -52,18 +45,7 @@ export default class extends React.Component {
   render() {
     return (
       <div>
-        <TextField
-          variant="standard"
-          label="Filter"
-          value={this.state.filter}
-          onChange={this.handleChange}
-        />
-
-        {/* Number of rows and columns of data table */}
-        <h5>
-          {/* {this.state.databasePreview.num_cols} Columns x{" "}
-          {this.state.databasePreview.num_rows} Rows */}
-        </h5>
+        <label>Previewing first 10 rows.</label>
 
         <Table bordered hover size="sm">
           {/* Data table headers */}

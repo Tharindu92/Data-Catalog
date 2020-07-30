@@ -10,6 +10,7 @@ import TextField from "@material-ui/core/TextField";
 import cookie from "react-cookies";
 
 const col_headers = [
+  "No.",
   "Tech Label",
   "Biz Label",
   "Data Type",
@@ -126,6 +127,7 @@ export default class extends React.Component {
                     )
                     .map(([key, attributes], id) => (
                       <tr {...bindTrigger(popupState)} key={id}>
+                        <td>{id + 1}</td>
                         <td>{attributes.Attribute_name}</td>
                         <td>{attributes.Business_name}</td>
                         <td>{attributes.Data_type}</td>

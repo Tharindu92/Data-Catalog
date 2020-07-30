@@ -2,7 +2,7 @@ import React from "react";
 import "../globalcss.css";
 import axios from "axios";
 import cookie from "react-cookies";
-import { Divider, Avatar, Grid, Paper } from "@material-ui/core";
+import { Divider, Grid, Paper } from "@material-ui/core";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
@@ -45,7 +45,8 @@ export default class extends React.Component {
       },
     };
     var api_string =
-      process.env.REACT_APP_API_URL + "api/v2/datacatalog/_table/collection_comment";
+      process.env.REACT_APP_API_URL +
+      "api/v2/datacatalog/_table/collection_comment";
     var content = {
       resource: [
         {

@@ -1,16 +1,9 @@
 import React from "react";
 import "../globalcss.css";
 import { Row, Col } from "react-bootstrap";
-import {
-  VictoryBar,
-  VictoryChart,
-  VictoryTheme,
-  VictoryLine,
-  VictoryPie,
-} from "victory";
+import { VictoryBar, VictoryChart, VictoryTheme, VictoryPie } from "victory";
 
 export default function ({ column_info }) {
-  const info = column_info;
   if (column_info !== undefined) {
     return (
       <div>
