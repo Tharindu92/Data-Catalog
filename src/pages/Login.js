@@ -103,12 +103,13 @@ export default function SignIn() {
     axios
       .post(api_string, login)
       .then((response) => {
-        // sendMail(response.data.session_token);
-        console.log(
-          process.env.REACT_APP_CATALOG_URL +
-            "/Search?session=" +
-            response.data.session_token
-        );
+        sendMail(response.data.session_token); //comment this line if not using on production server
+
+        // console.log(
+        //   process.env.REACT_APP_CATALOG_URL +
+        //     "/Search?session=" +
+        //     response.data.session_token
+        // );
 
         const expires = new Date();
         expires.setDate(Date.now() + 60 * 30);
