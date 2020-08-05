@@ -55,6 +55,41 @@ export default function SignIn() {
 
   function sendMail(session_token) {
     //send mail function
+    //only works in jtc productions
+    var headers = {
+      "Content-Type": "application/json",
+      "X-DreamFactory-Session-Token": session_token,
+      "X-DreamFactory-Api-Key": process.env.REACT_APP_DF_APP_KEY,
+    };
+    var data = {
+      to: [
+        {
+          name: state.email,
+          email: state.email,
+        },
+      ],
+      subject: "Here is your login link to access Data Catalog!",
+      body_text:
+        "Hello, click this link to login: " +
+        process.env.REACT_APP_CATALOG_URL +
+        "/Search?session=" +
+        session_token,
+      from_name: "JTC-Data_Engineering_Dept",
+      from_email: "JTC-Data_Engineering_Dept@jtc.gov.sg",
+      reply_to_name: "JTC-Data_Engineering_Dept",
+      reply_to_email: "alan_chee@jtc.gov.sg",
+    };
+
+    axios
+      .post(process.env.REACT_APP_PROXY_API + "/api/v2/jtccmg/", data, {
+        headers: headers,
+      })
+      .then(() => {
+        console.log("Mail sent!");
+      })
+      .catch((error) => {
+        //console.log("Email Error: " + error);
+      });
   }
 
   function processLogin() {
@@ -63,15 +98,14 @@ export default function SignIn() {
       password: process.env.REACT_APP_DF_PASSWORD,
       duration: 30,
     };
-    var api_string = process.env.REACT_APP_API_URL + "api/v2/user/session";
+    var api_string = process.env.REACT_APP_PROXY_API + "/api/v2/user/session";
     //Axios API call
     axios
       .post(api_string, login)
       .then((response) => {
         // sendMail(response.data.session_token);
         console.log(
-          "http://localhost:" +
-            process.env.REACT_APP_DEV_PORT +
+          process.env.REACT_APP_CATALOG_URL +
             "/Search?session=" +
             response.data.session_token
         );

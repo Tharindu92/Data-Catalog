@@ -49,8 +49,8 @@ export default class extends React.Component {
       },
     };
     var search_string =
-      process.env.REACT_APP_API_URL +
-      "api/v2/datacatalog/_table/attribute_metadata?filter=Parent_id=" +
+      process.env.REACT_APP_DIRECT_API +
+      "/api/v2/datacatalog/_table/attribute_metadata?filter=Parent_id=" +
       this.props.selected_dataset;
 
     //Axios API call
@@ -75,8 +75,8 @@ export default class extends React.Component {
       },
     };
     var search_string =
-      process.env.REACT_APP_API_URL +
-      "api/v2/datacatalog/_table/chart_data?filter=Parent_id=" +
+      process.env.REACT_APP_DIRECT_API +
+      "/api/v2/datacatalog/_table/chart_data?filter=Parent_id=" +
       this.props.selected_dataset;
 
     //Axios API call

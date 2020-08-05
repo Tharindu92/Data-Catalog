@@ -63,7 +63,7 @@ export default function SignIn() {
       password: state.password,
       duration: 30,
     };
-    var api_string = process.env.REACT_APP_API_URL + "api/v2/user/session";
+    var api_string = process.env.REACT_APP_PROXY_API + "/api/v2/user/session";
     //Axios API call
     axios
       .post(api_string, login)

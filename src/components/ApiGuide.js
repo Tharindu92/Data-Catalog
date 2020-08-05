@@ -28,7 +28,7 @@ export default function ({ datasetName }) {
   const classes = useStyles();
 
   const apiUrl =
-    process.env.REACT_APP_API_URL + "api/v2/PRD_LDS/_table/" + datasetName;
+    process.env.REACT_APP_DIRECT_API + "/api/v2/PRD_LDS/_table/" + datasetName;
 
   const jsExample =
     `

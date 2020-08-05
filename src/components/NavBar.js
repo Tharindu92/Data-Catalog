@@ -12,7 +12,7 @@ const Navigation = (props) => {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto justify-content-end" style={{ width: "100%" }}>
-          <Nav.Link href="/">Home</Nav.Link>
+          {/* <Nav.Link href="/">Home</Nav.Link> */}
           {/* <Nav.Link href="/Publish">Publish</Nav.Link> */}
           {/* <Nav.Link href="/Contact">My Downloads</Nav.Link> */}
         </Nav>

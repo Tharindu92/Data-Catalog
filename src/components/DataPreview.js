@@ -25,8 +25,8 @@ export default class extends React.Component {
     };
     //API url
     var search_string =
-      process.env.REACT_APP_API_URL +
-      "api/v2/PRD_LDS/_table/" +
+      process.env.REACT_APP_DIRECT_API +
+      "/api/v2/PRD_LDS/_table/" +
       this.props.selected_dataset +
       "?limit=10";
 
@@ -69,7 +69,9 @@ export default class extends React.Component {
               .map((row, id) => (
                 <tr key={id}>
                   {Object.entries(row).map(([key, value]) => (
-                    <td key={key}>{value.toString()}</td>
+                    <td key={key}>
+                      {typeof value === "boolean" ? value.toString() : value}
+                    </td>
                   ))}
                 </tr>
               ))}

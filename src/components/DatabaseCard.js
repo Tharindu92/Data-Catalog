@@ -37,8 +37,8 @@ export default class extends React.Component {
           <div className="float-right textColor mt-1">
             <ExportCsvButton
               dataUrl={
-                process.env.REACT_APP_API_URL +
-                "api/v2/PRD_LDS/_table/" +
+                process.env.REACT_APP_DIRECT_API +
+                "/api/v2/PRD_LDS/_table/" +
                 this.props.database.Collection_name
               }
               fileName={this.props.database.Collection_name}

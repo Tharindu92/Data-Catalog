@@ -175,8 +175,8 @@ export default class extends React.Component {
 
     var unique_tags = ["All"];
     var search_string =
-      process.env.REACT_APP_API_URL +
-      "api/v2/datacatalog/_table/collection_metadata/";
+      process.env.REACT_APP_DIRECT_API +
+      "/api/v2/datacatalog/_table/collection_metadata/";
     if (query) {
       search_string +=
         "?filter=(Collection_Biz_Label%20like%20" +

@@ -9,7 +9,9 @@ export default function ({ column_info }) {
       <div>
         <label>Additional info</label>
         <br />
-        <Row className="mt-2">
+        <label>Coming soon</label>
+        <br />
+        {/* <Row className="mt-2">
           <Col>
             <label className="textColor">Empty Values:</label>
             <br />
@@ -62,11 +64,9 @@ export default function ({ column_info }) {
               ]}
             />
           </Col>
-          <Col>{/* <label className="textColor">Chart3:</label> */}</Col>
-        </Row>
+          
+        </Row> */}
       </div>
     );
-  } else {
-    return <label>Select to view more information.</label>;
   }
 }

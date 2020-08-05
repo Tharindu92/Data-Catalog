@@ -55,8 +55,8 @@ export default function ({ rating, database_id, getRating }) {
         onChange={(event, newValue) => {
           var id = cookie.load("session_email").split("@")[0] + database_id;
           var api_string =
-            process.env.REACT_APP_API_URL +
-            "api/v2/datacatalog/_table/collection_rating";
+            process.env.REACT_APP_DIRECT_API +
+            "/api/v2/datacatalog/_table/collection_rating";
           var content = {
             resource: [
               {

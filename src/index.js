@@ -24,7 +24,7 @@ function App() {
     };
     axios
       .get(
-        process.env.REACT_APP_API_URL + "api/v2/datacatalog/_schema",
+        process.env.REACT_APP_DIRECT_API + "/api/v2/datacatalog/_schema",
         apiHeader
       )
       .then((response) => {
@@ -41,7 +41,10 @@ function App() {
     //Check if user email is logged in cookie
     if (!cookie.load("session_email")) {
       axios
-        .get(process.env.REACT_APP_API_URL + "api/v2/user/session", apiHeader)
+        .get(
+          process.env.REACT_APP_DIRECT_API + "/api/v2/user/session",
+          apiHeader
+        )
         .then((response) => {
           cookie.save("session_email", response.data.email, {
             path: "/",
