@@ -6,7 +6,6 @@ import Drawer from "@material-ui/core/Drawer";
 import DrawerContent from "./DrawerContent";
 
 //Display search results, takes in array of database dict and out put as individual cards
-//sample input, [{'name':'db1,'description:'sample text',...},{'name':'db2,'description:'sample text',...}]
 export default function SearchDisplay({ databaseList, session_token }) {
   const [state, setState] = React.useState({
     right: false,
@@ -14,7 +13,6 @@ export default function SearchDisplay({ databaseList, session_token }) {
   const [selectedDatabase, setDatabase] = React.useState({
     name: "test",
     description: "test description",
-    Source: ["-"],
   });
 
   // toggle function for the right drawer to slide out when individual database card is clicked.

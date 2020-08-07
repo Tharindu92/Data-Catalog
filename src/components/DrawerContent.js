@@ -12,6 +12,7 @@ import DataPreview from "./DataPreview";
 import DataAttributes from "./DataAttributes";
 import AboutDataSet from "./AboutDataSet";
 import DataSetComments from "./DataSetComments";
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -51,7 +52,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 //Right Drawer content, input database dict to display data table information
-//sample input, {name:'db name',description:'sample text'....}
 export default function DrawerContent({ database }) {
   const classes = useStyles();
   const theme = useTheme();

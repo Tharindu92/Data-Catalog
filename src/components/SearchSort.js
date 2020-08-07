@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-
+//Sorting tags
 export default function SearchSort({ onChange, sortBy }) {
   const classes = useStyles();
   const selectedStyle = {

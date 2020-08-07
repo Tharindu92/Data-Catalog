@@ -13,6 +13,7 @@ import axios from "axios";
 import Snackbar from "@material-ui/core/Snackbar";
 import cookie from "react-cookies";
 
+//CSS
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -40,7 +41,6 @@ export default function SignIn() {
   const [state, setState] = React.useState({
     email: "",
     session_token: "",
-    error: "",
     open: false,
     userInfo: "",
     loginMessage: "message",

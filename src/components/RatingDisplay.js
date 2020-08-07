@@ -28,6 +28,7 @@ const useStyles = makeStyles({
   },
 });
 
+//Shows the rating of selected database
 export default function ({ rating, database_id, getRating }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -53,6 +54,7 @@ export default function ({ rating, database_id, getRating }) {
         value={rating}
         precision={0.5}
         onChange={(event, newValue) => {
+          //Post rating change to db
           var id = cookie.load("session_email").split("@")[0] + database_id;
           var api_string =
             process.env.REACT_APP_DIRECT_API +
@@ -85,10 +87,7 @@ export default function ({ rating, database_id, getRating }) {
         }}
         icon={<StarIcon fontSize="inherit" />}
         size="large"
-      />{" "}
-      {/* <label className={classes.ratingNumber}>
-        {rating ? rating.toFixed(2) : "Unrated"}
-      </label> */}
+      />
     </div>
   );
 }

@@ -3,6 +3,7 @@ import "../globalcss.css";
 import { Row, Col } from "react-bootstrap";
 import { VictoryBar, VictoryChart, VictoryTheme, VictoryPie } from "victory";
 
+//Shows charts based on the attribute selected
 export default function ({ column_info }) {
   if (column_info !== undefined) {
     return (

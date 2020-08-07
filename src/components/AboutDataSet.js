@@ -6,6 +6,7 @@ import RatingDisplay from "./RatingDisplay";
 import Tags from "./Tags";
 import ApiGuide from "./ApiGuide";
 
+//shows basic information of selected dataset
 export default class extends React.Component {
   constructor(props) {
     super(props);

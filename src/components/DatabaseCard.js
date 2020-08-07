@@ -2,10 +2,9 @@ import React from "react";
 import Card from "react-bootstrap/Card";
 import Tags from "./Tags";
 import "../globalcss.css";
-
 import { ExportCsvButton } from "./ExportCsvButton";
+
 // Card component for search results, takes in a database dict and display as a card
-// input example, {name:'db name',description:'sample text',}
 export default class extends React.Component {
   render() {
     return (
@@ -17,6 +16,7 @@ export default class extends React.Component {
             : { width: "13.1em", height: "15em" }
         }
       >
+        {/* click to open content drawer */}
         <Card.Body onClick={this.props.function}>
           {/* Data table Name/title */}
           <Card.Title className="textColor">
@@ -25,6 +25,7 @@ export default class extends React.Component {
 
           {/* Description */}
           <Card.Text style={{ fontSize: 11 }}>
+            {/* Cut text when character count exceed 80 */}
             {this.props.database.Collection_description.length > 80
               ? this.props.database.Collection_description.slice(0, 80) + "..."
               : this.props.database.Collection_description}
@@ -48,7 +49,7 @@ export default class extends React.Component {
           <br />
         </Card.Body>
 
-        {/* Rating and last updated */}
+        {/*Last updated */}
         <Card.Footer
           onClick={this.props.function}
           style={{

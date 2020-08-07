@@ -8,6 +8,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Snackbar from "@material-ui/core/Snackbar";
 
+//configuration of data format
 const DATE_OPTIONS = {
   weekday: "short",
   year: "numeric",
@@ -17,21 +18,25 @@ const DATE_OPTIONS = {
   minute: "numeric",
 };
 
+//Shows the comments sections
 export default class extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      comments: [],
-      comment: "",
-      open: false,
+      comments: [], // comments pull from api
+      comment: "", // user comment box
+      open: false, //notification message box
     };
     this.handleCommentChange = this.handleCommentChange.bind(this);
     this.uploadComment = this.uploadComment.bind(this);
     this.handleClose = this.handleClose.bind(this);
   }
+
   handleCommentChange(event) {
     this.setState({ ...this.state, comment: event.target.value });
   }
+
+  //close message box
   handleClose = () => {
     this.setState({ ...this.state, open: false });
   };
@@ -67,6 +72,8 @@ export default class extends React.Component {
       })
       .catch((error) => {});
   }
+
+  //get other comments stored in db
   getComments() {
     // headers for api call
     var apiHeader = {

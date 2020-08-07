@@ -11,13 +11,14 @@ import Checkbox from "@material-ui/core/Checkbox";
 const useStyles = makeStyles((theme) => ({
   formControl: {
     minWidth: 120,
-    maxWidth: 180,
+    maxWidth: 120,
   },
   noLabel: {
     marginTop: theme.spacing(1),
   },
 }));
 
+//Filtering drop down for portrait mode
 export default function SearchFilterPortrait({
   filters,
   handleChange,

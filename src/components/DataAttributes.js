@@ -9,6 +9,7 @@ import Box from "@material-ui/core/Box";
 import TextField from "@material-ui/core/TextField";
 import cookie from "react-cookies";
 
+//table headers
 const col_headers = [
   "No.",
   "Tech Label",
@@ -19,6 +20,7 @@ const col_headers = [
   "Sensitivity",
 ];
 
+//Shows dataset attribute schema
 export default class extends React.Component {
   constructor(props) {
     super(props);
@@ -31,7 +33,7 @@ export default class extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
   }
-
+  //change event for filtering
   handleChange(e) {
     const value = e.target.value.toLowerCase();
     this.setState({
@@ -39,6 +41,7 @@ export default class extends React.Component {
       filter: value,
     });
   }
+  //get attributes from attribute_metadata table based on selected dataset
   getAttribute() {
     // headers for api call
     var apiHeader = {
@@ -65,6 +68,7 @@ export default class extends React.Component {
         console.log(error);
       });
   }
+  //Get chart data to be displayed as additional information, currently not completed.
   getChartData() {
     // headers for api call
     var apiHeader = {
@@ -91,6 +95,7 @@ export default class extends React.Component {
         console.log(error);
       });
   }
+
   componentDidMount() {
     this.getAttribute();
   }

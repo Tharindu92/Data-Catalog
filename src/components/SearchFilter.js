@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+//display the filter tags
 export default function SearchFilter({
   filters,
   handleClick,

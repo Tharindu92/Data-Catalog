@@ -24,12 +24,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+//Shows sample codes to access data via API
 export default function ({ datasetName }) {
   const classes = useStyles();
 
+  //API url according to selected dataset
   const apiUrl =
     process.env.REACT_APP_DIRECT_API + "/api/v2/PRD_LDS/_table/" + datasetName;
-
+  //Javascript example string
   const jsExample =
     `
     //Axios API call  
@@ -53,7 +55,7 @@ export default function ({ datasetName }) {
         console.log(response.data.resource);  
     }); 
   `;
-
+  //Python example string
   const pyExmaple =
     `
     #python request

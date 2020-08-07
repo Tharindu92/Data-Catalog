@@ -8,7 +8,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import GetAppIcon from "@material-ui/icons/GetApp";
-
+//CSS
 const confirmBtn = {
   color: "#264c8c",
   textDecoration: "none",
@@ -27,6 +27,7 @@ const cancelBtn = {
   border: "none",
 };
 
+//Button to download selected dataset
 export const ExportCsvButton = ({ dataUrl, fileName }) => {
   const [data, setData] = React.useState([
     ["Download", "Error"],
@@ -34,6 +35,7 @@ export const ExportCsvButton = ({ dataUrl, fileName }) => {
   ]);
   const [open, setOpen] = React.useState(false);
 
+  //Open confirm download popup box
   const handleClickOpen = () => {
     // headers for api call
     var apiHeader = {
@@ -75,6 +77,7 @@ export const ExportCsvButton = ({ dataUrl, fileName }) => {
             CANCEL
           </button>
           <CSVLink
+            //download csv when clicked
             style={confirmBtn}
             data={data}
             filename={fileName + ".csv"}

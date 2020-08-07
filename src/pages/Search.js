@@ -27,6 +27,9 @@ export default class extends React.Component {
 
     this.handleFilterChange = this.handleFilterChange.bind(this);
     this.handleSort = this.handleSort.bind(this);
+    this.handlePortraitFilterChange = this.handlePortraitFilterChange.bind(
+      this
+    );
     this.getSearchResult = this.getSearchResult.bind(this);
     this.handleSearchChange = this.handleSearchChange.bind(this);
   }
@@ -41,10 +44,6 @@ export default class extends React.Component {
       this.sortByNameAsc();
     } else if (value < 3) {
       this.sortByNameDesc();
-    } else if (value < 4) {
-      this.sortByDateAsc();
-    } else {
-      this.sortByDateDesc();
     }
   }
 
@@ -64,101 +63,101 @@ export default class extends React.Component {
 
   //Filtering
   handleFilterChange(e) {
-    //Update state on each filter change
+    //Landscape mode filtering
 
-    let { id, checked, value } = e.target;
-    //Check if its portrait mode
-    if (value !== "on") {
-      //Portrait mode filtering
-      if (
-        !this.state.filter_selection.includes("All") &&
-        value.includes("All")
-      ) {
-        this.setState({
-          ...this.state,
-          filter_selection: ["All"],
-          searchResult: this.state.databaseList,
-        });
-        value = ["All"];
-      } else {
-        if (value.includes("All")) {
-          value = value.filter((x) => x !== "All");
-        }
-
+    let { id, checked } = e.target;
+    if (id === "All") {
+      this.setState({
+        ...this.state,
+        filter_selection: ["All"],
+        searchResult: this.state.databaseList,
+        sortBy: "",
+      });
+    } else {
+      if (checked) {
         const filtered = this.state.databaseList.filter(
           (database) =>
-            database.Tags.filter((item) => value.includes(item)).length > 0
+            database.Tags.filter(
+              (value) =>
+                this.state.filter_selection.includes(value) || value === id
+            ).length > 0
         );
+        var selected = this.state.filter_selection.filter((x) => x !== "All");
 
         this.setState({
           ...this.state,
-          filter_selection: value,
+          filter_selection: selected.concat([id]),
           searchResult: filtered,
           sortBy: "",
         });
-      }
-    } else {
-      //Landscape mode filtering
-      if (id === "All") {
-        this.setState({
-          ...this.state,
-          filter_selection: ["All"],
-          searchResult: this.state.databaseList,
-          sortBy: "",
-        });
       } else {
-        if (checked) {
+        //set to ALL if 0 tags selected
+        if (
+          this.state.filter_selection.length < 2 &&
+          this.state.filter_selection.includes(id)
+        ) {
+          this.setState({
+            ...this.state,
+            filter_selection: ["All"],
+            searchResult: this.state.databaseList,
+            sortBy: "",
+          });
+        } else {
           const filtered = this.state.databaseList.filter(
             (database) =>
               database.Tags.filter(
                 (value) =>
-                  this.state.filter_selection.includes(value) || value === id
+                  this.state.filter_selection.includes(value) && value !== id
               ).length > 0
           );
-          var selected = this.state.filter_selection.filter((x) => x !== "All");
+          const remainder = this.state.filter_selection.filter(
+            (item) => item !== id
+          );
 
           this.setState({
             ...this.state,
-            filter_selection: selected.concat([id]),
+            filter_selection: remainder,
             searchResult: filtered,
             sortBy: "",
           });
-        } else {
-          if (
-            this.state.filter_selection.length < 2 &&
-            this.state.filter_selection.includes(id)
-          ) {
-            this.setState({
-              ...this.state,
-              filter_selection: ["All"],
-              searchResult: this.state.databaseList,
-              sortBy: "",
-            });
-          } else {
-            const filtered = this.state.databaseList.filter(
-              (database) =>
-                database.Tags.filter(
-                  (value) =>
-                    this.state.filter_selection.includes(value) && value !== id
-                ).length > 0
-            );
-            const remainder = this.state.filter_selection.filter(
-              (item) => item !== id
-            );
-
-            this.setState({
-              ...this.state,
-              filter_selection: remainder,
-              searchResult: filtered,
-              sortBy: "",
-            });
-          }
         }
       }
     }
   }
+  handlePortraitFilterChange(e) {
+    //Update state on each filter change
+
+    let { value } = e.target;
+
+    //Portrait mode filtering
+    if (!this.state.filter_selection.includes("All") && value.includes("All")) {
+      this.setState({
+        ...this.state,
+        filter_selection: ["All"],
+        searchResult: this.state.databaseList,
+      });
+      //check this
+      value = ["All"];
+    } else {
+      if (value.includes("All")) {
+        value = value.filter((x) => x !== "All");
+      }
+
+      const filtered = this.state.databaseList.filter(
+        (database) =>
+          database.Tags.filter((item) => value.includes(item)).length > 0
+      );
+
+      this.setState({
+        ...this.state,
+        filter_selection: value,
+        searchResult: filtered,
+        sortBy: "",
+      });
+    }
+  }
+
   //Get data from API
-  //sample result, [{'name':'db1,'description:'sample text',...},{'name':'db2,'description:'sample text',...}]
   getSearchResult() {
     // headers for api call
     var apiHeader = {
@@ -213,11 +212,11 @@ export default class extends React.Component {
       });
   }
 
-  //update components when screen size changes, from landscape to portrait or vice versa
+  // //update components when screen size changes, from landscape to portrait or vice versa
   resize = () => this.forceUpdate();
 
-  //When page loads, call api to get an array of database dict that matches the entered keyword
   componentDidMount() {
+    //When page loads, call api to get an array of database dict that matches the entered keyword
     this.getSearchResult();
     window.addEventListener("resize", this.resize);
   }
@@ -304,7 +303,7 @@ export default class extends React.Component {
                   <h4 className="textColor ml-2 mt-4">Filter By:</h4>
                   <SearchFilter
                     filters={this.state.all_filters}
-                    handleClick={this.handleFilterChange}
+                    handleClick={this.handlePortraitFilterChange}
                     selectedFilters={this.state.filter_selection}
                   />
                 </div>
@@ -346,7 +345,7 @@ export default class extends React.Component {
               <div className="">
                 <SearchFilterPortrait
                   filters={this.state.all_filters}
-                  handleChange={this.handleFilterChange}
+                  handleChange={this.handlePortraitFilterChange}
                   selectedFilters={this.state.filter_selection}
                 />
               </div>

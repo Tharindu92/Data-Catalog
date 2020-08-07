@@ -4,6 +4,7 @@ import axios from "axios";
 import { Table } from "react-bootstrap";
 import cookie from "react-cookies";
 
+//Data preview tab of drawerContent
 export default class extends React.Component {
   constructor(props) {
     super(props);
@@ -23,7 +24,7 @@ export default class extends React.Component {
         "X-DreamFactory-Api-Key": process.env.REACT_APP_DF_APP_KEY,
       },
     };
-    //API url
+    //API url, Get first 10 rows
     var search_string =
       process.env.REACT_APP_DIRECT_API +
       "/api/v2/PRD_LDS/_table/" +

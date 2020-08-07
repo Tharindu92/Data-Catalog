@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+//Sorting for portrait mode
 export default function SearchSortPortrait({ sortBy, onChange }) {
   const classes = useStyles();
 
@@ -27,10 +28,8 @@ export default function SearchSortPortrait({ sortBy, onChange }) {
             id: "sortBy",
           }}
         >
-          <MenuItem value={1}>Name Ascending</MenuItem>
-          <MenuItem value={2}>Name Descending</MenuItem>
-          <MenuItem value={3}>Date Ascending</MenuItem>
-          <MenuItem value={4}>Date Descending</MenuItem>
+          <MenuItem value={1}>Name A-Z</MenuItem>
+          <MenuItem value={2}>Name Z-A</MenuItem>
         </Select>
       </FormControl>
     </div>
