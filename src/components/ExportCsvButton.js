@@ -37,8 +37,12 @@ export const ExportCsvButton = ({ dataUrl, fileName }) => {
 
   //Open confirm download popup box
   const handleClickOpen = () => {
+    var exportData = [];
     // headers for api call
+    var offset = 0;
+    var iterations = 0;
     var apiHeader = {
+      params:{offset: offset, include_count: true, limit: 1},
       headers: {
         "Content-Type": "application/json",
         "X-DreamFactory-Session-Token": cookie.load("session_token"),
@@ -46,15 +50,37 @@ export const ExportCsvButton = ({ dataUrl, fileName }) => {
       },
     };
     axios
-      .get(dataUrl, apiHeader)
-      .then((response) => {
-        setData(response.data.resource);
-      })
-      //if error
-      .catch((error) => {
-        console.log(error);
-      });
-
+        .get(dataUrl, apiHeader )
+        .then((response) => {
+          iterations = Math.ceil(response.data.meta.count/1000);
+          var i;
+          for(i = 0; i < iterations; i++){
+            offset = i*1000;
+            apiHeader = {
+              params:{offset: offset},
+              headers: {
+                "Content-Type": "application/json",
+                "X-DreamFactory-Session-Token": cookie.load("session_token"),
+                "X-DreamFactory-Api-Key": process.env.REACT_APP_DF_APP_KEY,
+              },
+            };
+            // var len = exportData.length;
+            axios
+                .get(dataUrl, apiHeader )
+                .then((response) => {
+                  exportData.push(...response.data.resource);
+                })
+                //if error
+                .catch((error) => {
+                  console.log(error);
+                });
+          }
+        })
+        //if error
+        .catch((error) => {
+          console.log(error);
+        });
+    setData(exportData);
     setOpen(true);
   };
 

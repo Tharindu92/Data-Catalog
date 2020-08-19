@@ -82,7 +82,13 @@ export default function ({ rating, database_id, getRating }) {
             .then((response) => {
               getRating();
             })
-            .catch((error) => {});
+            .catch(
+                axios
+                    .post(api_string, content, apiHeader)
+                    .then((response) => {
+                        getRating();
+                    })
+                    .catch((error) => {}));
           setOpen(true);
         }}
         icon={<StarIcon fontSize="inherit" />}
