@@ -27,94 +27,158 @@ const cancelBtn = {
   border: "none",
 };
 
-//Button to download selected dataset
-export const ExportCsvButton = ({ dataUrl, fileName }) => {
-  const [data, setData] = React.useState([
-    ["Download", "Error"],
-    ["Please Contact Administrator", "."],
-  ]);
-  const [open, setOpen] = React.useState(false);
+class ExportCsvButton extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { data: [["Download", "Error"],
+     ["Please Contact Administrator", "."],], open: false, finished: false, error: false, faulty: false};
+    this.fetchData = this.fetchData.bind(this);
+    this.getDataToExport = this.getDataToExport.bind(this);
+    this.sleep = this.sleep.bind(this);
+  }
 
-  //Open confirm download popup box
-  const handleClickOpen = () => {
+  fetchData = () => {
+    this.setState({open: true, data: [["Download", "Error"],
+            ["Please Contact Administrator", "."],] }, () => {
+        this.getDataToExport(this.props.dataUrl);
+    });
+  }
+
+  handleClose = () => {
+    this.setState({open: false});
+  };
+
+  handleDownloadClose = () => {
+    this.setState({finished: false});
+  };
+
+  handleDownloadErrorClose = () => {
+    this.setState({error: false});
+   };
+
+  sleep = (milliseconds) => {
+    return new Promise(resolve => setTimeout(resolve, milliseconds))
+  };
+
+  getDataToExport = (dataUrl) => {
     var exportData = [];
     // headers for api call
     var offset = 0;
     var iterations = 0;
+    //!st API call to get the count
     var apiHeader = {
-      params:{offset: offset, include_count: true, limit: 1},
-      headers: {
-        "Content-Type": "application/json",
-        "X-DreamFactory-Session-Token": cookie.load("session_token"),
-        "X-DreamFactory-Api-Key": process.env.REACT_APP_DF_APP_KEY,
-      },
+        params: {count_only: true},
+        headers: {
+            "Content-Type": "application/json",
+            "X-DreamFactory-Session-Token": cookie.load("session_token"),
+            "X-DreamFactory-Api-Key": process.env.REACT_APP_DF_APP_KEY,
+        },
     };
-    axios
-        .get(dataUrl, apiHeader )
-        .then((response) => {
-          iterations = Math.ceil(response.data.meta.count/1000);
-          var i;
-          for(i = 0; i < iterations; i++){
-            offset = i*1000;
-            apiHeader = {
-              params:{offset: offset},
-              headers: {
-                "Content-Type": "application/json",
-                "X-DreamFactory-Session-Token": cookie.load("session_token"),
-                "X-DreamFactory-Api-Key": process.env.REACT_APP_DF_APP_KEY,
-              },
-            };
-            // var len = exportData.length;
-            axios
-                .get(dataUrl, apiHeader )
-                .then((response) => {
-                  exportData.push(...response.data.resource);
+    var totalDocs = 0;
+    console.log(this.state.data);
+
+    return axios
+        .get(dataUrl, apiHeader)
+        .then(async (response) => {
+            iterations = Math.ceil(response.data / 1000);
+            totalDocs = response.data;
+            var i;
+            //Repeat calling the API until all data is collected
+            for (i = 0; i < iterations; i++) {
+                if((i+1)%100 === 0){
+                    await this.sleep(5000);
+                }
+
+                offset = i * 1000;
+                apiHeader = {
+                    params: {offset: offset, limit: 1000},
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-DreamFactory-Session-Token": cookie.load("session_token"),
+                        "X-DreamFactory-Api-Key": process.env.REACT_APP_DF_APP_KEY,
+                    },
+                };
+                // var len = exportData.length;
+                axios
+                    .get(dataUrl, apiHeader)
+                    .then((response) => {
+                        exportData.push(...response.data.resource);
+                    }).then(() => {
+                    if(exportData.length === totalDocs){
+                        this.setState({open: false, finished: true, data: exportData});
+                    }
                 })
                 //if error
-                .catch((error) => {
-                  console.log(error);
-                });
-          }
+                    .catch((error) => {
+                        if(this.state.error === false){
+                            this.setState({open: false, error: true});
+                        }
+
+                    });
+            }
+            //export Data has all the records in the end
+
+            return exportData;
         })
         //if error
         .catch((error) => {
-          console.log(error);
+            this.setState({open: false, error: true});
         });
-    setData(exportData);
-    setOpen(true);
-  };
+  }
 
-  const handleClose = () => {
-    setOpen(false);
-  };
-  return (
-    <div>
-      <GetAppIcon />
-      <label onClick={handleClickOpen}>Download</label>
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle id="downloadConfirmationAlert">{"Download"}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Click confirm to start downloading the dataset.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <button style={cancelBtn} onClick={handleClose} color="primary">
-            CANCEL
-          </button>
-          <CSVLink
-            //download csv when clicked
-            style={confirmBtn}
-            data={data}
-            filename={fileName + ".csv"}
-            onClick={() => {
-              setOpen(false);
-            }}
-          >
-            CONFIRM
-          </CSVLink>
-        </DialogActions>
-      </Dialog>
-    </div>
-  );
-};
+  render() {
+    return (
+        <div>
+          <GetAppIcon />
+          <label onClick={this.fetchData}>Download</label>
+          <Dialog open={this.state.open} onClose={this.handleClose}>
+             <DialogTitle id="downloadConfirmationAlert">{"Download"}</DialogTitle>
+             <DialogContent>
+               <DialogContentText id="alert-dialog-description">
+                 Please wait while the data is being downloaded...
+               </DialogContentText>
+             </DialogContent>
+           </Dialog>
+            <Dialog open={this.state.error} onClose={this.handleDownloadErrorClose}>
+                <DialogTitle id="downloadErrorAlert">{"Error"}</DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        Error occurred while downloading the dataset.
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <button style={cancelBtn} onClick={this.handleDownloadErrorClose} color="primary">
+                        OK
+                    </button>
+                </DialogActions>
+            </Dialog>
+          <Dialog open={this.state.finished} onClose={this.handleDownloadClose}>
+            <DialogTitle id="downloadConfirmationAlert">{"Download"}</DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                Click confirm to start downloading the dataset.
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <button style={cancelBtn} onClick={this.handleDownloadClose} color="primary">
+                CANCEL
+              </button>
+              <CSVLink
+                  //download csv when clicked
+                  style={confirmBtn}
+                  data={this.state.data}
+                  filename={this.props.fileName + ".csv"}
+                  onClick={() => {
+                    this.setState({finished: false});
+                  }}
+              >
+                CONFIRM
+              </CSVLink>
+            </DialogActions>
+          </Dialog>
+        </div>
+
+    )
+  }
+}
+export default ExportCsvButton;

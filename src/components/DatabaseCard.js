@@ -2,7 +2,7 @@ import React from "react";
 import Card from "react-bootstrap/Card";
 import Tags from "./Tags";
 import "../globalcss.css";
-import { ExportCsvButton } from "./ExportCsvButton";
+import ExportCsvButton from "./ExportCsvButton";
 
 // Card component for search results, takes in a database dict and display as a card
 export default class extends React.Component {
