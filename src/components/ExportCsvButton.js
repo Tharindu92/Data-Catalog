@@ -39,9 +39,9 @@ class ExportCsvButton extends React.Component {
 
   fetchData = () => {
     this.setState({open: true, data: [["Download", "Error"],
-            ["Please Contact Administrator", "."],] }, () => {
-        this.getDataToExport(this.props.dataUrl);
-    });
+     ["Please Contact Administrator", "."],]}, () => {
+    	this.getDataToExport(this.props.dataUrl);
+     });   
   }
 
   handleClose = () => {
@@ -60,7 +60,7 @@ class ExportCsvButton extends React.Component {
     return new Promise(resolve => setTimeout(resolve, milliseconds))
   };
 
-  getDataToExport = (dataUrl) => {
+  getDataToExport = async(dataUrl) => {
     var exportData = [];
     // headers for api call
     var offset = 0;
@@ -75,23 +75,30 @@ class ExportCsvButton extends React.Component {
         },
     };
     var totalDocs = 0;
-    console.log(this.state.data);
+//this.props.fileName
+    var recordSize = 50000;
+    var sleepTime = 20000;
+
+    if(this.props.fileName == "Invoice_Base"){
+       recordSize = 22000;
+       sleepTime = 15000;
+    }
 
     return axios
         .get(dataUrl, apiHeader)
         .then(async (response) => {
-            iterations = Math.ceil(response.data / 1000);
+            iterations = Math.ceil(response.data / recordSize);
             totalDocs = response.data;
             var i;
             //Repeat calling the API until all data is collected
             for (i = 0; i < iterations; i++) {
-                if((i+1)%100 === 0){
-                    await this.sleep(5000);
-                }
+                // if(i !== 0){
+                    // await this.sleep(sleepTime);
+                // }
 
-                offset = i * 1000;
+                offset = i * recordSize;
                 apiHeader = {
-                    params: {offset: offset, limit: 1000},
+                    params: {offset: offset, limit: recordSize},
                     headers: {
                         "Content-Type": "application/json",
                         "X-DreamFactory-Session-Token": cookie.load("session_token"),
@@ -99,7 +106,7 @@ class ExportCsvButton extends React.Component {
                     },
                 };
                 // var len = exportData.length;
-                axios
+                await axios
                     .get(dataUrl, apiHeader)
                     .then((response) => {
                         exportData.push(...response.data.resource);
@@ -170,6 +177,7 @@ class ExportCsvButton extends React.Component {
                   filename={this.props.fileName + ".csv"}
                   onClick={() => {
                     this.setState({finished: false});
+					window.location.reload(false);
                   }}
               >
                 CONFIRM

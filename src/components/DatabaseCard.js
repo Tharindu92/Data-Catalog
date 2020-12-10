@@ -12,8 +12,8 @@ export default class extends React.Component {
         className="mb-1 mt-2 borderColor"
         style={
           window.innerWidth < 450
-            ? { width: "100%", height: "15em" }
-            : { width: "13.1em", height: "15em" }
+            ? { width: "100%", height: "20em" }
+            : { width: "13.1em", height: "20em" }
         }
       >
         {/* click to open content drawer */}
@@ -34,7 +34,7 @@ export default class extends React.Component {
 
         {/* Tags and download */}
         <Card.Body>
-          <Tags tags={this.props.database.Tags} />
+		<Tags tags={this.props.database.Tags} />
           <div className="float-right textColor mt-1">
             <ExportCsvButton
               dataUrl={

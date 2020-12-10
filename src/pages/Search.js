@@ -175,7 +175,7 @@ export default class extends React.Component {
     var unique_tags = ["All"];
     var search_string =
       process.env.REACT_APP_DIRECT_API +
-      "/api/v2/datacatalog/_table/collection_metadata/";
+      "/api/v2/datacatalog/_table/collection_metadata";
     if (query) {
       search_string +=
         "?filter=(Collection_Biz_Label%20like%20" +
@@ -189,15 +189,18 @@ export default class extends React.Component {
 
     //Axios API call
     axios
-      .get(search_string, apiHeader)
+	  .get(search_string, apiHeader)
       .then((response) => {
         var data = response.data.resource;
         //Get Unique Tags
-        data.map((row) =>
+        console.log(data);
+		data.map((row) =>
           row.Tags.map((tag) =>
             unique_tags.includes(tag) ? "" : unique_tags.push(tag)
           )
         );
+		console.log("unique_tags after" + unique_tags);
+		
         this.setState({
           databaseList: data,
           searchResult: data,
@@ -299,13 +302,14 @@ export default class extends React.Component {
                     sortBy={this.state.sortBy}
                     onChange={this.handleSort}
                   />
-
-                  <h4 className="textColor ml-2 mt-4">Filter By:</h4>
+				  
+                 <h4 className="textColor ml-2 mt-4">Filter By:</h4>
                   <SearchFilter
                     filters={this.state.all_filters}
                     handleClick={this.handlePortraitFilterChange}
                     selectedFilters={this.state.filter_selection}
                   />
+				  
                 </div>
               </Col>
               <Col className="ml-2 mr-2 mt-2">
@@ -348,7 +352,7 @@ export default class extends React.Component {
                   handleChange={this.handlePortraitFilterChange}
                   selectedFilters={this.state.filter_selection}
                 />
-              </div>
+              </div> 
             </div>
           </Hidden>
 
